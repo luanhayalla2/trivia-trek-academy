@@ -1,10 +1,11 @@
 import { GameCard } from "@/components/ui/game-card";
 import { Button } from "@/components/ui/button";
 import { Calculator, BookOpen, Atom, Clock, Globe, Palette } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const subjects = [
   {
-    id: 1,
+    id: "matematica",
     name: "Matemática",
     icon: Calculator,
     questions: 250,
@@ -12,7 +13,7 @@ const subjects = [
     description: "Números, equações e geometria"
   },
   {
-    id: 2,
+    id: "portugues",
     name: "Português",
     icon: BookOpen,
     questions: 200,
@@ -20,7 +21,7 @@ const subjects = [
     description: "Gramática, literatura e redação"
   },
   {
-    id: 3,
+    id: "ciencias",
     name: "Ciências",
     icon: Atom,
     questions: 180,
@@ -28,7 +29,7 @@ const subjects = [
     description: "Física, química e biologia"
   },
   {
-    id: 4,
+    id: "historia",
     name: "História",
     icon: Clock,
     questions: 150,
@@ -36,7 +37,7 @@ const subjects = [
     description: "Eventos e civilizações"
   },
   {
-    id: 5,
+    id: "geografia",
     name: "Geografia",
     icon: Globe,
     questions: 140,
@@ -44,7 +45,7 @@ const subjects = [
     description: "Países, capitais e relevos"
   },
   {
-    id: 6,
+    id: "artes",
     name: "Artes",
     icon: Palette,
     questions: 120,
@@ -95,9 +96,11 @@ const SubjectGrid = () => {
                     </div>
                   </div>
 
-                  <Button variant="game" className="w-full">
-                    Jogar Agora
-                  </Button>
+                  <Link to={`/game/${subject.id}`}>
+                    <Button variant="game" className="w-full">
+                      Jogar Agora
+                    </Button>
+                  </Link>
                 </div>
               </GameCard>
             );

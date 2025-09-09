@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { GameCard } from "@/components/ui/game-card";
 import { Play, Trophy, Users } from "lucide-react";
+import { Link } from "react-router-dom";
 import mascot from "@/assets/mascot.png";
 
 const Hero = () => {
@@ -22,13 +23,17 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-              <Button variant="game" size="lg" className="text-lg px-8">
-                <Play className="h-5 w-5" />
-                Começar a Jogar
-              </Button>
-              <Button variant="outline" size="lg" className="text-lg px-8">
-                Ver Disciplinas
-              </Button>
+              <Link to="/subjects">
+                <Button variant="game" size="lg" className="text-lg px-8">
+                  <Play className="h-5 w-5" />
+                  Começar a Jogar
+                </Button>
+              </Link>
+              <Link to="/subjects">
+                <Button variant="outline" size="lg" className="text-lg px-8">
+                  Ver Disciplinas
+                </Button>
+              </Link>
             </div>
 
             <div className="flex gap-8 justify-center lg:justify-start">

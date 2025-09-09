@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { GameCard } from "@/components/ui/game-card";
 import { BookOpen, Trophy, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -19,27 +20,29 @@ const Header = () => {
             </div>
           </div>
           
-          <nav className="hidden md:flex items-center space-x-6">
-            <a href="#home" className="text-foreground hover:text-primary transition-colors">
-              Início
-            </a>
-            <a href="#subjects" className="text-foreground hover:text-primary transition-colors">
-              Disciplinas
-            </a>
-            <a href="#ranking" className="text-foreground hover:text-primary transition-colors">
-              Ranking
-            </a>
-          </nav>
+            <nav className="hidden md:flex items-center space-x-6">
+              <Link to="/" className="text-foreground hover:text-primary transition-colors">
+                Início
+              </Link>
+              <Link to="/subjects" className="text-foreground hover:text-primary transition-colors">
+                Disciplinas
+              </Link>
+              <Link to="/ranking" className="text-foreground hover:text-primary transition-colors">
+                Ranking
+              </Link>
+            </nav>
 
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon">
-              <Trophy className="h-4 w-4" />
-            </Button>
-            <Button variant="game" size="sm">
-              <User className="h-4 w-4" />
-              Perfil
-            </Button>
-          </div>
+            <div className="flex items-center space-x-2">
+              <Button variant="ghost" size="icon">
+                <Trophy className="h-4 w-4" />
+              </Button>
+              <Link to="/profile">
+                <Button variant="game" size="sm">
+                  <User className="h-4 w-4" />
+                  Perfil
+                </Button>
+              </Link>
+            </div>
         </div>
       </div>
     </header>
