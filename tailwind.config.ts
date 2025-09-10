@@ -71,11 +71,17 @@ export default {
         "gradient-success": "var(--gradient-success)",
         "gradient-warning": "var(--gradient-warning)",
         "gradient-game": "var(--gradient-game)",
+        "gradient-knowledge": "var(--gradient-knowledge)",
+        "gradient-wisdom": "var(--gradient-wisdom)",
+        "gradient-growth": "var(--gradient-growth)",
       },
       boxShadow: {
         card: "var(--shadow-card)",
         elevated: "var(--shadow-elevated)",
         glow: "var(--shadow-glow)",
+        "purple-glow": "var(--shadow-purple-glow)",
+        "golden-glow": "var(--shadow-golden-glow)",
+        "green-glow": "var(--shadow-green-glow)",
       },
       borderRadius: {
         lg: "var(--radius)",

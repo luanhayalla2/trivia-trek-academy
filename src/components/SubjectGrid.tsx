@@ -9,23 +9,23 @@ const subjects = [
     name: "Matemática",
     icon: Calculator,
     questions: 250,
-    color: "text-blue-600",
+    variant: "knowledge" as const,
     description: "Números, equações e geometria"
   },
   {
-    id: "portugues",
+    id: "portugues", 
     name: "Português",
     icon: BookOpen,
     questions: 200,
-    color: "text-green-600",
+    variant: "growth" as const,
     description: "Gramática, literatura e redação"
   },
   {
     id: "ciencias",
-    name: "Ciências",
+    name: "Ciências", 
     icon: Atom,
     questions: 180,
-    color: "text-purple-600",
+    variant: "wisdom" as const,
     description: "Física, química e biologia"
   },
   {
@@ -33,7 +33,7 @@ const subjects = [
     name: "História",
     icon: Clock,
     questions: 150,
-    color: "text-orange-600",
+    variant: "warning" as const,
     description: "Eventos e civilizações"
   },
   {
@@ -41,7 +41,7 @@ const subjects = [
     name: "Geografia",
     icon: Globe,
     questions: 140,
-    color: "text-teal-600",
+    variant: "success" as const,
     description: "Países, capitais e relevos"
   },
   {
@@ -49,7 +49,7 @@ const subjects = [
     name: "Artes",
     icon: Palette,
     questions: 120,
-    color: "text-pink-600",
+    variant: "subject" as const,
     description: "Cultura e expressões artísticas"
   }
 ];
@@ -77,27 +77,27 @@ const SubjectGrid = () => {
             return (
               <GameCard
                 key={subject.id}
-                variant="default"
+                variant={subject.variant}
                 className="p-6 hover:cursor-pointer group"
               >
                 <div className="text-center space-y-4">
-                  <div className="mx-auto w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Icon className="h-8 w-8 text-primary-foreground" />
+                  <div className="mx-auto w-16 h-16 bg-background/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform backdrop-blur-sm">
+                    <Icon className="h-8 w-8" />
                   </div>
                   
                   <div>
                     <h3 className="text-xl font-bold mb-2">{subject.name}</h3>
-                    <p className="text-muted-foreground text-sm mb-4">
+                    <p className="text-current/80 text-sm mb-4">
                       {subject.description}
                     </p>
-                    <div className="flex justify-between items-center text-sm text-muted-foreground mb-4">
+                    <div className="flex justify-between items-center text-sm text-current/70 mb-4">
                       <span>{subject.questions} perguntas</span>
                       <span>Nível: Médio</span>
                     </div>
                   </div>
 
                   <Link to={`/game/${subject.id}`}>
-                    <Button variant="game" className="w-full">
+                    <Button variant="secondary" className="w-full bg-background/20 hover:bg-background/30 backdrop-blur-sm">
                       Jogar Agora
                     </Button>
                   </Link>

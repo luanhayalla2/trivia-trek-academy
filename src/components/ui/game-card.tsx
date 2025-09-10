@@ -9,9 +9,12 @@ const gameCardVariants = cva(
       variant: {
         default: "border-border hover:border-primary/50",
         subject: "border-transparent bg-gradient-primary text-primary-foreground hover:shadow-glow",
-        success: "border-transparent bg-gradient-success text-success-foreground hover:shadow-glow",
-        warning: "border-transparent bg-gradient-warning text-warning-foreground hover:shadow-glow",
+        success: "border-transparent bg-gradient-success text-success-foreground hover:shadow-green-glow",
+        warning: "border-transparent bg-gradient-warning text-warning-foreground hover:shadow-golden-glow",
         game: "border-transparent bg-gradient-game text-primary-foreground hover:shadow-glow",
+        knowledge: "border-transparent bg-gradient-knowledge text-primary-foreground hover:shadow-glow",
+        wisdom: "border-transparent bg-gradient-wisdom text-secondary-foreground hover:shadow-purple-glow",
+        growth: "border-transparent bg-gradient-growth text-success-foreground hover:shadow-green-glow",
       },
       size: {
         default: "p-6",

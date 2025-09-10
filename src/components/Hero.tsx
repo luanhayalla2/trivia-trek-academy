@@ -53,20 +53,20 @@ const Hero = () => {
           </div>
 
           <div className="relative">
-            <GameCard variant="subject" className="p-8 text-center">
+            <GameCard variant="knowledge" className="p-8 text-center">
               <img 
                 src={mascot} 
                 alt="EdGame Mascot" 
                 className="w-64 h-64 mx-auto mb-6 object-contain"
               />
               <div className="space-y-4">
-                <GameCard className="p-4 flex items-center justify-between">
+                <GameCard className="p-4 flex items-center justify-between bg-background/20 backdrop-blur-sm">
                   <div className="flex items-center space-x-3">
                     <Trophy className="h-6 w-6 text-warning" />
                     <span className="font-semibold">Recorde: 2.450 pts</span>
                   </div>
                 </GameCard>
-                <GameCard className="p-4 flex items-center justify-between">
+                <GameCard className="p-4 flex items-center justify-between bg-background/20 backdrop-blur-sm">
                   <div className="flex items-center space-x-3">
                     <Users className="h-6 w-6 text-success" />
                     <span className="font-semibold">Jogadores Online: 127</span>
