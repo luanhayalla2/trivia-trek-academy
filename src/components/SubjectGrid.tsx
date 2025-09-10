@@ -1,6 +1,6 @@
 import { GameCard } from "@/components/ui/game-card";
 import { Button } from "@/components/ui/button";
-import { Calculator, BookOpen, Atom, Clock, Globe, Palette } from "lucide-react";
+import { Calculator, BookOpen, Atom, Clock, Globe, Palette, Languages, Code, Music, Dumbbell, Brain, Users, Microscope, Zap, Leaf } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const subjects = [
@@ -21,18 +21,58 @@ const subjects = [
     description: "Gramática, literatura e redação"
   },
   {
-    id: "ciencias",
-    name: "Ciências", 
-    icon: Atom,
+    id: "ingles",
+    name: "Inglês",
+    icon: Languages,
     questions: 180,
+    variant: "knowledge" as const,
+    description: "Vocabulário, gramática e conversação"
+  },
+  {
+    id: "espanhol",
+    name: "Espanhol", 
+    icon: Languages,
+    questions: 160,
+    variant: "subject" as const,
+    description: "Vocabulário e cultura hispânica"
+  },
+  {
+    id: "frances",
+    name: "Francês",
+    icon: Languages,
+    questions: 140,
     variant: "wisdom" as const,
-    description: "Física, química e biologia"
+    description: "Língua francesa e cultura"
+  },
+  {
+    id: "fisica",
+    name: "Física", 
+    icon: Zap,
+    questions: 200,
+    variant: "knowledge" as const,
+    description: "Movimento, energia e universo"
+  },
+  {
+    id: "quimica",
+    name: "Química",
+    icon: Atom,
+    questions: 190,
+    variant: "wisdom" as const,
+    description: "Elementos, reações e moléculas"
+  },
+  {
+    id: "biologia",
+    name: "Biologia",
+    icon: Leaf,
+    questions: 185,
+    variant: "growth" as const,
+    description: "Vida, células e ecossistemas"
   },
   {
     id: "historia",
     name: "História",
     icon: Clock,
-    questions: 150,
+    questions: 175,
     variant: "warning" as const,
     description: "Eventos e civilizações"
   },
@@ -40,17 +80,57 @@ const subjects = [
     id: "geografia",
     name: "Geografia",
     icon: Globe,
-    questions: 140,
+    questions: 165,
     variant: "success" as const,
     description: "Países, capitais e relevos"
+  },
+  {
+    id: "filosofia",
+    name: "Filosofia",
+    icon: Brain,
+    questions: 150,
+    variant: "wisdom" as const,
+    description: "Pensamento crítico e reflexão"
+  },
+  {
+    id: "sociologia",
+    name: "Sociologia",
+    icon: Users,
+    questions: 140,
+    variant: "growth" as const,
+    description: "Sociedade e relações humanas"
   },
   {
     id: "artes",
     name: "Artes",
     icon: Palette,
-    questions: 120,
+    questions: 130,
     variant: "subject" as const,
     description: "Cultura e expressões artísticas"
+  },
+  {
+    id: "musica",
+    name: "Música",
+    icon: Music,
+    questions: 120,
+    variant: "warning" as const,
+    description: "Teoria musical e história"
+  },
+  {
+    id: "educacao-fisica",
+    name: "Educação Física",
+    icon: Dumbbell,
+    questions: 110,
+    variant: "success" as const,
+    description: "Esportes, saúde e movimento"
+  },
+  {
+    id: "informatica",
+    name: "Informática",
+    icon: Code,
+    questions: 200,
+    variant: "knowledge" as const,
+    description: "Programação, algoritmos e tecnologia"
   }
 ];
 
@@ -71,7 +151,7 @@ const SubjectGrid = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {subjects.map((subject) => {
             const Icon = subject.icon;
             return (
