@@ -9,6 +9,9 @@ import Game from "./pages/Game";
 import Profile from "./pages/Profile";
 import Ranking from "./pages/Ranking";
 import Settings from "./pages/Settings";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +29,9 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/ranking" element={<Ranking />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/about" element={<About />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

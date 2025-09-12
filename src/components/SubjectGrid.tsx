@@ -33,7 +33,7 @@ const subjects = [
     name: "Espanhol", 
     icon: Languages,
     questions: 160,
-    variant: "subject" as const,
+    variant: "intellect" as const,
     description: "Vocabulário e cultura hispânica"
   },
   {
@@ -57,7 +57,7 @@ const subjects = [
     name: "Italiano",
     icon: Languages,
     questions: 130,
-    variant: "subject" as const,
+    variant: "purity" as const,
     description: "Lingua italiana e tradições"
   },
   {
@@ -121,7 +121,7 @@ const subjects = [
     name: "História",
     icon: Clock,
     questions: 175,
-    variant: "warning" as const,
+    variant: "intellect" as const,
     description: "Eventos e civilizações"
   },
   {
@@ -129,7 +129,7 @@ const subjects = [
     name: "Geografia",
     icon: Globe,
     questions: 165,
-    variant: "success" as const,
+    variant: "growth" as const,
     description: "Países, capitais e relevos"
   },
   {
@@ -161,7 +161,7 @@ const subjects = [
     name: "Economia",
     icon: DollarSign,
     questions: 160,
-    variant: "warning" as const,
+    variant: "intellect" as const,
     description: "Mercados, finanças e negócios"
   },
   {
@@ -193,7 +193,7 @@ const subjects = [
     name: "Arquitetura",
     icon: Building,
     questions: 155,
-    variant: "subject" as const,
+    variant: "purity" as const,
     description: "Desenho, urbanismo e design"
   },
   {
@@ -233,7 +233,7 @@ const subjects = [
     name: "Ciências Ambientais",
     icon: TreePine,
     questions: 130,
-    variant: "success" as const,
+    variant: "growth" as const,
     description: "Sustentabilidade e ecologia"
   },
   {
@@ -241,7 +241,7 @@ const subjects = [
     name: "Educação Física",
     icon: Activity,
     questions: 110,
-    variant: "success" as const,
+    variant: "growth" as const,
     description: "Esportes, saúde e movimento"
   },
   {
@@ -249,7 +249,7 @@ const subjects = [
     name: "Administração",
     icon: Briefcase,
     questions: 150,
-    variant: "warning" as const,
+    variant: "intellect" as const,
     description: "Gestão, liderança e negócios"
   },
   {
@@ -257,7 +257,7 @@ const subjects = [
     name: "Artes",
     icon: Palette,
     questions: 130,
-    variant: "subject" as const,
+    variant: "purity" as const,
     description: "Cultura e expressões artísticas"
   },
   {
@@ -273,7 +273,7 @@ const subjects = [
     name: "Música",
     icon: Music,
     questions: 120,
-    variant: "warning" as const,
+    variant: "intellect" as const,
     description: "Teoria musical e história"
   },
   {
@@ -281,7 +281,7 @@ const subjects = [
     name: "Teatro",
     icon: Users,
     questions: 100,
-    variant: "subject" as const,
+    variant: "purity" as const,
     description: "Performance e dramaturgia"
   },
   {
@@ -305,7 +305,7 @@ const subjects = [
     name: "Turismo",
     icon: Plane,
     questions: 95,
-    variant: "success" as const,
+    variant: "growth" as const,
     description: "Destinos e hospitalidade"
   },
   {

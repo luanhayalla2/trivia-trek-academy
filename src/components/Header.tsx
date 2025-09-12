@@ -30,19 +30,26 @@ const Header = () => {
               <Link to="/ranking" className="text-foreground hover:text-primary transition-colors">
                 Ranking
               </Link>
-              <Link to="/settings" className="text-foreground hover:text-primary transition-colors">
-                Configurações
+              <Link to="/about" className="text-foreground hover:text-primary transition-colors">
+                Sobre Nós
               </Link>
             </nav>
 
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="icon">
-                <Trophy className="h-4 w-4" />
-              </Button>
-              <Link to="/profile">
-                <Button variant="game" size="sm">
-                  <User className="h-4 w-4" />
-                  Perfil
+              <Link to="/settings">
+                <Button variant="ghost" size="icon">
+                  <Trophy className="h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/login">
+                <Button variant="outline" size="sm" className="border-primary/50">
+                  Entrar
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button size="sm" className="bg-gradient-knowledge shadow-glow">
+                  <User className="h-4 w-4 mr-1" />
+                  Cadastrar
                 </Button>
               </Link>
             </div>

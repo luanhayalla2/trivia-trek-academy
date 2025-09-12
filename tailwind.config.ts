@@ -47,6 +47,26 @@ export default {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
         },
+        knowledge: {
+          DEFAULT: "hsl(var(--knowledge))",
+          foreground: "hsl(var(--knowledge-foreground))",
+        },
+        wisdom: {
+          DEFAULT: "hsl(var(--wisdom))",
+          foreground: "hsl(var(--wisdom-foreground))",
+        },
+        intellect: {
+          DEFAULT: "hsl(var(--intellect))",
+          foreground: "hsl(var(--intellect-foreground))",
+        },
+        growth: {
+          DEFAULT: "hsl(var(--growth))",
+          foreground: "hsl(var(--growth-foreground))",
+        },
+        purity: {
+          DEFAULT: "hsl(var(--purity))",
+          foreground: "hsl(var(--purity-foreground))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -74,6 +94,8 @@ export default {
         "gradient-knowledge": "var(--gradient-knowledge)",
         "gradient-wisdom": "var(--gradient-wisdom)",
         "gradient-growth": "var(--gradient-growth)",
+        "gradient-intellect": "var(--gradient-intellect)",
+        "gradient-purity": "var(--gradient-purity)",
       },
       boxShadow: {
         card: "var(--shadow-card)",
@@ -82,6 +104,7 @@ export default {
         "purple-glow": "var(--shadow-purple-glow)",
         "golden-glow": "var(--shadow-golden-glow)",
         "green-glow": "var(--shadow-green-glow)",
+        "white-glow": "var(--shadow-white-glow)",
       },
       borderRadius: {
         lg: "var(--radius)",

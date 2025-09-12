@@ -15,6 +15,8 @@ const gameCardVariants = cva(
         knowledge: "border-transparent bg-gradient-knowledge text-primary-foreground hover:shadow-glow",
         wisdom: "border-transparent bg-gradient-wisdom text-secondary-foreground hover:shadow-purple-glow",
         growth: "border-transparent bg-gradient-growth text-success-foreground hover:shadow-green-glow",
+        intellect: "border-transparent bg-gradient-intellect text-intellect-foreground hover:shadow-golden-glow",
+        purity: "border-transparent bg-gradient-purity text-purity-foreground hover:shadow-white-glow",
       },
       size: {
         default: "p-6",

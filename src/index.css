@@ -8,54 +8,72 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 27% 8%;
-    --foreground: 0 0% 95%;
+    --background: 220 35% 4%;
+    --foreground: 0 0% 98%;
 
-    --card: 220 27% 10%;
-    --card-foreground: 0 0% 95%;
+    --card: 220 35% 6%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 220 27% 10%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 220 35% 6%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 217 91% 65%;
+    --primary: 217 91% 68%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 265 89% 78%;
+    --secondary: 265 89% 75%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 27% 14%;
-    --muted-foreground: 220 9% 55%;
+    --muted: 220 35% 12%;
+    --muted-foreground: 220 15% 65%;
 
-    --accent: 142 76% 65%;
+    --accent: 142 76% 68%;
     --accent-foreground: 0 0% 100%;
 
-    --warning: 45 93% 58%;
-    --warning-foreground: 220 27% 8%;
+    --warning: 45 93% 65%;
+    --warning-foreground: 220 35% 4%;
 
-    --success: 142 76% 65%;
+    --success: 142 76% 68%;
     --success-foreground: 0 0% 100%;
 
-    --destructive: 0 75% 60%;
+    --destructive: 0 75% 65%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 27% 18%;
-    --input: 220 27% 18%;
-    --ring: 217 91% 65%;
+    --border: 220 35% 15%;
+    --input: 220 35% 15%;
+    --ring: 217 91% 68%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 65%), hsl(265 89% 78%));
-    --gradient-success: linear-gradient(135deg, hsl(142 76% 65%), hsl(120 70% 55%));
-    --gradient-warning: linear-gradient(135deg, hsl(45 93% 58%), hsl(38 92% 50%));
-    --gradient-game: linear-gradient(135deg, hsl(217 91% 65%), hsl(265 89% 78%), hsl(142 76% 65%));
-    --gradient-knowledge: linear-gradient(135deg, hsl(217 91% 65%), hsl(265 89% 78%), hsl(45 93% 58%));
-    --gradient-wisdom: linear-gradient(135deg, hsl(265 89% 78%), hsl(280 85% 70%));
-    --gradient-growth: linear-gradient(135deg, hsl(142 76% 65%), hsl(165 80% 55%));
+    --knowledge: 217 91% 68%;
+    --knowledge-foreground: 0 0% 100%;
+    
+    --wisdom: 265 89% 75%;
+    --wisdom-foreground: 0 0% 100%;
+    
+    --intellect: 45 93% 65%;
+    --intellect-foreground: 220 35% 4%;
+    
+    --growth: 142 76% 68%;
+    --growth-foreground: 0 0% 100%;
+    
+    --purity: 0 0% 98%;
+    --purity-foreground: 220 35% 4%;
 
-    --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.3), 0 2px 4px -2px hsl(0 0% 0% / 0.3);
-    --shadow-elevated: 0 10px 15px -3px hsl(0 0% 0% / 0.4), 0 4px 6px -4px hsl(0 0% 0% / 0.4);
-    --shadow-glow: 0 0 25px hsl(217 91% 65% / 0.4);
-    --shadow-purple-glow: 0 0 25px hsl(265 89% 78% / 0.4);
-    --shadow-golden-glow: 0 0 25px hsl(45 93% 58% / 0.4);
-    --shadow-green-glow: 0 0 25px hsl(142 76% 65% / 0.4);
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 68%), hsl(265 89% 75%));
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 68%), hsl(120 70% 60%));
+    --gradient-warning: linear-gradient(135deg, hsl(45 93% 65%), hsl(38 92% 55%));
+    --gradient-game: linear-gradient(135deg, hsl(217 91% 68%), hsl(265 89% 75%), hsl(142 76% 68%));
+    --gradient-knowledge: linear-gradient(135deg, hsl(217 91% 68%), hsl(265 89% 75%), hsl(45 93% 65%));
+    --gradient-wisdom: linear-gradient(135deg, hsl(265 89% 75%), hsl(280 85% 70%));
+    --gradient-growth: linear-gradient(135deg, hsl(142 76% 68%), hsl(165 80% 60%));
+    --gradient-intellect: linear-gradient(135deg, hsl(45 93% 65%), hsl(55 95% 70%));
+    --gradient-purity: linear-gradient(135deg, hsl(0 0% 98%), hsl(220 35% 90%));
+
+    --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.5), 0 2px 4px -2px hsl(0 0% 0% / 0.5);
+    --shadow-elevated: 0 10px 15px -3px hsl(0 0% 0% / 0.6), 0 4px 6px -4px hsl(0 0% 0% / 0.6);
+    --shadow-glow: 0 0 30px hsl(217 91% 68% / 0.6);
+    --shadow-purple-glow: 0 0 30px hsl(265 89% 75% / 0.6);
+    --shadow-golden-glow: 0 0 30px hsl(45 93% 65% / 0.6);
+    --shadow-green-glow: 0 0 30px hsl(142 76% 68% / 0.6);
+    --shadow-white-glow: 0 0 25px hsl(0 0% 98% / 0.3);
 
     --radius: 0.75rem;
 
