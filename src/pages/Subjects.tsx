@@ -1,7 +1,8 @@
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { GameCard } from "@/components/ui/game-card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Calculator, BookOpen, Atom, Clock, Globe, Palette, ArrowLeft, Play, Trophy } from "lucide-react";
+import { ArrowLeft, Calculator, BookOpen, Atom, Clock, Globe, Palette, Languages, Code, Music, Dumbbell, Brain, Users, Microscope, Zap, Leaf, Heart, DollarSign, Scale, Building, Hammer, PenTool, Star, Mountain, TrendingUp, TreePine, Activity, Briefcase, Stethoscope, Wrench, Camera, Gamepad2, Plane } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const subjects = [
@@ -10,177 +11,383 @@ const subjects = [
     name: "Matemática",
     icon: Calculator,
     questions: 250,
-    color: "text-blue-600",
-    description: "Números, equações e geometria",
-    difficulty: "Médio",
-    avgTime: "45s",
-    topScore: 2450,
-    topics: ["Aritmética", "Álgebra", "Geometria", "Estatística"]
+    variant: "knowledge" as const,
+    description: "Números, equações e geometria"
   },
   {
-    id: "portugues",
+    id: "portugues", 
     name: "Português",
     icon: BookOpen,
     questions: 200,
-    color: "text-green-600",
-    description: "Gramática, literatura e redação",
-    difficulty: "Fácil",
-    avgTime: "35s",
-    topScore: 1890,
-    topics: ["Gramática", "Literatura", "Interpretação", "Ortografia"]
+    variant: "growth" as const,
+    description: "Gramática, literatura e redação"
   },
   {
-    id: "ciencias",
-    name: "Ciências",
-    icon: Atom,
+    id: "ingles",
+    name: "Inglês",
+    icon: Languages,
     questions: 180,
-    color: "text-purple-600",
-    description: "Física, química e biologia",
-    difficulty: "Difícil",
-    avgTime: "60s",
-    topScore: 3200,
-    topics: ["Física", "Química", "Biologia", "Astronomia"]
+    variant: "knowledge" as const,
+    description: "Vocabulário, gramática e conversação"
+  },
+  {
+    id: "espanhol",
+    name: "Espanhol", 
+    icon: Languages,
+    questions: 160,
+    variant: "intellect" as const,
+    description: "Vocabulário e cultura hispânica"
+  },
+  {
+    id: "frances",
+    name: "Francês",
+    icon: Languages,
+    questions: 140,
+    variant: "wisdom" as const,
+    description: "Língua francesa e cultura"
+  },
+  {
+    id: "alemao",
+    name: "Alemão",
+    icon: Languages,
+    questions: 135,
+    variant: "knowledge" as const,
+    description: "Gramática alemã e cultura"
+  },
+  {
+    id: "italiano",
+    name: "Italiano",
+    icon: Languages,
+    questions: 130,
+    variant: "purity" as const,
+    description: "Lingua italiana e tradições"
+  },
+  {
+    id: "japones",
+    name: "Japonês",
+    icon: Languages,
+    questions: 125,
+    variant: "wisdom" as const,
+    description: "Kanji, hiragana e cultura"
+  },
+  {
+    id: "chines",
+    name: "Chinês",
+    icon: Languages,
+    questions: 120,
+    variant: "knowledge" as const,
+    description: "Mandarim e ideogramas"
+  },
+  {
+    id: "russo",
+    name: "Russo",
+    icon: Languages,
+    questions: 115,
+    variant: "growth" as const,
+    description: "Cirílico e cultura russa"
+  },
+  {
+    id: "arabe",
+    name: "Árabe",
+    icon: Languages,
+    questions: 110,
+    variant: "wisdom" as const,
+    description: "Escrita árabe e cultura"
+  },
+  {
+    id: "fisica",
+    name: "Física", 
+    icon: Zap,
+    questions: 200,
+    variant: "knowledge" as const,
+    description: "Movimento, energia e universo"
+  },
+  {
+    id: "quimica",
+    name: "Química",
+    icon: Atom,
+    questions: 190,
+    variant: "wisdom" as const,
+    description: "Elementos, reações e moléculas"
+  },
+  {
+    id: "biologia",
+    name: "Biologia",
+    icon: Leaf,
+    questions: 185,
+    variant: "growth" as const,
+    description: "Vida, células e ecossistemas"
   },
   {
     id: "historia",
     name: "História",
     icon: Clock,
-    questions: 150,
-    color: "text-orange-600",
-    description: "Eventos e civilizações",
-    difficulty: "Médio",
-    avgTime: "50s",
-    topScore: 2100,
-    topics: ["Brasil", "Mundial", "Antiguidade", "Moderna"]
+    questions: 175,
+    variant: "intellect" as const,
+    description: "Eventos e civilizações"
   },
   {
     id: "geografia",
     name: "Geografia",
     icon: Globe,
+    questions: 165,
+    variant: "growth" as const,
+    description: "Países, capitais e relevos"
+  },
+  {
+    id: "filosofia",
+    name: "Filosofia",
+    icon: Brain,
+    questions: 150,
+    variant: "wisdom" as const,
+    description: "Pensamento crítico e reflexão"
+  },
+  {
+    id: "sociologia",
+    name: "Sociologia",
+    icon: Users,
     questions: 140,
-    color: "text-teal-600",
-    description: "Países, capitais e relevos",
-    difficulty: "Fácil",
-    avgTime: "40s",
-    topScore: 1750,
-    topics: ["Física", "Humana", "Brasil", "Mundial"]
+    variant: "growth" as const,
+    description: "Sociedade e relações humanas"
+  },
+  {
+    id: "psicologia",
+    name: "Psicologia",
+    icon: Heart,
+    questions: 145,
+    variant: "wisdom" as const,
+    description: "Mente humana e comportamento"
+  },
+  {
+    id: "economia",
+    name: "Economia",
+    icon: DollarSign,
+    questions: 160,
+    variant: "intellect" as const,
+    description: "Mercados, finanças e negócios"
+  },
+  {
+    id: "direito",
+    name: "Direito",
+    icon: Scale,
+    questions: 170,
+    variant: "knowledge" as const,
+    description: "Leis, justiça e constituição"
+  },
+  {
+    id: "medicina",
+    name: "Medicina",
+    icon: Stethoscope,
+    questions: 220,
+    variant: "growth" as const,
+    description: "Anatomia, fisiologia e saúde"
+  },
+  {
+    id: "engenharia",
+    name: "Engenharia",
+    icon: Wrench,
+    questions: 195,
+    variant: "knowledge" as const,
+    description: "Cálculos, estruturas e projetos"
+  },
+  {
+    id: "arquitetura",
+    name: "Arquitetura",
+    icon: Building,
+    questions: 155,
+    variant: "purity" as const,
+    description: "Desenho, urbanismo e design"
+  },
+  {
+    id: "literatura",
+    name: "Literatura",
+    icon: PenTool,
+    questions: 165,
+    variant: "wisdom" as const,
+    description: "Obras clássicas e autores"
+  },
+  {
+    id: "astronomia",
+    name: "Astronomia",
+    icon: Star,
+    questions: 135,
+    variant: "knowledge" as const,
+    description: "Planetas, estrelas e galáxias"
+  },
+  {
+    id: "geologia",
+    name: "Geologia",
+    icon: Mountain,
+    questions: 125,
+    variant: "growth" as const,
+    description: "Rochas, minerais e Terra"
+  },
+  {
+    id: "estatistica",
+    name: "Estatística",
+    icon: TrendingUp,
+    questions: 140,
+    variant: "knowledge" as const,
+    description: "Dados, probabilidade e análise"
+  },
+  {
+    id: "ciencias-ambientais",
+    name: "Ciências Ambientais",
+    icon: TreePine,
+    questions: 130,
+    variant: "growth" as const,
+    description: "Sustentabilidade e ecologia"
+  },
+  {
+    id: "educacao-fisica",
+    name: "Educação Física",
+    icon: Activity,
+    questions: 110,
+    variant: "growth" as const,
+    description: "Esportes, saúde e movimento"
+  },
+  {
+    id: "administracao",
+    name: "Administração",
+    icon: Briefcase,
+    questions: 150,
+    variant: "intellect" as const,
+    description: "Gestão, liderança e negócios"
   },
   {
     id: "artes",
     name: "Artes",
     icon: Palette,
+    questions: 130,
+    variant: "purity" as const,
+    description: "Cultura e expressões artísticas"
+  },
+  {
+    id: "fotografia",
+    name: "Fotografia",
+    icon: Camera,
+    questions: 105,
+    variant: "growth" as const,
+    description: "Técnicas e composição visual"
+  },
+  {
+    id: "musica",
+    name: "Música",
+    icon: Music,
     questions: 120,
-    color: "text-pink-600",
-    description: "Cultura e expressões artísticas",
-    difficulty: "Médio",
-    avgTime: "45s",
-    topScore: 1950,
-    topics: ["Pintura", "Música", "Teatro", "Dança"]
+    variant: "intellect" as const,
+    description: "Teoria musical e história"
+  },
+  {
+    id: "teatro",
+    name: "Teatro",
+    icon: Users,
+    questions: 100,
+    variant: "purity" as const,
+    description: "Performance e dramaturgia"
+  },
+  {
+    id: "design-grafico",
+    name: "Design Gráfico",
+    icon: PenTool,
+    questions: 115,
+    variant: "knowledge" as const,
+    description: "Criação visual e comunicação"
+  },
+  {
+    id: "game-design",
+    name: "Game Design",
+    icon: Gamepad2,
+    questions: 125,
+    variant: "wisdom" as const,
+    description: "Criação e mecânicas de jogos"
+  },
+  {
+    id: "turismo",
+    name: "Turismo",
+    icon: Plane,
+    questions: 95,
+    variant: "growth" as const,
+    description: "Destinos e hospitalidade"
+  },
+  {
+    id: "informatica",
+    name: "Informática",
+    icon: Code,
+    questions: 200,
+    variant: "knowledge" as const,
+    description: "Programação, algoritmos e tecnologia"
   }
 ];
-
-const getDifficultyColor = (difficulty: string) => {
-  switch (difficulty) {
-    case "Fácil": return "bg-success/10 text-success border-success/20";
-    case "Médio": return "bg-warning/10 text-warning border-warning/20";
-    case "Difícil": return "bg-destructive/10 text-destructive border-destructive/20";
-    default: return "bg-muted text-muted-foreground";
-  }
-};
 
 const Subjects = () => {
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <Link to="/">
-            <Button variant="ghost" className="mb-4">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Voltar ao Início
-            </Button>
-          </Link>
-          
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Escolha sua{" "}
-              <span className="bg-gradient-primary bg-clip-text text-transparent">
-                Aventura
-              </span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-              Selecione uma disciplina e teste seus conhecimentos com perguntas 
-              desafiadoras. Cada matéria oferece uma experiência única de aprendizado!
-            </p>
+      <Header />
+      
+      <main className="pt-20">
+        <div className="container mx-auto px-4 py-8">
+          <div className="mb-12">
+            <Link to="/">
+              <Button variant="ghost" className="mb-6">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Voltar ao Início
+              </Button>
+            </Link>
+            
+            <div className="text-center">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                Escolha sua{" "}
+                <span className="bg-gradient-primary bg-clip-text text-transparent">
+                  Aventura
+                </span>
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+                Selecione uma disciplina e teste seus conhecimentos com perguntas 
+                desafiadoras. Cada matéria oferece uma experiência única de aprendizado!
+              </p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {subjects.map((subject) => {
+              const Icon = subject.icon;
+              return (
+                <GameCard
+                  key={subject.id}
+                  variant={subject.variant}
+                  className="p-6 hover:cursor-pointer group"
+                >
+                  <div className="text-center space-y-4">
+                    <div className="mx-auto w-16 h-16 bg-background/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform backdrop-blur-sm">
+                      <Icon className="h-8 w-8" />
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-xl font-bold mb-2">{subject.name}</h3>
+                      <p className="text-current/80 text-sm mb-4">
+                        {subject.description}
+                      </p>
+                      <div className="flex justify-between items-center text-sm text-current/70 mb-4">
+                        <span>{subject.questions} perguntas</span>
+                        <span>Nível: Médio</span>
+                      </div>
+                    </div>
+
+                    <Link to={`/game/${subject.id}`}>
+                      <Button variant="secondary" className="w-full bg-background/20 hover:bg-background/30 backdrop-blur-sm">
+                        Jogar Agora
+                      </Button>
+                    </Link>
+                  </div>
+                </GameCard>
+              );
+            })}
           </div>
         </div>
+      </main>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {subjects.map((subject) => {
-            const Icon = subject.icon;
-            return (
-              <GameCard
-                key={subject.id}
-                variant="default"
-                className="p-6 hover:cursor-pointer group h-full"
-              >
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <div className="w-16 h-16 bg-gradient-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Icon className="h-8 w-8 text-primary-foreground" />
-                    </div>
-                    <Badge className={getDifficultyColor(subject.difficulty)}>
-                      {subject.difficulty}
-                    </Badge>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-2xl font-bold mb-2">{subject.name}</h3>
-                    <p className="text-muted-foreground mb-4">
-                      {subject.description}
-                    </p>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Perguntas</span>
-                      <span className="font-semibold">{subject.questions}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Tempo médio</span>
-                      <span className="font-semibold">{subject.avgTime}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground flex items-center gap-1">
-                        <Trophy className="h-3 w-3" />
-                        Recorde
-                      </span>
-                      <span className="font-semibold text-primary">{subject.topScore} pts</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-muted-foreground">Tópicos:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {subject.topics.map((topic) => (
-                        <Badge key={topic} variant="secondary" className="text-xs">
-                          {topic}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <Link to={`/game/${subject.id}`}>
-                    <Button variant="game" className="w-full text-lg py-6">
-                      <Play className="h-5 w-5 mr-2" />
-                      Jogar {subject.name}
-                    </Button>
-                  </Link>
-                </div>
-              </GameCard>
-            );
-          })}
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 };
