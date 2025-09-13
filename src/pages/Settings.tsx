@@ -164,6 +164,11 @@ const Settings = () => {
             </div>
             
             <div className="space-y-3">
+              <Link to="/profile">
+                <Button variant="outline" className="w-full justify-start">
+                  Ver Meu Perfil
+                </Button>
+              </Link>
               <Button variant="outline" className="w-full justify-start">
                 Exportar Progresso
               </Button>

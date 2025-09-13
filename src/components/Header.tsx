@@ -36,7 +36,7 @@ const Header = () => {
             </nav>
 
             <div className="flex items-center space-x-2">
-              <Link to="/settings">
+              <Link to="/profile">
                 <Button variant="ghost" size="icon">
                   <Trophy className="h-4 w-4" />
                 </Button>

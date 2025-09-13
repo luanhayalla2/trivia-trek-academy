@@ -60,18 +60,22 @@ const Hero = () => {
                 className="w-64 h-64 mx-auto mb-6 object-contain"
               />
               <div className="space-y-4">
-                <GameCard className="p-4 flex items-center justify-between bg-background/20 backdrop-blur-sm">
-                  <div className="flex items-center space-x-3">
-                    <Trophy className="h-6 w-6 text-warning" />
-                    <span className="font-semibold">Recorde: 2.450 pts</span>
-                  </div>
-                </GameCard>
-                <GameCard className="p-4 flex items-center justify-between bg-background/20 backdrop-blur-sm">
-                  <div className="flex items-center space-x-3">
-                    <Users className="h-6 w-6 text-success" />
-                    <span className="font-semibold">Jogadores Online: 127</span>
-                  </div>
-                </GameCard>
+                <Link to="/ranking">
+                  <GameCard className="p-4 flex items-center justify-between bg-background/20 backdrop-blur-sm hover:bg-background/30 transition-colors cursor-pointer">
+                    <div className="flex items-center space-x-3">
+                      <Trophy className="h-6 w-6 text-warning" />
+                      <span className="font-semibold">Recorde: 2.450 pts</span>
+                    </div>
+                  </GameCard>
+                </Link>
+                <Link to="/ranking">
+                  <GameCard className="p-4 flex items-center justify-between bg-background/20 backdrop-blur-sm hover:bg-background/30 transition-colors cursor-pointer">
+                    <div className="flex items-center space-x-3">
+                      <Users className="h-6 w-6 text-success" />
+                      <span className="font-semibold">Jogadores Online: 127</span>
+                    </div>
+                  </GameCard>
+                </Link>
               </div>
             </GameCard>
           </div>
