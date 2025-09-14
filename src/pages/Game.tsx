@@ -600,15 +600,872 @@ const questionsDB = {
       correct: 0,
       difficulty: "medium"
     }
+  ],
+  alemao: [
+    {
+      id: 1,
+      question: "Como se diz 'hello' em alemão?",
+      options: ["Guten Tag", "Auf Wiedersehen", "Danke", "Bitte"],
+      correct: 0,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "Qual é o artigo definido masculino?",
+      options: ["die", "der", "das", "den"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "Como se diz 'obrigado'?",
+      options: ["Bitte", "Entschuldigung", "Danke", "Tschüss"],
+      correct: 2,
+      difficulty: "easy"
+    },
+    {
+      id: 4,
+      question: "Complete: Ich _____ Deutsch",
+      options: ["spreche", "sprichst", "spricht", "sprechen"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "O que significa 'Haus'?",
+      options: ["Carro", "Casa", "Escola", "Trabalho"],
+      correct: 1,
+      difficulty: "easy"
+    }
+  ],
+  italiano: [
+    {
+      id: 1,
+      question: "Come si dice 'buongiorno'?",
+      options: ["Boa tarde", "Bom dia", "Boa noite", "Tchau"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "Qual è l'articolo femminile?",
+      options: ["il", "lo", "la", "gli"],
+      correct: 2,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "Complete: Io _____ italiano",
+      options: ["parla", "parli", "parlo", "parlano"],
+      correct: 2,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "Che cosa significa 'grazie'?",
+      options: ["Por favor", "Obrigado", "Desculpe", "De nada"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 5,
+      question: "Come si dice 'acqua'?",
+      options: ["Água", "Vinho", "Leite", "Café"],
+      correct: 0,
+      difficulty: "easy"
+    }
+  ],
+  japones: [
+    {
+      id: 1,
+      question: "Como se diz 'olá' em japonês?",
+      options: ["Sayonara", "Konnichiwa", "Arigato", "Sumimasen"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "Quantos sistemas de escrita tem o japonês?",
+      options: ["1", "2", "3", "4"],
+      correct: 2,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que significa 'arigato'?",
+      options: ["Olá", "Tchau", "Obrigado", "Desculpe"],
+      correct: 2,
+      difficulty: "easy"
+    },
+    {
+      id: 4,
+      question: "Qual sistema é usado para palavras estrangeiras?",
+      options: ["Hiragana", "Katakana", "Kanji", "Romaji"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "Como se diz 'sim'?",
+      options: ["Ie", "Hai", "Domo", "Mata"],
+      correct: 1,
+      difficulty: "easy"
+    }
+  ],
+  chines: [
+    {
+      id: 1,
+      question: "Como se diz 'olá' em mandarim?",
+      options: ["Nǐ hǎo", "Xièxiè", "Zàijiàn", "Duìbuqǐ"],
+      correct: 0,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "Quantos tons tem o mandarim?",
+      options: ["3", "4", "5", "6"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que significa 'xièxiè'?",
+      options: ["Olá", "Tchau", "Obrigado", "Desculpe"],
+      correct: 2,
+      difficulty: "easy"
+    },
+    {
+      id: 4,
+      question: "Como se diz 'água'?",
+      options: ["Shuǐ", "Chá", "Niú", "Mǐ"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "Qual é o caractere para 'pessoa'?",
+      options: ["人", "水", "火", "土"],
+      correct: 0,
+      difficulty: "medium"
+    }
+  ],
+  russo: [
+    {
+      id: 1,
+      question: "Como se diz 'olá' em russo?",
+      options: ["Привет", "Спасибо", "Пока", "Извините"],
+      correct: 0,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "Quantas letras tem o alfabeto cirílico?",
+      options: ["30", "33", "35", "28"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que significa 'спасибо'?",
+      options: ["Olá", "Obrigado", "Tchau", "Desculpe"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 4,
+      question: "Como se diz 'sim'?",
+      options: ["Нет", "Да", "Может", "Хорошо"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 5,
+      question: "Qual é a capital da Rússia?",
+      options: ["Москва", "Петербург", "Киев", "Минск"],
+      correct: 0,
+      difficulty: "medium"
+    }
+  ],
+  arabe: [
+    {
+      id: 1,
+      question: "Como se diz 'paz' em árabe?",
+      options: ["السلام", "شكرا", "مرحبا", "وداعا"],
+      correct: 0,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "Em que direção se escreve árabe?",
+      options: ["Esquerda para direita", "Direita para esquerda", "Cima para baixo", "Baixo para cima"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 3,
+      question: "O que significa 'شكرا'?",
+      options: ["Olá", "Obrigado", "Tchau", "Desculpe"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 4,
+      question: "Quantas letras tem o alfabeto árabe?",
+      options: ["26", "28", "30", "32"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "Como se diz 'água'?",
+      options: ["ماء", "نار", "هواء", "تراب"],
+      correct: 0,
+      difficulty: "medium"
+    }
+  ],
+  psicologia: [
+    {
+      id: 1,
+      question: "Quem é considerado o pai da psicanálise?",
+      options: ["Carl Jung", "Sigmund Freud", "B.F. Skinner", "Jean Piaget"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "O que estuda a psicologia cognitiva?",
+      options: ["Comportamento", "Processos mentais", "Emoções", "Personalidade"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que é o inconsciente segundo Freud?",
+      options: ["Memória perdida", "Parte da mente fora da consciência", "Instinto", "Reflexo"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "Quantos estágios tem o desenvolvimento cognitivo de Piaget?",
+      options: ["3", "4", "5", "6"],
+      correct: 1,
+      difficulty: "hard"
+    },
+    {
+      id: 5,
+      question: "O que é behaviorismo?",
+      options: ["Estudo da consciência", "Estudo do comportamento", "Estudo da personalidade", "Estudo das emoções"],
+      correct: 1,
+      difficulty: "medium"
+    }
+  ],
+  economia: [
+    {
+      id: 1,
+      question: "O que é PIB?",
+      options: ["Produto Interno Bruto", "Produto Internacional Básico", "Programa de Investimento Básico", "Plano Interno de Base"],
+      correct: 0,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "O que acontece com o preço quando a demanda aumenta?",
+      options: ["Diminui", "Aumenta", "Fica igual", "Varia aleatoriamente"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que é inflação?",
+      options: ["Queda nos preços", "Aumento geral nos preços", "Estabilidade econômica", "Crescimento do PIB"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 4,
+      question: "Quem criou a teoria da 'mão invisível'?",
+      options: ["Karl Marx", "Adam Smith", "John Keynes", "Milton Friedman"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "O que é taxa de juros?",
+      options: ["Custo do dinheiro", "Preço das ações", "Valor da moeda", "Índice de inflação"],
+      correct: 0,
+      difficulty: "medium"
+    }
+  ],
+  direito: [
+    {
+      id: 1,
+      question: "Qual é a lei máxima do país?",
+      options: ["Código Civil", "Constituição", "Código Penal", "CLT"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "Quantos poderes tem o Estado brasileiro?",
+      options: ["2", "3", "4", "5"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 3,
+      question: "O que é habeas corpus?",
+      options: ["Direito de propriedade", "Garantia de liberdade", "Direito de voto", "Liberdade de expressão"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "Qual princípio diz que 'ninguém é obrigado a fazer prova contra si'?",
+      options: ["Contraditório", "Ampla defesa", "Não autoincriminação", "Presunção de inocência"],
+      correct: 2,
+      difficulty: "hard"
+    },
+    {
+      id: 5,
+      question: "O que são direitos fundamentais?",
+      options: ["Direitos básicos da pessoa", "Leis específicas", "Normas administrativas", "Regulamentos"],
+      correct: 0,
+      difficulty: "medium"
+    }
+  ],
+  medicina: [
+    {
+      id: 1,
+      question: "Qual é o osso mais longo do corpo humano?",
+      options: ["Tíbia", "Fêmur", "Úmero", "Rádio"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "Quantas câmaras tem o coração?",
+      options: ["2", "3", "4", "5"],
+      correct: 2,
+      difficulty: "easy"
+    },
+    {
+      id: 3,
+      question: "O que é hipertensão?",
+      options: ["Pressão alta", "Pressão baixa", "Arritmia", "Insuficiência"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "Qual órgão produz insulina?",
+      options: ["Fígado", "Pâncreas", "Rim", "Estômago"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "O que é anatomia?",
+      options: ["Estudo das funções", "Estudo da estrutura", "Estudo das doenças", "Estudo dos medicamentos"],
+      correct: 1,
+      difficulty: "easy"
+    }
+  ],
+  engenharia: [
+    {
+      id: 1,
+      question: "O que é resistência de materiais?",
+      options: ["Dureza", "Capacidade de suportar esforços", "Peso", "Densidade"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 2,
+      question: "Qual é a unidade de pressão no SI?",
+      options: ["Newton", "Pascal", "Joule", "Watt"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que é momento fletor?",
+      options: ["Força de torção", "Esforço de flexão", "Compressão", "Tração"],
+      correct: 1,
+      difficulty: "hard"
+    },
+    {
+      id: 4,
+      question: "Qual material é mais usado na construção civil?",
+      options: ["Aço", "Madeira", "Concreto", "Alumínio"],
+      correct: 2,
+      difficulty: "easy"
+    },
+    {
+      id: 5,
+      question: "O que é CAD?",
+      options: ["Computer Aided Design", "Computer Analysis Data", "Control And Design", "Calculate And Draw"],
+      correct: 0,
+      difficulty: "medium"
+    }
+  ],
+  arquitetura: [
+    {
+      id: 1,
+      question: "Quem projetou Brasília?",
+      options: ["Oscar Niemeyer", "Lúcio Costa", "Paulo Mendes da Rocha", "Ruy Ohtake"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 2,
+      question: "O que é planta baixa?",
+      options: ["Vista aérea", "Corte horizontal", "Elevação", "Perspectiva"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 3,
+      question: "Qual movimento arquitetônico Le Corbusier representou?",
+      options: ["Barroco", "Modernismo", "Gótico", "Renascimento"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "O que é sustentabilidade na arquitetura?",
+      options: ["Beleza estética", "Eficiência energética", "Baixo custo", "Rapidez na construção"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "O que são pilotis?",
+      options: ["Colunas de sustentação", "Janelas grandes", "Telhados planos", "Paredes curvas"],
+      correct: 0,
+      difficulty: "hard"
+    }
+  ],
+  literatura: [
+    {
+      id: 1,
+      question: "Quem escreveu 'Dom Casmurro'?",
+      options: ["José de Alencar", "Machado de Assis", "Clarice Lispector", "Guimarães Rosa"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "Qual movimento literário caracteriza o século XIX?",
+      options: ["Romantismo", "Barroco", "Modernismo", "Classicismo"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que é um soneto?",
+      options: ["Poema de 12 versos", "Poema de 14 versos", "Prosa poética", "Teatro em versos"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "Quem escreveu 'O Cortiço'?",
+      options: ["Aluísio Azevedo", "Raul Pompéia", "Adolfo Caminha", "Júlio Ribeiro"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "O que é narrador onisciente?",
+      options: ["Que participa da história", "Que sabe tudo", "Que conta em primeira pessoa", "Que é personagem"],
+      correct: 1,
+      difficulty: "medium"
+    }
+  ],
+  astronomia: [
+    {
+      id: 1,
+      question: "Qual é o planeta mais próximo do Sol?",
+      options: ["Vênus", "Terra", "Mercúrio", "Marte"],
+      correct: 2,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "Quantas luas tem Júpiter?",
+      options: ["Mais de 70", "12", "4", "1"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que é uma supernova?",
+      options: ["Nascimento de estrela", "Explosão de estrela", "Planeta gigante", "Buraco negro"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "Qual é a estrela mais próxima da Terra?",
+      options: ["Próxima Centauri", "Sol", "Sirius", "Vega"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 5,
+      question: "O que é Via Láctea?",
+      options: ["Constelação", "Nossa galáxia", "Nebulosa", "Aglomerado"],
+      correct: 1,
+      difficulty: "easy"
+    }
+  ],
+  geologia: [
+    {
+      id: 1,
+      question: "O que são rochas ígneas?",
+      options: ["Formadas por pressão", "Formadas por calor", "Formadas por sedimentação", "Formadas por erosão"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 2,
+      question: "Qual é o mineral mais duro?",
+      options: ["Quartzo", "Diamante", "Topázio", "Safira"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 3,
+      question: "O que causa os terremotos?",
+      options: ["Movimento das placas tectônicas", "Erosão", "Vulcões", "Marés"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "Quantos tipos básicos de rochas existem?",
+      options: ["2", "3", "4", "5"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "O que é intemperismo?",
+      options: ["Formação de rochas", "Decomposição de rochas", "Cristalização", "Sedimentação"],
+      correct: 1,
+      difficulty: "hard"
+    }
+  ],
+  estatistica: [
+    {
+      id: 1,
+      question: "O que é média aritmética?",
+      options: ["Valor central", "Soma dividida pelo número de elementos", "Valor mais frequente", "Diferença entre maior e menor"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "O que é desvio padrão?",
+      options: ["Medida de dispersão", "Medida central", "Valor máximo", "Valor mínimo"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "Em uma distribuição normal, quantos % estão a 1 desvio da média?",
+      options: ["50%", "68%", "95%", "99%"],
+      correct: 1,
+      difficulty: "hard"
+    },
+    {
+      id: 4,
+      question: "O que é probabilidade?",
+      options: ["Certeza de ocorrência", "Chance de ocorrência", "Número de eventos", "Frequência absoluta"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 5,
+      question: "Qual é a probabilidade de sair cara em uma moeda?",
+      options: ["0.25", "0.5", "0.75", "1"],
+      correct: 1,
+      difficulty: "easy"
+    }
+  ],
+  "ciencias-ambientais": [
+    {
+      id: 1,
+      question: "O que é sustentabilidade?",
+      options: ["Crescimento econômico", "Desenvolvimento que não compromete o futuro", "Preservação total", "Industrialização"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "O que causa o efeito estufa?",
+      options: ["Gases na atmosfera", "Desmatamento", "Poluição da água", "Erosão do solo"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que é biodiversidade?",
+      options: ["Variedade de vida", "Clima tropical", "Solo fértil", "Água limpa"],
+      correct: 0,
+      difficulty: "easy"
+    },
+    {
+      id: 4,
+      question: "Qual gás é o principal responsável pelo aquecimento global?",
+      options: ["Oxigênio", "Nitrogênio", "Dióxido de carbono", "Ozônio"],
+      correct: 2,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "O que é reciclagem?",
+      options: ["Reaproveitamento de materiais", "Queima de lixo", "Descarte adequado", "Redução de consumo"],
+      correct: 0,
+      difficulty: "easy"
+    }
+  ],
+  administracao: [
+    {
+      id: 1,
+      question: "O que são as funções administrativas básicas?",
+      options: ["Comprar, vender, lucrar", "Planejar, organizar, dirigir, controlar", "Produzir, distribuir, consumir", "Criar, inovar, competir"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 2,
+      question: "O que é liderança?",
+      options: ["Dar ordens", "Influenciar pessoas para objetivos", "Ser chefe", "Tomar decisões"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que é marketing?",
+      options: ["Vendas", "Propaganda", "Satisfação do cliente", "Preço baixo"],
+      correct: 2,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "O que é organograma?",
+      options: ["Gráfico de vendas", "Estrutura organizacional", "Fluxo de caixa", "Plano de negócios"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 5,
+      question: "O que é planejamento estratégico?",
+      options: ["Plano diário", "Visão de longo prazo", "Orçamento mensal", "Relatório de vendas"],
+      correct: 1,
+      difficulty: "medium"
+    }
+  ],
+  fotografia: [
+    {
+      id: 1,
+      question: "O que é abertura do diafragma?",
+      options: ["Velocidade da foto", "Quantidade de luz", "Foco da imagem", "Cor da foto"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 2,
+      question: "O que significa ISO em fotografia?",
+      options: ["Sensibilidade à luz", "Tamanho da foto", "Qualidade da lente", "Tipo de câmera"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que é regra dos terços?",
+      options: ["Técnica de composição", "Tipo de lente", "Modo de foco", "Configuração de cor"],
+      correct: 0,
+      difficulty: "easy"
+    },
+    {
+      id: 4,
+      question: "O que é profundidade de campo?",
+      options: ["Brilho da foto", "Área em foco", "Tamanho da imagem", "Velocidade de captura"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "Para que serve o tripé?",
+      options: ["Aumentar zoom", "Estabilizar câmera", "Melhorar cor", "Reduzir ruído"],
+      correct: 1,
+      difficulty: "easy"
+    }
+  ],
+  teatro: [
+    {
+      id: 1,
+      question: "O que é dramaturgia?",
+      options: ["Arte de representar", "Arte de escrever peças", "Arte de dirigir", "Arte de cenografia"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 2,
+      question: "Quantos atos tem uma peça clássica?",
+      options: ["2", "3", "4", "5"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que é monólogo?",
+      options: ["Fala de dois personagens", "Fala de um personagem", "Música de fundo", "Mudança de cenário"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 4,
+      question: "Quem foi Shakespeare?",
+      options: ["Ator inglês", "Dramaturgo inglês", "Diretor francês", "Crítico alemão"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 5,
+      question: "O que é catarse no teatro?",
+      options: ["Purificação emocional", "Mudança de ato", "Entrada de personagem", "Final da peça"],
+      correct: 0,
+      difficulty: "hard"
+    }
+  ],
+  "design-grafico": [
+    {
+      id: 1,
+      question: "O que são cores primárias?",
+      options: ["Vermelho, verde, azul", "Vermelho, amarelo, azul", "Preto, branco, cinza", "Rosa, roxo, laranja"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "O que é tipografia?",
+      options: ["Arte das cores", "Arte das fontes", "Arte das formas", "Arte das imagens"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 3,
+      question: "O que significa RGB?",
+      options: ["Red Green Blue", "Real Good Basic", "Rapid Graphics Base", "Rich Graphic Bold"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "O que é hierarquia visual?",
+      options: ["Ordem de importância", "Paleta de cores", "Tipo de fonte", "Tamanho da imagem"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "Para que serve o espaço em branco?",
+      options: ["Economizar tinta", "Criar respiração visual", "Reduzir custos", "Facilitar impressão"],
+      correct: 1,
+      difficulty: "medium"
+    }
+  ],
+  "game-design": [
+    {
+      id: 1,
+      question: "O que é gameplay?",
+      options: ["História do jogo", "Mecânicas de jogo", "Gráficos do jogo", "Som do jogo"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "O que é level design?",
+      options: ["Design de personagens", "Design de fases", "Design de interface", "Design de áudio"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 3,
+      question: "O que são mecânicas de jogo?",
+      options: ["Gráficos 3D", "Regras e sistemas", "Trilha sonora", "História narrativa"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "O que é balanceamento?",
+      options: ["Ajustar dificuldade", "Criar gráficos", "Compor música", "Escrever história"],
+      correct: 0,
+      difficulty: "medium"
+    },
+    {
+      id: 5,
+      question: "O que é prototipagem?",
+      options: ["Versão final", "Versão de teste", "Marketing do jogo", "Venda do jogo"],
+      correct: 1,
+      difficulty: "easy"
+    }
+  ],
+  turismo: [
+    {
+      id: 1,
+      question: "O que é turismo sustentável?",
+      options: ["Turismo barato", "Turismo que preserva o ambiente", "Turismo de luxo", "Turismo nacional"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 2,
+      question: "O que é alta temporada?",
+      options: ["Período de menor movimento", "Período de maior movimento", "Período de chuvas", "Período de frio"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 3,
+      question: "O que é ecoturismo?",
+      options: ["Turismo urbano", "Turismo na natureza", "Turismo histórico", "Turismo gastronômico"],
+      correct: 1,
+      difficulty: "medium"
+    },
+    {
+      id: 4,
+      question: "O que faz um guia de turismo?",
+      options: ["Vende passagens", "Conduz e informa turistas", "Administra hotéis", "Cozinha pratos típicos"],
+      correct: 1,
+      difficulty: "easy"
+    },
+    {
+      id: 5,
+      question: "O que é patrimônio cultural?",
+      options: ["Bens naturais", "Bens históricos e culturais", "Hotéis antigos", "Restaurantes típicos"],
+      correct: 1,
+      difficulty: "medium"
+    }
   ]
 };
 
 const subjectNames = {
   matematica: "Matemática",
-  portugues: "Português",
+  portugues: "Português", 
   ingles: "Inglês",
   espanhol: "Espanhol",
   frances: "Francês",
+  alemao: "Alemão",
+  italiano: "Italiano",
+  japones: "Japonês",
+  chines: "Chinês",
+  russo: "Russo",
+  arabe: "Árabe",
   fisica: "Física",
   quimica: "Química",
   biologia: "Biologia",
@@ -616,9 +1473,26 @@ const subjectNames = {
   geografia: "Geografia",
   filosofia: "Filosofia",
   sociologia: "Sociologia",
-  artes: "Artes",
-  musica: "Música",
+  psicologia: "Psicologia",
+  economia: "Economia",
+  direito: "Direito",
+  medicina: "Medicina",
+  engenharia: "Engenharia",
+  arquitetura: "Arquitetura",
+  literatura: "Literatura",
+  astronomia: "Astronomia",
+  geologia: "Geologia",
+  estatistica: "Estatística",
+  "ciencias-ambientais": "Ciências Ambientais",
   "educacao-fisica": "Educação Física",
+  administracao: "Administração",
+  artes: "Artes",
+  fotografia: "Fotografia",
+  musica: "Música",
+  teatro: "Teatro",
+  "design-grafico": "Design Gráfico",
+  "game-design": "Game Design",
+  turismo: "Turismo",
   informatica: "Informática"
 };
 
