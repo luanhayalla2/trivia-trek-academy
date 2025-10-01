@@ -23,7 +23,7 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-              <Link to="/subjects">
+              <Link to="/auth">
                 <Button variant="game" size="lg" className="text-lg px-8">
                   <Play className="h-5 w-5" />
                   Começar a Jogar
