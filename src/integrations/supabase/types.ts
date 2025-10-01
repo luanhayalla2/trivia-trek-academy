@@ -14,7 +14,246 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      achievements: {
+        Row: {
+          achievement_type: string
+          description: string | null
+          earned_at: string | null
+          id: string
+          title: string
+          user_id: string | null
+        }
+        Insert: {
+          achievement_type: string
+          description?: string | null
+          earned_at?: string | null
+          id?: string
+          title: string
+          user_id?: string | null
+        }
+        Update: {
+          achievement_type?: string
+          description?: string | null
+          earned_at?: string | null
+          id?: string
+          title?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "achievements_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lessons: {
+        Row: {
+          content: string
+          created_at: string | null
+          difficulty: Database["public"]["Enums"]["difficulty_level"]
+          id: string
+          order_index: number
+          subject_id: string
+          title: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          difficulty: Database["public"]["Enums"]["difficulty_level"]
+          id?: string
+          order_index: number
+          subject_id: string
+          title: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          difficulty?: Database["public"]["Enums"]["difficulty_level"]
+          id?: string
+          order_index?: number
+          subject_id?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          accuracy: number | null
+          active_ship: Database["public"]["Enums"]["ship_type"] | null
+          avatar_url: string | null
+          best_streak: number | null
+          coins: number | null
+          created_at: string | null
+          current_streak: number | null
+          gems: number | null
+          global_rank: number | null
+          id: string
+          level: number | null
+          questions_answered: number | null
+          total_xp: number | null
+          updated_at: string | null
+          username: string
+          xp: number | null
+        }
+        Insert: {
+          accuracy?: number | null
+          active_ship?: Database["public"]["Enums"]["ship_type"] | null
+          avatar_url?: string | null
+          best_streak?: number | null
+          coins?: number | null
+          created_at?: string | null
+          current_streak?: number | null
+          gems?: number | null
+          global_rank?: number | null
+          id: string
+          level?: number | null
+          questions_answered?: number | null
+          total_xp?: number | null
+          updated_at?: string | null
+          username: string
+          xp?: number | null
+        }
+        Update: {
+          accuracy?: number | null
+          active_ship?: Database["public"]["Enums"]["ship_type"] | null
+          avatar_url?: string | null
+          best_streak?: number | null
+          coins?: number | null
+          created_at?: string | null
+          current_streak?: number | null
+          gems?: number | null
+          global_rank?: number | null
+          id?: string
+          level?: number | null
+          questions_answered?: number | null
+          total_xp?: number | null
+          updated_at?: string | null
+          username?: string
+          xp?: number | null
+        }
+        Relationships: []
+      }
+      questions: {
+        Row: {
+          correct_answer: number
+          created_at: string | null
+          difficulty: Database["public"]["Enums"]["difficulty_level"]
+          explanation: string
+          id: string
+          lesson_id: string | null
+          options: Json
+          question_text: string
+          time_limit: number | null
+        }
+        Insert: {
+          correct_answer: number
+          created_at?: string | null
+          difficulty: Database["public"]["Enums"]["difficulty_level"]
+          explanation: string
+          id?: string
+          lesson_id?: string | null
+          options: Json
+          question_text: string
+          time_limit?: number | null
+        }
+        Update: {
+          correct_answer?: number
+          created_at?: string | null
+          difficulty?: Database["public"]["Enums"]["difficulty_level"]
+          explanation?: string
+          id?: string
+          lesson_id?: string | null
+          options?: Json
+          question_text?: string
+          time_limit?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "questions_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ships: {
+        Row: {
+          id: string
+          purchased_at: string | null
+          ship_type: Database["public"]["Enums"]["ship_type"]
+          user_id: string | null
+        }
+        Insert: {
+          id?: string
+          purchased_at?: string | null
+          ship_type: Database["public"]["Enums"]["ship_type"]
+          user_id?: string | null
+        }
+        Update: {
+          id?: string
+          purchased_at?: string | null
+          ship_type?: Database["public"]["Enums"]["ship_type"]
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ships_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_progress: {
+        Row: {
+          completed: boolean | null
+          completed_at: string | null
+          id: string
+          lesson_id: string | null
+          score: number | null
+          time_taken: number | null
+          user_id: string | null
+        }
+        Insert: {
+          completed?: boolean | null
+          completed_at?: string | null
+          id?: string
+          lesson_id?: string | null
+          score?: number | null
+          time_taken?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          completed?: boolean | null
+          completed_at?: string | null
+          id?: string
+          lesson_id?: string | null
+          score?: number | null
+          time_taken?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_progress_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +262,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      difficulty_level: "facil" | "medio" | "dificil" | "avancado"
+      ship_type:
+        | "explorador"
+        | "velocista"
+        | "erudito"
+        | "guerreiro"
+        | "mistico"
+        | "cosmico"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +396,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      difficulty_level: ["facil", "medio", "dificil", "avancado"],
+      ship_type: [
+        "explorador",
+        "velocista",
+        "erudito",
+        "guerreiro",
+        "mistico",
+        "cosmico",
+      ],
+    },
   },
 } as const
