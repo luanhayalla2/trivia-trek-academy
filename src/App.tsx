@@ -18,6 +18,8 @@ import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import LessonFlow from "./pages/LessonFlow";
 import SubjectDetail from "./pages/SubjectDetail";
+import Shop from "./pages/Shop";
+import Chatbot from "./components/Chatbot";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
+          <Chatbot />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
@@ -38,6 +41,7 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/ranking" element={<Ranking />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/shop" element={<Shop />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />

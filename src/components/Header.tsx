@@ -1,9 +1,35 @@
 import { Button } from "@/components/ui/button";
 import { GameCard } from "@/components/ui/game-card";
-import { BookOpen, Trophy, User } from "lucide-react";
+import { BookOpen, Trophy, User, Store, Gem } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Header = () => {
+  const { user, signOut } = useAuth();
+  const [gems, setGems] = useState(0);
+
+  useEffect(() => {
+    if (user) {
+      loadGems();
+    }
+  }, [user]);
+
+  const loadGems = async () => {
+    if (!user) return;
+    
+    const { data } = await supabase
+      .from("profiles")
+      .select("gems")
+      .eq("id", user.id)
+      .single();
+
+    if (data) {
+      setGems(data.gems);
+    }
+  };
+
   return (
     <header className="w-full border-b bg-card/50 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-4">
@@ -27,6 +53,9 @@ const Header = () => {
               <Link to="/subjects" className="text-foreground hover:text-primary transition-colors">
                 Disciplinas
               </Link>
+              <Link to="/shop" className="text-foreground hover:text-primary transition-colors">
+                Loja
+              </Link>
               <Link to="/ranking" className="text-foreground hover:text-primary transition-colors">
                 Ranking
               </Link>
@@ -36,22 +65,36 @@ const Header = () => {
             </nav>
 
             <div className="flex items-center space-x-2">
-              <Link to="/profile">
-                <Button variant="ghost" size="icon">
-                  <Trophy className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link to="/login">
-                <Button variant="outline" size="sm" className="border-primary/50">
-                  Entrar
-                </Button>
-              </Link>
-              <Link to="/register">
-                <Button size="sm" className="bg-gradient-knowledge shadow-glow">
-                  <User className="h-4 w-4 mr-1" />
-                  Cadastrar
-                </Button>
-              </Link>
+              {user ? (
+                <>
+                  <div className="flex items-center gap-1 px-3 py-1 bg-primary/10 rounded-full">
+                    <Gem className="h-4 w-4 text-primary" />
+                    <span className="font-bold">{gems}</span>
+                  </div>
+                  <Link to="/profile">
+                    <Button variant="ghost" size="icon">
+                      <User className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                  <Button variant="outline" size="sm" onClick={signOut}>
+                    Sair
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/auth">
+                    <Button variant="outline" size="sm" className="border-primary/50">
+                      Entrar
+                    </Button>
+                  </Link>
+                  <Link to="/auth">
+                    <Button size="sm" className="bg-gradient-knowledge shadow-glow">
+                      <User className="h-4 w-4 mr-1" />
+                      Cadastrar
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
         </div>
       </div>
