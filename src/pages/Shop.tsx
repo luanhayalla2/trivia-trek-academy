@@ -20,47 +20,47 @@ const ships = [
     description: "Nave básica para iniciantes",
     cost: 0,
     color: "success",
-    features: ["Velocidade padrão", "Design clássico", "Ideal para começar"]
+    features: ["Nave básica", "Ideal para começar", "Velocidade padrão"]
   },
   {
     type: "velocista" as const,
     name: "⚡ Velocista",
-    description: "Nave ultra-rápida",
-    cost: 100,
+    description: "+20% tempo nas perguntas",
+    cost: 50,
     color: "warning",
-    features: ["Velocidade máxima", "Resposta rápida", "Boost de tempo"]
+    features: ["+20% tempo extra", "Resposta mais ágil", "Melhor desempenho"]
   },
   {
     type: "erudito" as const,
     name: "📚 Erudito",
-    description: "Nave do conhecimento",
-    cost: 150,
+    description: "Dicas em perguntas avançadas",
+    cost: 100,
     color: "intellect",
-    features: ["Boost em todas matérias", "Biblioteca integrada", "XP extra"]
+    features: ["Dicas exclusivas", "Auxílio em questões difíceis", "Conhecimento ampliado"]
   },
   {
     type: "guerreiro" as const,
     name: "⚔️ Guerreiro",
-    description: "Nave de combate aos desafios",
-    cost: 120,
+    description: "-50% penalidade por erro",
+    cost: 150,
     color: "knowledge",
-    features: ["Resistência extra", "Força em questões difíceis", "Escudo protetor"]
+    features: ["Metade da penalidade", "Mais chances de acertar", "Proteção contra erros"]
   },
   {
     type: "mistico" as const,
     name: "🔮 Místico",
-    description: "Nave mágica e misteriosa",
-    cost: 130,
+    description: "Adaptação mais rápida da dificuldade",
+    cost: 200,
     color: "wisdom",
-    features: ["Intuição aprimorada", "Pistas especiais", "Sorte aumentada"]
+    features: ["IA adaptativa aprimorada", "Ajuste dinâmico", "Progressão otimizada"]
   },
   {
     type: "cosmico" as const,
     name: "🌌 Cósmico",
-    description: "Nave suprema do universo",
-    cost: 200,
+    description: "Todos os bônus combinados",
+    cost: 500,
     color: "subject",
-    features: ["Todos os boosts", "Design espacial", "Prestígio máximo"]
+    features: ["Todos os benefícios", "Poder supremo", "Prestígio máximo"]
   }
 ];
 
