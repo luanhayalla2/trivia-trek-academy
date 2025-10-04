@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Index from "./pages/Index";
 import Subjects from "./pages/Subjects";
 import Game from "./pages/Game";
@@ -32,20 +33,24 @@ const App = () => (
         <AuthProvider>
           <Chatbot />
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/subjects" element={<Subjects />} />
-            <Route path="/subjects/:subjectId" element={<SubjectDetail />} />
-            <Route path="/lesson/:subjectId/:difficulty" element={<LessonFlow />} />
-            <Route path="/game/:subjectId" element={<Game />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/ranking" element={<Ranking />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/shop" element={<Shop />} />
+            {/* Public routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/auth" element={<Auth />} />
+            
+            {/* Protected routes */}
+            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/subjects" element={<ProtectedRoute><Subjects /></ProtectedRoute>} />
+            <Route path="/subjects/:subjectId" element={<ProtectedRoute><SubjectDetail /></ProtectedRoute>} />
+            <Route path="/lesson/:subjectId/:difficulty" element={<ProtectedRoute><LessonFlow /></ProtectedRoute>} />
+            <Route path="/game/:subjectId" element={<ProtectedRoute><Game /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/ranking" element={<ProtectedRoute><Ranking /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            <Route path="/shop" element={<ProtectedRoute><Shop /></ProtectedRoute>} />
+            <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

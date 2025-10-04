@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (event === "SIGNED_IN") {
           navigate("/");
         } else if (event === "SIGNED_OUT") {
-          navigate("/auth");
+          navigate("/login");
         }
       }
     );
