@@ -2,48 +2,10 @@ import { GameCard } from "@/components/ui/game-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Trophy, Medal, Award, Crown, TrendingUp } from "lucide-react";
+import { ArrowLeft, Trophy, Medal, Award, Crown } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const globalRanking = [
-  { id: 1, name: "Ana Costa", score: 15450, games: 89, accuracy: 92, avatar: "", position: 1 },
-  { id: 2, name: "Carlos Silva", score: 14200, games: 75, accuracy: 89, avatar: "", position: 2 },
-  { id: 3, name: "Maria Santos", score: 13800, games: 82, accuracy: 87, avatar: "", position: 3 },
-  { id: 4, name: "João Oliveira", score: 12950, games: 68, accuracy: 85, avatar: "", position: 4 },
-  { id: 5, name: "Pedro Lima", score: 12400, games: 71, accuracy: 83, avatar: "", position: 5 },
-  { id: 6, name: "Julia Ferreira", score: 11800, games: 65, accuracy: 88, avatar: "", position: 6 },
-  { id: 7, name: "Lucas Rocha", score: 11200, games: 59, accuracy: 81, avatar: "", position: 7 },
-  { id: 8, name: "Beatriz Alves", score: 10900, games: 63, accuracy: 84, avatar: "", position: 8 },
-  { id: 9, name: "Rafael Souza", score: 10500, games: 55, accuracy: 79, avatar: "", position: 9 },
-  { id: 10, name: "Camila Dias", score: 10200, games: 52, accuracy: 86, avatar: "", position: 10 },
-];
-
-const weeklyRanking = [
-  { id: 1, name: "Pedro Lima", score: 2850, games: 12, accuracy: 94, avatar: "", position: 1 },
-  { id: 2, name: "Ana Costa", score: 2650, games: 11, accuracy: 91, avatar: "", position: 2 },
-  { id: 3, name: "Julia Ferreira", score: 2400, games: 10, accuracy: 89, avatar: "", position: 3 },
-  { id: 4, name: "Carlos Silva", score: 2200, games: 9, accuracy: 87, avatar: "", position: 4 },
-  { id: 5, name: "Maria Santos", score: 2100, games: 8, accuracy: 92, avatar: "", position: 5 },
-];
-
-const subjectRankings = {
-  matematica: [
-    { id: 1, name: "Carlos Silva", score: 3200, position: 1 },
-    { id: 2, name: "Ana Costa", score: 2950, position: 2 },
-    { id: 3, name: "João Oliveira", score: 2750, position: 3 },
-  ],
-  portugues: [
-    { id: 1, name: "Maria Santos", score: 2850, position: 1 },
-    { id: 2, name: "Julia Ferreira", score: 2650, position: 2 },
-    { id: 3, name: "Ana Costa", score: 2400, position: 3 },
-  ],
-  ciencias: [
-    { id: 1, name: "Pedro Lima", score: 3450, position: 1 },
-    { id: 2, name: "Carlos Silva", score: 3200, position: 2 },
-    { id: 3, name: "Rafael Souza", score: 2980, position: 3 },
-  ]
-};
+import { useAuth } from "@/contexts/AuthContext";
+import { useGlobalRanking, useUserRank } from "@/hooks/useRanking";
 
 const getPositionIcon = (position: number) => {
   switch (position) {
@@ -63,8 +25,8 @@ const getPositionColor = (position: number) => {
   }
 };
 
-const RankingCard = ({ player, showStats = true }: { player: any, showStats?: boolean }) => (
-  <GameCard className={`p-4 ${player.position <= 3 ? getPositionColor(player.position) : ''} ${player.position <= 3 ? 'text-primary-foreground' : ''}`}>
+const RankingCard = ({ player, isCurrentUser = false }: { player: any, isCurrentUser?: boolean }) => (
+  <GameCard className={`p-4 ${player.position <= 3 ? getPositionColor(player.position) : ''} ${player.position <= 3 ? 'text-primary-foreground' : ''} ${isCurrentUser ? 'ring-2 ring-primary' : ''}`}>
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-4">
         <div className="flex items-center justify-center w-12 h-12">
@@ -72,28 +34,29 @@ const RankingCard = ({ player, showStats = true }: { player: any, showStats?: bo
         </div>
         
         <Avatar className="w-10 h-10">
-          <AvatarImage src={player.avatar} />
+          <AvatarImage src={player.avatar_url || undefined} />
           <AvatarFallback>
-            {player.name.split(' ').map((n: string) => n[0]).join('')}
+            {player.username.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
         
         <div>
-          <h3 className="font-bold">{player.name}</h3>
-          {showStats && (
-            <p className={`text-sm ${player.position <= 3 ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
-              {player.games} jogos • {player.accuracy}% precisão
-            </p>
-          )}
+          <h3 className="font-bold">
+            {player.username}
+            {isCurrentUser && <span className="ml-2 text-sm">(Você)</span>}
+          </h3>
+          <p className={`text-sm ${player.position <= 3 ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
+            Nível {player.level} • {player.questions_answered} perguntas
+          </p>
         </div>
       </div>
       
       <div className="text-right">
         <div className="text-2xl font-bold">
-          {player.score.toLocaleString()}
+          {player.total_xp.toLocaleString()}
         </div>
         <div className={`text-sm ${player.position <= 3 ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
-          pontos
+          XP
         </div>
       </div>
     </div>
@@ -101,6 +64,24 @@ const RankingCard = ({ player, showStats = true }: { player: any, showStats?: bo
 );
 
 const Ranking = () => {
+  const { user } = useAuth();
+  const { data: ranking, isLoading } = useGlobalRanking();
+  const { data: userRank } = useUserRank(user?.id);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4" />
+          <p className="text-muted-foreground">Carregando ranking...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const topThree = ranking?.slice(0, 3) || [];
+  const restOfRanking = ranking?.slice(3) || [];
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
@@ -123,110 +104,74 @@ const Ranking = () => {
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Veja os melhores jogadores e compare seu desempenho com outros estudantes!
             </p>
+            {userRank && (
+              <Badge variant="secondary" className="mt-4">
+                Sua posição: #{userRank}
+              </Badge>
+            )}
           </div>
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <Tabs defaultValue="global" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
-              <TabsTrigger value="global" className="flex items-center space-x-2">
-                <Trophy className="h-4 w-4" />
-                <span>Global</span>
-              </TabsTrigger>
-              <TabsTrigger value="weekly" className="flex items-center space-x-2">
-                <TrendingUp className="h-4 w-4" />
-                <span>Semanal</span>
-              </TabsTrigger>
-              <TabsTrigger value="subjects" className="flex items-center space-x-2">
-                <Medal className="h-4 w-4" />
-                <span>Disciplinas</span>
-              </TabsTrigger>
-            </TabsList>
+          <div className="space-y-4">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold mb-2">Ranking Geral</h2>
+              <p className="text-muted-foreground">Baseado no XP total acumulado</p>
+            </div>
             
-            <TabsContent value="global" className="space-y-4">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold mb-2">Ranking Geral</h2>
-                <p className="text-muted-foreground">Baseado na pontuação total de todos os jogos</p>
-              </div>
-              
-              {/* Pódium */}
-              <div className="grid md:grid-cols-3 gap-4 mb-8">
-                {globalRanking.slice(0, 3).map((player) => (
+            {/* Pódio */}
+            <div className="grid md:grid-cols-3 gap-4 mb-8">
+              {topThree.map((player) => {
+                const isCurrentUser = player.id === user?.id;
+                return (
                   <GameCard
                     key={player.id}
                     variant={player.position === 1 ? "warning" : player.position === 2 ? "game" : "subject"}
-                    className="p-6 text-center"
+                    className={`p-6 text-center ${isCurrentUser ? 'ring-2 ring-primary' : ''}`}
                   >
                     <div className="mb-4">
                       {getPositionIcon(player.position)}
                     </div>
                     <Avatar className="w-16 h-16 mx-auto mb-4">
-                      <AvatarImage src={player.avatar} />
+                      <AvatarImage src={player.avatar_url || undefined} />
                       <AvatarFallback className="text-xl">
-                        {player.name.split(' ').map(n => n[0]).join('')}
+                        {player.username.charAt(0).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-                    <h3 className="font-bold text-lg mb-2">{player.name}</h3>
+                    <h3 className="font-bold text-lg mb-2">
+                      {player.username}
+                      {isCurrentUser && <span className="block text-sm">(Você)</span>}
+                    </h3>
                     <div className="text-2xl font-bold mb-2">
-                      {player.score.toLocaleString()}
+                      {player.total_xp.toLocaleString()} XP
                     </div>
                     <p className="text-sm opacity-80">
-                      {player.games} jogos • {player.accuracy}%
+                      Nível {player.level} • {player.accuracy.toFixed(1)}% precisão
                     </p>
                   </GameCard>
-                ))}
-              </div>
-              
-              {/* Restante do ranking */}
-              <div className="space-y-3">
-                {globalRanking.slice(3).map((player) => (
-                  <RankingCard key={player.id} player={player} />
-                ))}
-              </div>
-            </TabsContent>
+                );
+              })}
+            </div>
             
-            <TabsContent value="weekly" className="space-y-4">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold mb-2">Ranking Semanal</h2>
-                <p className="text-muted-foreground">
-                  Baseado nos pontos conquistados nos últimos 7 dias
-                </p>
-                <Badge variant="secondary" className="mt-2">
-                  Atualizado há 2 horas
-                </Badge>
-              </div>
-              
-              <div className="space-y-3">
-                {weeklyRanking.map((player) => (
-                  <RankingCard key={player.id} player={player} />
-                ))}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="subjects" className="space-y-8">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold mb-2">Ranking por Disciplina</h2>
-                <p className="text-muted-foreground">
-                  Os melhores jogadores em cada matéria
-                </p>
-              </div>
-              
-              {Object.entries(subjectRankings).map(([subject, ranking]) => (
-                <div key={subject}>
-                  <h3 className="text-xl font-bold mb-4 capitalize">
-                    {subject === 'matematica' ? 'Matemática' : 
-                     subject === 'portugues' ? 'Português' : 
-                     subject === 'ciencias' ? 'Ciências' : subject}
-                  </h3>
-                  <div className="grid gap-3">
-                    {ranking.map((player) => (
-                      <RankingCard key={player.id} player={player} showStats={false} />
-                    ))}
-                  </div>
-                </div>
+            {/* Restante do ranking */}
+            <div className="space-y-3">
+              {restOfRanking.map((player) => (
+                <RankingCard 
+                  key={player.id} 
+                  player={player}
+                  isCurrentUser={player.id === user?.id}
+                />
               ))}
-            </TabsContent>
-          </Tabs>
+            </div>
+
+            {ranking && ranking.length === 0 && (
+              <GameCard className="p-8 text-center">
+                <Trophy className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground">Ainda não há jogadores no ranking.</p>
+                <p className="text-sm text-muted-foreground mt-2">Seja o primeiro a jogar!</p>
+              </GameCard>
+            )}
+          </div>
         </div>
       </div>
     </div>
