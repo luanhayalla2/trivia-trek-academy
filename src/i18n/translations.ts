@@ -35,7 +35,21 @@ export const translations = {
       continueDescription: 'Responda mais perguntas, complete missões e suba no ranking global. Quanto mais você joga, mais gemas e XP ganha!',
       playNow: 'Jogar Agora',
       inviteFriends: 'Convidar Amigos',
-      backToHome: 'Voltar ao Início'
+      backToHome: 'Voltar ao Início',
+      globalTitle: 'Ranking Geral',
+      globalDescription: 'Baseado no XP total acumulado'
+    },
+    profile: {
+      title: 'Meu',
+      subtitle: 'Perfil'
+    },
+    shop: {
+      title: 'Loja',
+      subtitle: 'Adquira naves especiais e melhore seu desempenho!'
+    },
+    common: {
+      back: 'Voltar',
+      settings: 'Configurações'
     }
   },
   en: {
@@ -74,7 +88,21 @@ export const translations = {
       continueDescription: 'Answer more questions, complete missions and climb the global ranking. The more you play, the more gems and XP you earn!',
       playNow: 'Play Now',
       inviteFriends: 'Invite Friends',
-      backToHome: 'Back to Home'
+      backToHome: 'Back to Home',
+      globalTitle: 'Global Ranking',
+      globalDescription: 'Based on total accumulated XP'
+    },
+    profile: {
+      title: 'My',
+      subtitle: 'Profile'
+    },
+    shop: {
+      title: 'Shop',
+      subtitle: 'Get special ships and improve your performance!'
+    },
+    common: {
+      back: 'Back',
+      settings: 'Settings'
     }
   },
   es: {

@@ -8,8 +8,11 @@ import Footer from "@/components/Footer";
 import { GameCard } from "@/components/ui/game-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Rocket, Gem, Check } from "lucide-react";
+import { ArrowLeft, Rocket, Gem, Check, ShoppingCart, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { CreditShop } from "@/components/CreditShop";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type ShipType = Database["public"]["Enums"]["ship_type"];
 
@@ -67,6 +70,7 @@ const ships = [
 const Shop = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [profile, setProfile] = useState<any>(null);
   const [ownedShips, setOwnedShips] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -196,80 +200,111 @@ const Shop = () => {
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2">
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Loja de Naves
+              {t('shop.title')}
             </span>
           </h1>
           <p className="text-xl text-muted-foreground mb-4">
-            Adquira naves especiais e melhore seu desempenho!
+            {t('shop.subtitle')}
           </p>
-          <div className="flex items-center justify-center gap-2">
-            <Gem className="h-5 w-5 text-primary" />
-            <span className="text-2xl font-bold">{profile?.gems || 0} Gemas</span>
+          <div className="flex items-center justify-center gap-6">
+            <div className="flex items-center gap-2">
+              <Gem className="h-5 w-5 text-primary" />
+              <span className="text-2xl font-bold">{profile?.gems || 0}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">💰</span>
+              <span className="text-2xl font-bold text-warning">{profile?.coins || 0}</span>
+            </div>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {ships.map((ship) => {
-            const isOwned = ownedShips.includes(ship.type);
-            const isActive = profile?.active_ship === ship.type;
+        <Tabs defaultValue="ships" className="max-w-6xl mx-auto">
+          <TabsList className="grid w-full grid-cols-2 mb-8">
+            <TabsTrigger value="ships">
+              <Rocket className="h-4 w-4 mr-2" />
+              Loja de Naves
+            </TabsTrigger>
+            <TabsTrigger value="credits">
+              <ShoppingCart className="h-4 w-4 mr-2" />
+              Comprar Créditos
+            </TabsTrigger>
+          </TabsList>
 
-            return (
-              <GameCard
-                key={ship.type}
-                variant={ship.color as any}
-                className="p-6"
-              >
-                <div className="text-center mb-4">
-                  <div className="text-6xl mb-3">{ship.name.split(" ")[0]}</div>
-                  <h3 className="text-2xl font-bold mb-2">{ship.name}</h3>
-                  <p className="text-sm opacity-80 mb-4">{ship.description}</p>
-                </div>
+          <TabsContent value="ships">
+            <div className="mb-6 text-center">
+              <h2 className="text-2xl font-bold mb-2">Naves Espaciais</h2>
+              <p className="text-muted-foreground">
+                Desbloqueie poderes especiais e melhore sua jornada de aprendizado
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {ships.map((ship) => {
+                const isOwned = ownedShips.includes(ship.type);
+                const isActive = profile?.active_ship === ship.type;
 
-                <div className="space-y-2 mb-4">
-                  {ship.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-sm">
-                      <Check className="h-4 w-4" />
-                      <span>{feature}</span>
+                return (
+                  <GameCard
+                    key={ship.type}
+                    variant={ship.color as any}
+                    className="p-6"
+                  >
+                    <div className="text-center mb-4">
+                      <div className="text-6xl mb-3">{ship.name.split(" ")[0]}</div>
+                      <h3 className="text-2xl font-bold mb-2">{ship.name}</h3>
+                      <p className="text-sm opacity-80 mb-4">{ship.description}</p>
                     </div>
-                  ))}
-                </div>
 
-                <div className="pt-4 border-t border-current/20">
-                  {isOwned ? (
-                    isActive ? (
-                      <Badge className="w-full justify-center py-2">
-                        Equipada
-                      </Badge>
-                    ) : (
-                      <Button
-                        onClick={() => activateShip(ship.type)}
-                        variant="secondary"
-                        className="w-full"
-                      >
-                        Equipar
-                      </Button>
-                    )
-                  ) : (
-                    <Button
-                      onClick={() => buyShip(ship.type, ship.cost)}
-                      disabled={ship.cost > (profile?.gems || 0)}
-                      className="w-full"
-                    >
-                      {ship.cost === 0 ? (
-                        "Grátis"
+                    <div className="space-y-2 mb-4">
+                      {ship.features.map((feature, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-sm">
+                          <Check className="h-4 w-4" />
+                          <span>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="pt-4 border-t border-current/20">
+                      {isOwned ? (
+                        isActive ? (
+                          <Badge className="w-full justify-center py-2">
+                            Equipada
+                          </Badge>
+                        ) : (
+                          <Button
+                            onClick={() => activateShip(ship.type)}
+                            variant="secondary"
+                            className="w-full"
+                          >
+                            Equipar
+                          </Button>
+                        )
                       ) : (
-                        <>
-                          <Gem className="mr-2 h-4 w-4" />
-                          {ship.cost} Gemas
-                        </>
+                        <Button
+                          onClick={() => buyShip(ship.type, ship.cost)}
+                          disabled={ship.cost > (profile?.gems || 0)}
+                          className="w-full"
+                        >
+                          {ship.cost === 0 ? (
+                            "Grátis"
+                          ) : (
+                            <>
+                              <Gem className="mr-2 h-4 w-4" />
+                              {ship.cost} Gemas
+                            </>
+                          )}
+                        </Button>
                       )}
-                    </Button>
-                  )}
-                </div>
-              </GameCard>
-            );
-          })}
-        </div>
+                    </div>
+                  </GameCard>
+                );
+              })}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="credits">
+            <CreditShop />
+          </TabsContent>
+        </Tabs>
       </main>
 
       <Footer />

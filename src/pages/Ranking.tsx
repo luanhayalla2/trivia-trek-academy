@@ -2,11 +2,15 @@ import { GameCard } from "@/components/ui/game-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowLeft, Trophy, Medal, Award, Crown } from "lucide-react";
+import { ArrowLeft, Trophy, Medal, Award, Crown, Map } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useGlobalRanking, useUserRank } from "@/hooks/useRanking";
+import { AchievementsMap } from "@/components/AchievementsMap";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
 
 const getPositionIcon = (position: number) => {
   switch (position) {
@@ -69,6 +73,31 @@ const Ranking = () => {
   const { t } = useLanguage();
   const { data: ranking, isLoading } = useGlobalRanking();
   const { data: userRank } = useUserRank(user?.id);
+  const [selectedPlayerAchievements, setSelectedPlayerAchievements] = useState<any[]>([]);
+  const [loadingAchievements, setLoadingAchievements] = useState(false);
+
+  const loadPlayerAchievements = async (playerId: string) => {
+    setLoadingAchievements(true);
+    try {
+      const { data, error } = await supabase
+        .from('achievements')
+        .select('*')
+        .eq('user_id', playerId);
+      
+      if (error) throw error;
+      setSelectedPlayerAchievements(data || []);
+    } catch (error) {
+      console.error('Error loading achievements:', error);
+    } finally {
+      setLoadingAchievements(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.id) {
+      loadPlayerAchievements(user.id);
+    }
+  }, [user]);
 
   if (isLoading) {
     return (
@@ -114,12 +143,25 @@ const Ranking = () => {
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold mb-2">Ranking Geral</h2>
-              <p className="text-muted-foreground">Baseado no XP total acumulado</p>
-            </div>
+        <div className="max-w-6xl mx-auto">
+          <Tabs defaultValue="ranking" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-8">
+              <TabsTrigger value="ranking">
+                <Trophy className="h-4 w-4 mr-2" />
+                {t('ranking.title')}
+              </TabsTrigger>
+              <TabsTrigger value="achievements">
+                <Map className="h-4 w-4 mr-2" />
+                Conquistas dos Jogadores
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="ranking">
+              <div className="space-y-4">
+                <div className="text-center mb-6">
+                  <h2 className="text-2xl font-bold mb-2">{t('ranking.globalTitle')}</h2>
+                  <p className="text-muted-foreground">{t('ranking.globalDescription')}</p>
+                </div>
             
             {/* Pódio */}
             <div className="grid md:grid-cols-3 gap-4 mb-8">
@@ -167,14 +209,34 @@ const Ranking = () => {
               ))}
             </div>
 
-            {ranking && ranking.length === 0 && (
-              <GameCard className="p-8 text-center">
-                <Trophy className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">Ainda não há jogadores no ranking.</p>
-                <p className="text-sm text-muted-foreground mt-2">Seja o primeiro a jogar!</p>
-              </GameCard>
-            )}
-          </div>
+                {ranking && ranking.length === 0 && (
+                  <GameCard className="p-8 text-center">
+                    <Trophy className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                    <p className="text-muted-foreground">Ainda não há jogadores no ranking.</p>
+                    <p className="text-sm text-muted-foreground mt-2">Seja o primeiro a jogar!</p>
+                  </GameCard>
+                )}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="achievements">
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold mb-2">Mapa de Conquistas</h2>
+                <p className="text-muted-foreground">
+                  Visualize as conquistas desbloqueadas pelos melhores jogadores
+                </p>
+              </div>
+              
+              {loadingAchievements ? (
+                <div className="text-center py-12">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
+                  <p className="text-muted-foreground">Carregando conquistas...</p>
+                </div>
+              ) : (
+                <AchievementsMap achievements={selectedPlayerAchievements} />
+              )}
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>

@@ -20,8 +20,13 @@ import {
   Coins,
   Gem,
   CheckCircle2,
-  Zap
+  Zap,
+  Settings,
+  Map
 } from "lucide-react";
+import { AchievementsMap } from "@/components/AchievementsMap";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -67,6 +72,7 @@ const Profile = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [loading, setLoading] = useState(true);
@@ -140,18 +146,26 @@ const Profile = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <Link to="/">
-            <Button variant="ghost" className="mb-6">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Voltar ao Início
-            </Button>
-          </Link>
+          <div className="flex items-center justify-between mb-6">
+            <Link to="/">
+              <Button variant="ghost">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                {t('common.back')}
+              </Button>
+            </Link>
+            <Link to="/settings">
+              <Button variant="outline">
+                <Settings className="h-4 w-4 mr-2" />
+                {t('common.settings')}
+              </Button>
+            </Link>
+          </div>
           
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Meu{" "}
+              {t('profile.title')}{" "}
               <span className="bg-gradient-primary bg-clip-text text-transparent">
-                Perfil
+                {t('profile.subtitle')}
               </span>
             </h1>
           </div>
@@ -261,9 +275,25 @@ const Profile = () => {
 
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Missões Ativas */}
-            <div>
-              <h2 className="text-2xl font-bold mb-6">Missões Ativas</h2>
+            <Tabs defaultValue="missions" className="w-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="missions">
+                  <Target className="h-4 w-4 mr-2" />
+                  Missões
+                </TabsTrigger>
+                <TabsTrigger value="achievements">
+                  <Trophy className="h-4 w-4 mr-2" />
+                  Conquistas
+                </TabsTrigger>
+                <TabsTrigger value="map">
+                  <Map className="h-4 w-4 mr-2" />
+                  Mapa
+                </TabsTrigger>
+              </TabsList>
+
+              {/* Missions Tab */}
+              <TabsContent value="missions" className="mt-6">
+                <h2 className="text-2xl font-bold mb-6">Missões Ativas</h2>
               <div className="grid gap-4">
                 {missions.map((mission) => (
                   <GameCard key={mission.id} className="p-6">
@@ -298,11 +328,11 @@ const Profile = () => {
                   </GameCard>
                 ))}
               </div>
-            </div>
+              </TabsContent>
 
-            {/* Achievements */}
-            <div>
-              <h2 className="text-2xl font-bold mb-6">Conquistas</h2>
+              {/* Achievements Tab */}
+              <TabsContent value="achievements" className="mt-6">
+                <h2 className="text-2xl font-bold mb-6">Conquistas Desbloqueadas</h2>
               {achievements.length > 0 ? (
                 <div className="grid md:grid-cols-2 gap-4">
                   {achievements.map((achievement) => (
@@ -335,10 +365,22 @@ const Profile = () => {
                   <p className="text-sm text-muted-foreground mt-2">Continue jogando para desbloquear conquistas!</p>
                 </GameCard>
               )}
-            </div>
+              </TabsContent>
 
-            {/* Nave Ativa */}
-            <div>
+              {/* Achievements Map Tab */}
+              <TabsContent value="map" className="mt-6">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold mb-2">Mapa de Conquistas</h2>
+                  <p className="text-muted-foreground">
+                    Visualize todas as conquistas disponíveis e seu progresso
+                  </p>
+                </div>
+                <AchievementsMap achievements={achievements} />
+              </TabsContent>
+            </Tabs>
+
+            {/* Nave Ativa - Moved outside tabs */}
+            <div className="mt-8">
               <h2 className="text-2xl font-bold mb-6">Nave Ativa</h2>
               <GameCard className="p-6">
                 <div className="flex items-center justify-between">
