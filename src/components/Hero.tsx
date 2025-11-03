@@ -2,36 +2,34 @@ import { Button } from "@/components/ui/button";
 import { GameCard } from "@/components/ui/game-card";
 import { Play, Trophy, Users } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 import mascot from "@/assets/mascot.png";
 
 const Hero = () => {
+  const { t } = useLanguage();
+  
   return (
     <section className="py-20 px-4">
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Aprenda{" "}
-              <span className="bg-gradient-primary bg-clip-text text-transparent">
-                Brincando
-              </span>{" "}
-              com o EdGame
+              {t('hero.title')}
             </h1>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Transforme seus estudos em uma aventura emocionante! Jogue, aprenda e 
-              conquiste conhecimento em diversas disciplinas de forma divertida e interativa.
+              {t('hero.subtitle')}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
               <Link to="/auth">
                 <Button variant="game" size="lg" className="text-lg px-8">
                   <Play className="h-5 w-5" />
-                  Começar a Jogar
+                  {t('hero.cta')}
                 </Button>
               </Link>
               <Link to="/subjects">
                 <Button variant="outline" size="lg" className="text-lg px-8">
-                  Ver Disciplinas
+                  {t('header.subjects')}
                 </Button>
               </Link>
             </div>

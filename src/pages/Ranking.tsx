@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ArrowLeft, Trophy, Medal, Award, Crown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useGlobalRanking, useUserRank } from "@/hooks/useRanking";
 
 const getPositionIcon = (position: number) => {
@@ -25,7 +26,7 @@ const getPositionColor = (position: number) => {
   }
 };
 
-const RankingCard = ({ player, isCurrentUser = false }: { player: any, isCurrentUser?: boolean }) => (
+const RankingCard = ({ player, isCurrentUser = false, t }: { player: any, isCurrentUser?: boolean, t: (key: string) => string }) => (
   <GameCard className={`p-4 ${player.position <= 3 ? getPositionColor(player.position) : ''} ${player.position <= 3 ? 'text-primary-foreground' : ''} ${isCurrentUser ? 'ring-2 ring-primary' : ''}`}>
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-4">
@@ -43,10 +44,10 @@ const RankingCard = ({ player, isCurrentUser = false }: { player: any, isCurrent
         <div>
           <h3 className="font-bold">
             {player.username}
-            {isCurrentUser && <span className="ml-2 text-sm">(Você)</span>}
+            {isCurrentUser && <span className="ml-2 text-sm">({t('ranking.you')})</span>}
           </h3>
           <p className={`text-sm ${player.position <= 3 ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
-            Nível {player.level} • {player.questions_answered} perguntas
+            {t('ranking.level')} {player.level} • {player.questions_answered} {t('ranking.correctAnswers')}
           </p>
         </div>
       </div>
@@ -65,6 +66,7 @@ const RankingCard = ({ player, isCurrentUser = false }: { player: any, isCurrent
 
 const Ranking = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const { data: ranking, isLoading } = useGlobalRanking();
   const { data: userRank } = useUserRank(user?.id);
 
@@ -90,23 +92,23 @@ const Ranking = () => {
           <Link to="/">
             <Button variant="ghost" className="mb-6">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Voltar ao Início
+              {t('ranking.backToHome')}
             </Button>
           </Link>
           
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               <span className="bg-gradient-warning bg-clip-text text-transparent">
-                Ranking
+                {t('ranking.title')}
               </span>{" "}
-              Global
+              {t('ranking.subtitle')}
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Veja os melhores jogadores e compare seu desempenho com outros estudantes!
+              {t('ranking.description')}
             </p>
             {userRank && (
               <Badge variant="secondary" className="mt-4">
-                Sua posição: #{userRank}
+                {t('ranking.yourStats')}: #{userRank}
               </Badge>
             )}
           </div>
@@ -140,13 +142,13 @@ const Ranking = () => {
                     </Avatar>
                     <h3 className="font-bold text-lg mb-2">
                       {player.username}
-                      {isCurrentUser && <span className="block text-sm">(Você)</span>}
+                      {isCurrentUser && <span className="block text-sm">({t('ranking.you')})</span>}
                     </h3>
                     <div className="text-2xl font-bold mb-2">
                       {player.total_xp.toLocaleString()} XP
                     </div>
                     <p className="text-sm opacity-80">
-                      Nível {player.level} • {player.accuracy.toFixed(1)}% precisão
+                      {t('ranking.level')} {player.level} • {player.accuracy.toFixed(1)}% {t('ranking.accuracy')}
                     </p>
                   </GameCard>
                 );
@@ -160,6 +162,7 @@ const Ranking = () => {
                   key={player.id} 
                   player={player}
                   isCurrentUser={player.id === user?.id}
+                  t={t}
                 />
               ))}
             </div>

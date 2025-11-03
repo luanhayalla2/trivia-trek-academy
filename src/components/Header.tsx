@@ -3,11 +3,14 @@ import { GameCard } from "@/components/ui/game-card";
 import { BookOpen, Trophy, User, Store, Gem } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 const Header = () => {
   const { user, signOut } = useAuth();
+  const { t } = useLanguage();
   const [gems, setGems] = useState(0);
 
   useEffect(() => {
@@ -40,31 +43,32 @@ const Header = () => {
             </GameCard>
             <div>
               <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                EdGame
+                {t('header.title')}
               </h1>
-              <p className="text-sm text-muted-foreground">Aprenda jogando!</p>
+              <p className="text-sm text-muted-foreground">{t('header.subtitle')}</p>
             </div>
           </div>
           
             <nav className="hidden md:flex items-center space-x-6">
               <Link to="/" className="text-foreground hover:text-primary transition-colors">
-                Início
+                {t('header.home')}
               </Link>
               <Link to="/subjects" className="text-foreground hover:text-primary transition-colors">
-                Disciplinas
+                {t('header.subjects')}
               </Link>
               <Link to="/shop" className="text-foreground hover:text-primary transition-colors">
-                Loja
+                {t('header.shop')}
               </Link>
               <Link to="/ranking" className="text-foreground hover:text-primary transition-colors">
-                Ranking
+                {t('header.ranking')}
               </Link>
               <Link to="/about" className="text-foreground hover:text-primary transition-colors">
-                Sobre Nós
+                {t('header.about')}
               </Link>
             </nav>
 
             <div className="flex items-center space-x-2">
+              <LanguageSelector />
               {user ? (
                 <>
                   <div className="flex items-center gap-1 px-3 py-1 bg-primary/10 rounded-full">
@@ -77,20 +81,20 @@ const Header = () => {
                     </Button>
                   </Link>
                   <Button variant="outline" size="sm" onClick={signOut}>
-                    Sair
+                    {t('header.logout')}
                   </Button>
                 </>
               ) : (
                 <>
                   <Link to="/auth">
                     <Button variant="outline" size="sm" className="border-primary/50">
-                      Entrar
+                      {t('header.login')}
                     </Button>
                   </Link>
                   <Link to="/auth">
                     <Button size="sm" className="bg-gradient-knowledge shadow-glow">
                       <User className="h-4 w-4 mr-1" />
-                      Cadastrar
+                      {t('header.register')}
                     </Button>
                   </Link>
                 </>
