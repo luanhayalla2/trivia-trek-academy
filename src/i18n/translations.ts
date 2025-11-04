@@ -1,5 +1,22 @@
 export const translations = {
   pt: {
+    subjects: {
+      title: "Todas as",
+      subtitle: "Disciplinas",
+      description: "Mais de 30 disciplinas para você explorar. Escolha sua área favorita e comece sua jornada!",
+      all: "Todas",
+      questions: "perguntas",
+      level: "Nível: Médio",
+      playNow: "Jogar Agora",
+      categories: {
+        languages: "Domine novos idiomas e culturas",
+        exact: "Ciências exatas e raciocínio lógico",
+        humanities: "Sociedade, cultura e pensamento",
+        professional: "Conhecimentos para sua carreira",
+        creative: "Arte, design e expressão",
+        technology: "Inovação e conhecimento aplicado",
+      }
+    },
     header: {
       title: 'EdGame',
       subtitle: 'Aprenda jogando!',
@@ -53,6 +70,23 @@ export const translations = {
     }
   },
   en: {
+    subjects: {
+      title: "All",
+      subtitle: "Subjects",
+      description: "Over 30 subjects to explore. Choose your favorite area and start your journey!",
+      all: "All",
+      questions: "questions",
+      level: "Level: Medium",
+      playNow: "Play Now",
+      categories: {
+        languages: "Master new languages and cultures",
+        exact: "Exact sciences and logical reasoning",
+        humanities: "Society, culture and thought",
+        professional: "Knowledge for your career",
+        creative: "Art, design and expression",
+        technology: "Innovation and applied knowledge",
+      }
+    },
     header: {
       title: 'EdGame',
       subtitle: 'Learn by playing!',
