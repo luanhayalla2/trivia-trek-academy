@@ -21,6 +21,7 @@ import Auth from "./pages/Auth";
 import LessonFlow from "./pages/LessonFlow";
 import SubjectDetail from "./pages/SubjectDetail";
 import Shop from "./pages/Shop";
+import Checkout from "./pages/Checkout";
 import Chatbot from "./components/Chatbot";
 
 const queryClient = new QueryClient();
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/ranking" element={<ProtectedRoute><Ranking /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             <Route path="/shop" element={<ProtectedRoute><Shop /></ProtectedRoute>} />
+            <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
             <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

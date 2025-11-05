@@ -2,7 +2,7 @@ import { GameCard } from "@/components/ui/game-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Gem, Coins, Sparkles, Zap, Crown } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 interface CreditPackage {
   id: string;
@@ -34,13 +34,10 @@ interface CreditShopProps {
 }
 
 export const CreditShop = ({ onPurchase }: CreditShopProps) => {
-  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handlePurchase = (pkg: CreditPackage) => {
-    toast({
-      title: "🎉 Compra simulada!",
-      description: `Você compraria ${pkg.amount + pkg.bonus} ${pkg.type === 'gems' ? 'gemas' : 'moedas'} por R$ ${pkg.price.toFixed(2)}`,
-    });
+    navigate(`/checkout?package=${pkg.id}&type=${pkg.type}&amount=${pkg.amount}&bonus=${pkg.bonus}&price=${pkg.price}`);
     
     if (onPurchase) {
       onPurchase(pkg.id);
