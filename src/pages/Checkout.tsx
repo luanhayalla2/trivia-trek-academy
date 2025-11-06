@@ -6,6 +6,7 @@ import { GameCard } from "@/components/ui/game-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Gem, Coins, CreditCard, Lock, CheckCircle2, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -20,6 +21,8 @@ interface PackageDetails {
   price: number;
 }
 
+type PaymentMethod = 'credit_card' | 'paypal' | 'pix' | null;
+
 export default function Checkout() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -28,6 +31,8 @@ export default function Checkout() {
   const { user } = useAuth();
   const [processing, setProcessing] = useState(false);
   const [packageDetails, setPackageDetails] = useState<PackageDetails | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod>(null);
+  const [pixQrCode, setPixQrCode] = useState<string | null>(null);
 
   useEffect(() => {
     const pkgId = searchParams.get('package');
@@ -49,8 +54,23 @@ export default function Checkout() {
     }
   }, [searchParams, navigate]);
 
+  const handlePaymentMethodSelect = (method: PaymentMethod) => {
+    setSelectedPaymentMethod(method);
+    if (method === 'pix') {
+      // Simular geração de QR Code Pix
+      setPixQrCode('00020126580014BR.GOV.BCB.PIX0136' + Math.random().toString(36).substring(2, 15));
+    }
+  };
+
   const handlePurchase = async () => {
-    if (!packageDetails || !user) return;
+    if (!packageDetails || !user || !selectedPaymentMethod) {
+      toast({
+        title: t('checkout.error'),
+        description: t('checkout.selectPaymentFirst'),
+        variant: "destructive",
+      });
+      return;
+    }
 
     setProcessing(true);
 
@@ -175,15 +195,46 @@ export default function Checkout() {
                   <CardDescription>{t('checkout.selectPayment')}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <Button variant="outline" className="w-full justify-start h-auto py-4">
+                  <Button 
+                    variant={selectedPaymentMethod === 'credit_card' ? "default" : "outline"}
+                    className="w-full justify-start h-auto py-4"
+                    onClick={() => handlePaymentMethodSelect('credit_card')}
+                  >
                     <CreditCard className="h-5 w-5 mr-3" />
                     <div className="text-left">
                       <div className="font-semibold">{t('checkout.creditCard')}</div>
                       <div className="text-xs text-muted-foreground">{t('checkout.creditCardDesc')}</div>
                     </div>
                   </Button>
+
+                  {selectedPaymentMethod === 'credit_card' && (
+                    <Card className="p-4 space-y-4 bg-background/50">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">{t('checkout.cardNumber')}</label>
+                        <Input placeholder="1234 5678 9012 3456" maxLength={19} />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">{t('checkout.cardName')}</label>
+                        <Input placeholder={t('checkout.cardNamePlaceholder')} />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">{t('checkout.cardExpiry')}</label>
+                          <Input placeholder="MM/AA" maxLength={5} />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">CVV</label>
+                          <Input placeholder="123" maxLength={4} />
+                        </div>
+                      </div>
+                    </Card>
+                  )}
                   
-                  <Button variant="outline" className="w-full justify-start h-auto py-4">
+                  <Button 
+                    variant={selectedPaymentMethod === 'paypal' ? "default" : "outline"}
+                    className="w-full justify-start h-auto py-4"
+                    onClick={() => handlePaymentMethodSelect('paypal')}
+                  >
                     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png" alt="PayPal" className="h-5 mr-3" />
                     <div className="text-left">
                       <div className="font-semibold">PayPal</div>
@@ -191,13 +242,50 @@ export default function Checkout() {
                     </div>
                   </Button>
 
-                  <Button variant="outline" className="w-full justify-start h-auto py-4">
+                  {selectedPaymentMethod === 'paypal' && (
+                    <Card className="p-4 bg-background/50">
+                      <p className="text-sm text-muted-foreground mb-3">{t('checkout.paypalRedirect')}</p>
+                      <Button variant="outline" className="w-full">
+                        {t('checkout.continuePaypal')}
+                      </Button>
+                    </Card>
+                  )}
+
+                  <Button 
+                    variant={selectedPaymentMethod === 'pix' ? "default" : "outline"}
+                    className="w-full justify-start h-auto py-4"
+                    onClick={() => handlePaymentMethodSelect('pix')}
+                  >
                     <Coins className="h-5 w-5 mr-3" />
                     <div className="text-left">
                       <div className="font-semibold">Pix</div>
                       <div className="text-xs text-muted-foreground">{t('checkout.pixDesc')}</div>
                     </div>
                   </Button>
+
+                  {selectedPaymentMethod === 'pix' && pixQrCode && (
+                    <Card className="p-4 bg-background/50">
+                      <div className="flex flex-col items-center space-y-4">
+                        <div className="bg-white p-4 rounded-lg">
+                          <div className="w-48 h-48 bg-gray-200 flex items-center justify-center rounded">
+                            <p className="text-xs text-gray-500 text-center px-4">{t('checkout.pixQrCode')}</p>
+                          </div>
+                        </div>
+                        <div className="w-full space-y-2">
+                          <label className="text-sm font-medium">{t('checkout.pixCode')}</label>
+                          <div className="flex gap-2">
+                            <Input value={pixQrCode} readOnly className="font-mono text-xs" />
+                            <Button variant="outline" size="sm" onClick={() => {
+                              navigator.clipboard.writeText(pixQrCode);
+                              toast({ title: t('checkout.pixCopied') });
+                            }}>
+                              {t('checkout.copy')}
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  )}
                 </CardContent>
               </Card>
 
