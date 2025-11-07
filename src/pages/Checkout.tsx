@@ -243,11 +243,15 @@ export default function Checkout() {
                   </Button>
 
                   {selectedPaymentMethod === 'paypal' && (
-                    <Card className="p-4 bg-background/50">
-                      <p className="text-sm text-muted-foreground mb-3">{t('checkout.paypalRedirect')}</p>
-                      <Button variant="outline" className="w-full">
-                        {t('checkout.continuePaypal')}
-                      </Button>
+                    <Card className="p-4 space-y-4 bg-background/50">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">{t('checkout.paypalEmail')}</label>
+                        <Input type="email" placeholder="seu-email@exemplo.com" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">{t('checkout.paypalPassword')}</label>
+                        <Input type="password" placeholder="••••••••" />
+                      </div>
                     </Card>
                   )}
 
