@@ -58,6 +58,7 @@ export type Database = {
           order_index: number
           subject_id: string
           title: string
+          video_url: string | null
         }
         Insert: {
           content: string
@@ -67,6 +68,7 @@ export type Database = {
           order_index: number
           subject_id: string
           title: string
+          video_url?: string | null
         }
         Update: {
           content?: string
@@ -76,6 +78,43 @@ export type Database = {
           order_index?: number
           subject_id?: string
           title?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
+      missions: {
+        Row: {
+          created_at: string | null
+          description: string
+          icon: string | null
+          id: string
+          reward_gems: number
+          reward_xp: number
+          target_value: number
+          title: string
+          type: string
+        }
+        Insert: {
+          created_at?: string | null
+          description: string
+          icon?: string | null
+          id?: string
+          reward_gems?: number
+          reward_xp?: number
+          target_value: number
+          title: string
+          type: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string
+          icon?: string | null
+          id?: string
+          reward_gems?: number
+          reward_xp?: number
+          target_value?: number
+          title?: string
+          type?: string
         }
         Relationships: []
       }
@@ -209,6 +248,47 @@ export type Database = {
           },
         ]
       }
+      user_missions: {
+        Row: {
+          completed: boolean | null
+          completed_at: string | null
+          created_at: string | null
+          expires_at: string
+          id: string
+          mission_id: string | null
+          progress: number | null
+          user_id: string | null
+        }
+        Insert: {
+          completed?: boolean | null
+          completed_at?: string | null
+          created_at?: string | null
+          expires_at: string
+          id?: string
+          mission_id?: string | null
+          progress?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          completed?: boolean | null
+          completed_at?: string | null
+          created_at?: string | null
+          expires_at?: string
+          id?: string
+          mission_id?: string | null
+          progress?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_missions_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_progress: {
         Row: {
           completed: boolean | null
@@ -259,7 +339,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      assign_daily_missions: { Args: never; Returns: undefined }
+      assign_weekly_missions: { Args: never; Returns: undefined }
+      check_mission_completion: {
+        Args: { p_mission_id: string; p_user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       difficulty_level: "facil" | "medio" | "dificil" | "avancado"

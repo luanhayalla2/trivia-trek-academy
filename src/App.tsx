@@ -46,7 +46,7 @@ const App = () => (
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/subjects" element={<ProtectedRoute><Subjects /></ProtectedRoute>} />
             <Route path="/subjects/:subjectId" element={<ProtectedRoute><SubjectDetail /></ProtectedRoute>} />
-            <Route path="/lesson/:subjectId/:difficulty" element={<ProtectedRoute><LessonFlow /></ProtectedRoute>} />
+            <Route path="/lesson/:lessonId" element={<ProtectedRoute><LessonFlow /></ProtectedRoute>} />
             <Route path="/game/:subjectId" element={<ProtectedRoute><Game /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/ranking" element={<ProtectedRoute><Ranking /></ProtectedRoute>} />
