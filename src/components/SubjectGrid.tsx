@@ -72,7 +72,7 @@ const SubjectGrid = () => {
 
                       <Link to={`/subjects/${subject.id}`}>
                         <Button variant="secondary" className="w-full bg-background/20 hover:bg-background/30 backdrop-blur-sm">
-                          Explorar Níveis
+                          Ver Aulas
                         </Button>
                       </Link>
                     </div>
