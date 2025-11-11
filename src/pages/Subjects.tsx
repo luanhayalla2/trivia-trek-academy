@@ -102,9 +102,9 @@ const Subjects = () => {
                           </div>
                         </div>
 
-                        <Link to={`/subjects/${subject.id}`}>
+                        <Link to={`/game/${subject.id}`}>
                           <Button variant="secondary" className="w-full bg-background/20 hover:bg-background/30 backdrop-blur-sm border border-current/10">
-                            Ver Aulas
+                            {t('subjects.playNow')}
                           </Button>
                         </Link>
                       </div>

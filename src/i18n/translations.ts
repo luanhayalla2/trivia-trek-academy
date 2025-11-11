@@ -107,7 +107,6 @@ export const translations = {
     },
     common: {
       back: 'Voltar',
-      backToHome: 'Voltar ao Início',
       settings: 'Configurações'
     }
   },
@@ -219,7 +218,6 @@ export const translations = {
     },
     common: {
       back: 'Back',
-      backToHome: 'Back to Home',
       settings: 'Settings'
     }
   },
@@ -260,11 +258,6 @@ export const translations = {
       playNow: 'Jugar Ahora',
       inviteFriends: 'Invitar Amigos',
       backToHome: 'Volver al Inicio'
-    },
-    common: {
-      back: 'Volver',
-      backToHome: 'Volver al Inicio',
-      settings: 'Configuración'
     }
   },
   fr: {
@@ -304,11 +297,6 @@ export const translations = {
       playNow: 'Jouer Maintenant',
       inviteFriends: 'Inviter des Amis',
       backToHome: 'Retour à l\'Accueil'
-    },
-    common: {
-      back: 'Retour',
-      backToHome: 'Retour à l\'Accueil',
-      settings: 'Paramètres'
     }
   },
   de: {
@@ -348,11 +336,6 @@ export const translations = {
       playNow: 'Jetzt Spielen',
       inviteFriends: 'Freunde Einladen',
       backToHome: 'Zurück zur Startseite'
-    },
-    common: {
-      back: 'Zurück',
-      backToHome: 'Zurück zur Startseite',
-      settings: 'Einstellungen'
     }
   },
   it: {
@@ -392,11 +375,6 @@ export const translations = {
       playNow: 'Gioca Ora',
       inviteFriends: 'Invita Amici',
       backToHome: 'Torna alla Home'
-    },
-    common: {
-      back: 'Indietro',
-      backToHome: 'Torna alla Home',
-      settings: 'Impostazioni'
     }
   },
   ja: {
@@ -436,11 +414,6 @@ export const translations = {
       playNow: '今すぐプレイ',
       inviteFriends: '友達を招待',
       backToHome: 'ホームに戻る'
-    },
-    common: {
-      back: '戻る',
-      backToHome: 'ホームに戻る',
-      settings: '設定'
     }
   },
   zh: {
@@ -480,11 +453,6 @@ export const translations = {
       playNow: '立即游戏',
       inviteFriends: '邀请朋友',
       backToHome: '返回首页'
-    },
-    common: {
-      back: '返回',
-      backToHome: '返回首页',
-      settings: '设置'
     }
   },
   ru: {
@@ -524,11 +492,6 @@ export const translations = {
       playNow: 'Играть Сейчас',
       inviteFriends: 'Пригласить Друзей',
       backToHome: 'Вернуться на Главную'
-    },
-    common: {
-      back: 'Назад',
-      backToHome: 'Вернуться на Главную',
-      settings: 'Настройки'
     }
   },
   ar: {
@@ -568,11 +531,6 @@ export const translations = {
       playNow: 'العب الآن',
       inviteFriends: 'ادع الأصدقاء',
       backToHome: 'العودة للرئيسية'
-    },
-    common: {
-      back: 'رجوع',
-      backToHome: 'العودة للرئيسية',
-      settings: 'الإعدادات'
     }
   }
 };

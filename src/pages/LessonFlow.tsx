@@ -16,8 +16,6 @@ interface Lesson {
   title: string;
   content: string;
   difficulty: Difficulty;
-  subject_id: string;
-  video_url?: string;
 }
 
 interface Question {
@@ -38,7 +36,7 @@ const difficultyConfig = {
 };
 
 const LessonFlow = () => {
-  const { lessonId } = useParams<{ lessonId: string }>();
+  const { subjectId, difficulty } = useParams<{ subjectId: string; difficulty: Difficulty }>();
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -51,12 +49,12 @@ const LessonFlow = () => {
   const [showLesson, setShowLesson] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  const subject = lesson ? subjects.find(s => s.id === lesson.subject_id) : null;
-  const diffConfig = lesson ? difficultyConfig[lesson.difficulty as Difficulty] : null;
+  const subject = subjects.find(s => s.id === subjectId);
+  const diffConfig = difficultyConfig[difficulty as Difficulty];
 
   useEffect(() => {
     loadLessonAndQuestion();
-  }, [lessonId]);
+  }, [subjectId, difficulty]);
 
   useEffect(() => {
     if (!showLesson && timeLeft > 0 && !showExplanation) {
@@ -70,11 +68,14 @@ const LessonFlow = () => {
 
   const loadLessonAndQuestion = async () => {
     try {
-      // Load lesson by ID
+      // Load lesson
       const { data: lessonData } = await supabase
         .from("lessons")
         .select("*")
-        .eq("id", lessonId)
+        .eq("subject_id", subjectId)
+        .eq("difficulty", difficulty)
+        .order("order_index")
+        .limit(1)
         .single();
 
       if (lessonData) {
@@ -109,8 +110,6 @@ const LessonFlow = () => {
   };
 
   const handleAnswer = async (answerIndex: number | null) => {
-    if (!diffConfig) return;
-    
     setSelectedAnswer(answerIndex);
     setShowExplanation(true);
 
@@ -204,24 +203,11 @@ const LessonFlow = () => {
         </Button>
 
         {showLesson ? (
-          <GameCard variant={diffConfig?.color as any} className="p-8">
+          <GameCard variant={diffConfig.color as any} className="p-8">
             <div className="text-center mb-6">
               <h1 className="text-3xl font-bold mb-2">{lesson.title}</h1>
-              <p className="text-lg opacity-90">{diffConfig?.label}</p>
+              <p className="text-lg opacity-90">{diffConfig.label}</p>
             </div>
-
-            {lesson.video_url && (
-              <div className="mb-6">
-                <div className="aspect-video rounded-lg overflow-hidden bg-background/20">
-                  <iframe
-                    src={lesson.video_url}
-                    className="w-full h-full"
-                    allowFullScreen
-                    title={lesson.title}
-                  />
-                </div>
-              </div>
-            )}
 
             <div className="bg-background/20 rounded-lg p-6 mb-8">
               <div className="prose prose-invert max-w-none">
@@ -240,7 +226,7 @@ const LessonFlow = () => {
             </Button>
           </GameCard>
         ) : (
-          <GameCard variant={diffConfig?.color as any} className="p-8">
+          <GameCard variant={diffConfig.color as any} className="p-8">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold">{subject?.name}</h2>
               <div className="flex items-center gap-2 text-lg font-bold">
@@ -292,7 +278,7 @@ const LessonFlow = () => {
             {showExplanation && (
               <div className="flex gap-4">
                 <Button
-                  onClick={() => navigate(`/subjects/${lesson.subject_id}`)}
+                  onClick={() => navigate(`/subjects/${subjectId}`)}
                   className="flex-1"
                 >
                   <Trophy className="mr-2 h-4 w-4" />
