@@ -7,6 +7,10 @@ import WordSearch from "@/components/games/WordSearch";
 import Crossword from "@/components/games/Crossword";
 import Anagram from "@/components/games/Anagram";
 import MemoryGame from "@/components/games/MemoryGame";
+import Quiz from "@/components/games/Quiz";
+import MatchColumns from "@/components/games/MatchColumns";
+import Hangman from "@/components/games/Hangman";
+import Puzzle from "@/components/games/Puzzle";
 
 const EducaGame = () => {
   const [activeGame, setActiveGame] = useState<string | null>(null);
@@ -40,6 +44,34 @@ const EducaGame = () => {
       icon: "🃏",
       description: "Combine os pares corretos",
       component: MemoryGame,
+    },
+    {
+      id: "quiz",
+      title: "Quiz",
+      icon: "❓",
+      description: "Teste seus conhecimentos",
+      component: Quiz,
+    },
+    {
+      id: "match-columns",
+      title: "Ligar Colunas",
+      icon: "🔗",
+      description: "Conecte os itens corretamente",
+      component: MatchColumns,
+    },
+    {
+      id: "hangman",
+      title: "Forca Educativa",
+      icon: "🎯",
+      description: "Descubra a palavra antes que acabe",
+      component: Hangman,
+    },
+    {
+      id: "puzzle",
+      title: "Quebra-Cabeças",
+      icon: "🧩",
+      description: "Organize os números em ordem",
+      component: Puzzle,
     },
   ];
 
