@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { GameCard } from "@/components/ui/game-card";
-import { BookOpen, Trophy, User, Store, Gem } from "lucide-react";
+import { BookOpen, Trophy, User, Store, Gem, Gamepad2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -55,6 +55,10 @@ const Header = () => {
               </Link>
               <Link to="/subjects" className="text-foreground hover:text-primary transition-colors">
                 {t('header.subjects')}
+              </Link>
+              <Link to="/educa-game" className="text-foreground hover:text-primary transition-colors flex items-center gap-1">
+                <Gamepad2 className="h-4 w-4" />
+                Jogos
               </Link>
               <Link to="/shop" className="text-foreground hover:text-primary transition-colors">
                 {t('header.shop')}
