@@ -177,12 +177,12 @@ const Register = () => {
       const recommendedLevel = calculateRecommendedLevel(quizScore);
 
       const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
+        email: email.trim().toLowerCase(),
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/`,
           data: {
-            username: name,
+            username: name.trim(),
             birth_date: birthDate,
             education_level: educationLevel,
             quiz_score: quizScore,
@@ -192,16 +192,36 @@ const Register = () => {
       });
 
       if (authError) {
+        let errorMessage = authError.message;
+        
+        // Mensagens de erro amigáveis em português
+        if (authError.message.includes("User already registered")) {
+          errorMessage = "Este email já está cadastrado. Tente fazer login.";
+        } else if (authError.message.includes("Password should be")) {
+          errorMessage = "A senha deve ter pelo menos 6 caracteres.";
+        } else if (authError.message.includes("Invalid email")) {
+          errorMessage = "Por favor, insira um email válido.";
+        } else if (authError.message.includes("Signup requires a valid password")) {
+          errorMessage = "Por favor, insira uma senha válida.";
+        }
+        
         toast({
           title: "Erro ao criar conta",
-          description: authError.message,
+          description: errorMessage,
           variant: "destructive",
         });
         return;
       }
 
-      // Profile will be automatically created by the trigger
-      // Additional data is stored in user metadata
+      // Verifica se o usuário foi criado (pode retornar null se email precisa confirmação)
+      if (authData.user && !authData.session) {
+        toast({
+          title: "Verifique seu email",
+          description: "Enviamos um link de confirmação para seu email.",
+        });
+        navigate("/login");
+        return;
+      }
 
       toast({
         title: "Conta criada com sucesso!",

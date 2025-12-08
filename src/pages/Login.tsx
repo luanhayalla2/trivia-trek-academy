@@ -32,14 +32,25 @@ const Login = () => {
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email,
+        email: email.trim().toLowerCase(),
         password,
       });
 
       if (error) {
+        let errorMessage = error.message;
+        
+        // Mensagens de erro amigáveis em português
+        if (error.message.includes("Invalid login credentials")) {
+          errorMessage = "Email ou senha incorretos. Verifique suas credenciais.";
+        } else if (error.message.includes("Email not confirmed")) {
+          errorMessage = "Por favor, confirme seu email antes de fazer login.";
+        } else if (error.message.includes("Too many requests")) {
+          errorMessage = "Muitas tentativas de login. Aguarde alguns minutos.";
+        }
+        
         toast({
           title: "Erro ao fazer login",
-          description: error.message,
+          description: errorMessage,
           variant: "destructive",
         });
         return;
