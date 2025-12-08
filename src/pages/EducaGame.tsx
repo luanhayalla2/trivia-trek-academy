@@ -11,6 +11,14 @@ import Quiz from "@/components/games/Quiz";
 import MatchColumns from "@/components/games/MatchColumns";
 import Hangman from "@/components/games/Hangman";
 import Puzzle from "@/components/games/Puzzle";
+import Chess from "@/components/games/Chess";
+import Domino from "@/components/games/Domino";
+import Checkers from "@/components/games/Checkers";
+import CardGame from "@/components/games/CardGame";
+import Ludo from "@/components/games/Ludo";
+import Trilha from "@/components/games/Trilha";
+import TicTacToe from "@/components/games/TicTacToe";
+import Poker from "@/components/games/Poker";
 
 const EducaGame = () => {
   const [activeGame, setActiveGame] = useState<string | null>(null);
@@ -20,7 +28,7 @@ const EducaGame = () => {
     {
       id: "word-search",
       title: "Caça-Palavras",
-      icon: "🧩",
+      icon: "🔍",
       description: "Encontre palavras escondidas na grade",
       component: WordSearch,
     },
@@ -72,6 +80,62 @@ const EducaGame = () => {
       icon: "🧩",
       description: "Organize os números em ordem",
       component: Puzzle,
+    },
+    {
+      id: "chess",
+      title: "Xadrez",
+      icon: "♟️",
+      description: "O clássico jogo de estratégia",
+      component: Chess,
+    },
+    {
+      id: "domino",
+      title: "Dominó",
+      icon: "🁡",
+      description: "Combine as peças numeradas",
+      component: Domino,
+    },
+    {
+      id: "checkers",
+      title: "Damas",
+      icon: "⚫",
+      description: "Capture todas as peças adversárias",
+      component: Checkers,
+    },
+    {
+      id: "cardgame",
+      title: "Baralho (21)",
+      icon: "🃏",
+      description: "Blackjack - chegue a 21 pontos",
+      component: CardGame,
+    },
+    {
+      id: "ludo",
+      title: "Ludo",
+      icon: "🎲",
+      description: "Corra para chegar ao fim primeiro",
+      component: Ludo,
+    },
+    {
+      id: "trilha",
+      title: "Trilha",
+      icon: "⚪",
+      description: "Forme linhas de três peças",
+      component: Trilha,
+    },
+    {
+      id: "tictactoe",
+      title: "Jogo da Velha",
+      icon: "❌",
+      description: "Faça três em linha",
+      component: TicTacToe,
+    },
+    {
+      id: "poker",
+      title: "Video Poker",
+      icon: "🎰",
+      description: "Monte a melhor mão de cartas",
+      component: Poker,
     },
   ];
 
