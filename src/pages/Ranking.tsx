@@ -2,8 +2,8 @@ import { GameCard } from "@/components/ui/game-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowLeft, Trophy, Medal, Award, Crown, Map } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Trophy, Medal, Award, Crown, Map, Gamepad2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useGlobalRanking, useUserRank } from "@/hooks/useRanking";
@@ -71,6 +71,7 @@ const RankingCard = ({ player, isCurrentUser = false, t }: { player: any, isCurr
 const Ranking = () => {
   const { user } = useAuth();
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const { data: ranking, isLoading } = useGlobalRanking();
   const { data: userRank } = useUserRank(user?.id);
   const [selectedPlayerAchievements, setSelectedPlayerAchievements] = useState<any[]>([]);
@@ -145,14 +146,18 @@ const Ranking = () => {
 
         <div className="max-w-6xl mx-auto">
           <Tabs defaultValue="ranking" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
+            <TabsList className="grid w-full grid-cols-3 mb-8">
               <TabsTrigger value="ranking">
                 <Trophy className="h-4 w-4 mr-2" />
                 {t('ranking.title')}
               </TabsTrigger>
               <TabsTrigger value="achievements">
                 <Map className="h-4 w-4 mr-2" />
-                Conquistas dos Jogadores
+                Conquistas
+              </TabsTrigger>
+              <TabsTrigger value="games">
+                <Gamepad2 className="h-4 w-4 mr-2" />
+                Jogos
               </TabsTrigger>
             </TabsList>
 
@@ -235,6 +240,45 @@ const Ranking = () => {
               ) : (
                 <AchievementsMap achievements={selectedPlayerAchievements} />
               )}
+            </TabsContent>
+
+            <TabsContent value="games">
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold mb-2">Jogos Educativos</h2>
+                <p className="text-muted-foreground">
+                  Divirta-se enquanto aprende com nossos jogos interativos
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                {[
+                  { icon: "🧩", title: "Caça-Palavras", desc: "Encontre palavras escondidas" },
+                  { icon: "🧠", title: "Palavras Cruzadas", desc: "Preencha com as dicas" },
+                  { icon: "💬", title: "Anagramas", desc: "Descubra palavras embaralhadas" },
+                  { icon: "🃏", title: "Jogo da Memória", desc: "Combine os pares corretos" },
+                  { icon: "❓", title: "Quiz", desc: "Teste seus conhecimentos" },
+                  { icon: "🔗", title: "Ligar Colunas", desc: "Conecte os itens" },
+                  { icon: "🎯", title: "Forca Educativa", desc: "Descubra a palavra" },
+                  { icon: "🧩", title: "Quebra-Cabeças", desc: "Organize em ordem" },
+                ].map((game, index) => (
+                  <GameCard key={index} className="p-4 text-center hover:scale-105 transition-transform">
+                    <div className="text-4xl mb-2">{game.icon}</div>
+                    <h3 className="font-bold text-sm">{game.title}</h3>
+                    <p className="text-xs text-muted-foreground">{game.desc}</p>
+                  </GameCard>
+                ))}
+              </div>
+
+              <div className="text-center">
+                <Button 
+                  size="lg" 
+                  onClick={() => navigate('/educa-game')}
+                  className="gap-2"
+                >
+                  <Gamepad2 className="h-5 w-5" />
+                  Jogar Agora
+                </Button>
+              </div>
             </TabsContent>
           </Tabs>
         </div>
