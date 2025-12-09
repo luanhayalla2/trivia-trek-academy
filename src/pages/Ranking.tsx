@@ -2,7 +2,7 @@ import { GameCard } from "@/components/ui/game-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowLeft, Trophy, Medal, Award, Crown, Map, Gamepad2 } from "lucide-react";
+import { ArrowLeft, Trophy, Medal, Award, Crown, Map, Gamepad2, Target } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -11,6 +11,7 @@ import { AchievementsMap } from "@/components/AchievementsMap";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
+import { GameRankingTab } from "@/components/GameRankingTab";
 
 const getPositionIcon = (position: number) => {
   switch (position) {

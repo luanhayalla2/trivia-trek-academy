@@ -49,6 +49,93 @@ export type Database = {
           },
         ]
       }
+      game_high_scores: {
+        Row: {
+          best_score: number
+          best_time: number | null
+          difficulty: Database["public"]["Enums"]["game_difficulty"]
+          draws: number
+          game_id: string
+          games_played: number
+          id: string
+          losses: number
+          updated_at: string
+          user_id: string
+          wins: number
+        }
+        Insert: {
+          best_score?: number
+          best_time?: number | null
+          difficulty?: Database["public"]["Enums"]["game_difficulty"]
+          draws?: number
+          game_id: string
+          games_played?: number
+          id?: string
+          losses?: number
+          updated_at?: string
+          user_id: string
+          wins?: number
+        }
+        Update: {
+          best_score?: number
+          best_time?: number | null
+          difficulty?: Database["public"]["Enums"]["game_difficulty"]
+          draws?: number
+          game_id?: string
+          games_played?: number
+          id?: string
+          losses?: number
+          updated_at?: string
+          user_id?: string
+          wins?: number
+        }
+        Relationships: []
+      }
+      game_scores: {
+        Row: {
+          accuracy: number | null
+          combos: number | null
+          created_at: string
+          difficulty: Database["public"]["Enums"]["game_difficulty"]
+          game_id: string
+          id: string
+          mode: Database["public"]["Enums"]["game_mode"]
+          moves_count: number | null
+          result: Database["public"]["Enums"]["game_result"] | null
+          score: number
+          time_taken: number | null
+          user_id: string
+        }
+        Insert: {
+          accuracy?: number | null
+          combos?: number | null
+          created_at?: string
+          difficulty?: Database["public"]["Enums"]["game_difficulty"]
+          game_id: string
+          id?: string
+          mode?: Database["public"]["Enums"]["game_mode"]
+          moves_count?: number | null
+          result?: Database["public"]["Enums"]["game_result"] | null
+          score?: number
+          time_taken?: number | null
+          user_id: string
+        }
+        Update: {
+          accuracy?: number | null
+          combos?: number | null
+          created_at?: string
+          difficulty?: Database["public"]["Enums"]["game_difficulty"]
+          game_id?: string
+          id?: string
+          mode?: Database["public"]["Enums"]["game_mode"]
+          moves_count?: number | null
+          result?: Database["public"]["Enums"]["game_result"] | null
+          score?: number
+          time_taken?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       lessons: {
         Row: {
           content: string
@@ -115,6 +202,48 @@ export type Database = {
           target_value?: number
           title?: string
           type?: string
+        }
+        Relationships: []
+      }
+      multiplayer_matches: {
+        Row: {
+          created_at: string
+          game_id: string
+          id: string
+          moves_count: number | null
+          player1_name: string
+          player1_score: number | null
+          player2_name: string
+          player2_score: number | null
+          time_taken: number | null
+          user_id: string | null
+          winner: string | null
+        }
+        Insert: {
+          created_at?: string
+          game_id: string
+          id?: string
+          moves_count?: number | null
+          player1_name: string
+          player1_score?: number | null
+          player2_name: string
+          player2_score?: number | null
+          time_taken?: number | null
+          user_id?: string | null
+          winner?: string | null
+        }
+        Update: {
+          created_at?: string
+          game_id?: string
+          id?: string
+          moves_count?: number | null
+          player1_name?: string
+          player1_score?: number | null
+          player2_name?: string
+          player2_score?: number | null
+          time_taken?: number | null
+          user_id?: string | null
+          winner?: string | null
         }
         Relationships: []
       }
@@ -393,6 +522,9 @@ export type Database = {
     }
     Enums: {
       difficulty_level: "facil" | "medio" | "dificil" | "avancado"
+      game_difficulty: "facil" | "medio" | "dificil"
+      game_mode: "single" | "multiplayer"
+      game_result: "vitoria" | "derrota" | "empate"
       ship_type:
         | "explorador"
         | "velocista"
@@ -528,6 +660,9 @@ export const Constants = {
   public: {
     Enums: {
       difficulty_level: ["facil", "medio", "dificil", "avancado"],
+      game_difficulty: ["facil", "medio", "dificil"],
+      game_mode: ["single", "multiplayer"],
+      game_result: ["vitoria", "derrota", "empate"],
       ship_type: [
         "explorador",
         "velocista",
