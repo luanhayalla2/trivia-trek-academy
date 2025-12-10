@@ -14,6 +14,7 @@ const games = [
   { id: 'chess', name: 'Xadrez' },
   { id: 'memory', name: 'Memória' },
   { id: 'wordsearch', name: 'Caça-Palavras' },
+  { id: 'domino', name: 'Dominó' },
   { id: 'crossword', name: 'Palavras Cruzadas' },
 ];
 
@@ -44,7 +45,7 @@ export const GameRankingTab = () => {
         query = query.eq('game_id', selectedGame);
       }
       if (selectedDifficulty !== 'all') {
-        query = query.eq('difficulty', selectedDifficulty);
+        query = query.eq('difficulty', selectedDifficulty as 'facil' | 'medio' | 'dificil');
       }
 
       const { data, error } = await query;
