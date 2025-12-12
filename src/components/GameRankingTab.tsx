@@ -15,7 +15,9 @@ const games = [
   { id: 'memory', name: 'Memória' },
   { id: 'wordsearch', name: 'Caça-Palavras' },
   { id: 'domino', name: 'Dominó' },
-  { id: 'crossword', name: 'Palavras Cruzadas' },
+  { id: 'quiz', name: 'Quiz' },
+  { id: 'anagram', name: 'Anagramas' },
+  { id: 'hangman', name: 'Forca' },
 ];
 
 const difficulties = [
