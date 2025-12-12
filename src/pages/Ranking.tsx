@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { GameRankingTab } from "@/components/GameRankingTab";
+import { GameAchievements } from "@/components/GameAchievements";
 
 const getPositionIcon = (position: number) => {
   switch (position) {
@@ -227,20 +228,25 @@ const Ranking = () => {
 
             <TabsContent value="achievements">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold mb-2">Mapa de Conquistas</h2>
+                <h2 className="text-2xl font-bold mb-2">Conquistas de Jogos</h2>
                 <p className="text-muted-foreground">
-                  Visualize as conquistas desbloqueadas pelos melhores jogadores
+                  Medalhas e conquistas desbloqueadas nos jogos
                 </p>
               </div>
               
-              {loadingAchievements ? (
-                <div className="text-center py-12">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
-                  <p className="text-muted-foreground">Carregando conquistas...</p>
-                </div>
-              ) : (
-                <AchievementsMap achievements={selectedPlayerAchievements} />
-              )}
+              <GameAchievements />
+              
+              <div className="mt-8">
+                <h3 className="text-xl font-bold mb-4">Mapa de Conquistas Gerais</h3>
+                {loadingAchievements ? (
+                  <div className="text-center py-12">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
+                    <p className="text-muted-foreground">Carregando conquistas...</p>
+                  </div>
+                ) : (
+                  <AchievementsMap achievements={selectedPlayerAchievements} />
+                )}
+              </div>
             </TabsContent>
 
             <TabsContent value="games">
