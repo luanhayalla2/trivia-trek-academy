@@ -1,89 +1,182 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { CheckCircle } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { CheckCircle, Clock, Trophy } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useGameScore } from "@/hooks/useGameScore";
+import { toast } from "sonner";
 
-const MatchColumns = () => {
-  const [selectedLeft, setSelectedLeft] = useState<number | null>(null);
-  const [matches, setMatches] = useState<Record<number, number>>({});
-  const [completed, setCompleted] = useState(false);
-
-  const pairs = [
+const pairsByDifficulty = {
+  facil: [
+    { left: "Brasil", right: "Brasília" },
+    { left: "França", right: "Paris" },
+    { left: "Japão", right: "Tóquio" },
+  ],
+  medio: [
     { left: "Brasil", right: "Brasília" },
     { left: "França", right: "Paris" },
     { left: "Japão", right: "Tóquio" },
     { left: "Itália", right: "Roma" },
     { left: "Canadá", right: "Ottawa" },
-  ];
+  ],
+  dificil: [
+    { left: "Brasil", right: "Brasília" },
+    { left: "França", right: "Paris" },
+    { left: "Japão", right: "Tóquio" },
+    { left: "Itália", right: "Roma" },
+    { left: "Canadá", right: "Ottawa" },
+    { left: "Austrália", right: "Camberra" },
+    { left: "Alemanha", right: "Berlim" },
+  ],
+};
 
-  const leftItems = pairs.map((p, i) => ({ id: i, text: p.left }));
-  const rightItems = pairs
-    .map((p, i) => ({ id: i, text: p.right }))
-    .sort(() => Math.random() - 0.5);
+const MatchColumns = () => {
+  const { user } = useAuth();
+  const { saveScore } = useGameScore();
+  const [difficulty, setDifficulty] = useState<'facil' | 'medio' | 'dificil'>('medio');
+  const [pairs, setPairs] = useState(pairsByDifficulty.medio);
+  const [selectedLeft, setSelectedLeft] = useState<number | null>(null);
+  const [matches, setMatches] = useState<Record<number, number>>({});
+  const [completed, setCompleted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [errors, setErrors] = useState(0);
+  const [shuffledRight, setShuffledRight] = useState<{ id: number; text: string }[]>([]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (gameStarted && !completed) {
+      interval = setInterval(() => setTimer(t => t + 1), 1000);
+    }
+    return () => clearInterval(interval);
+  }, [gameStarted, completed]);
+
+  const startGame = () => {
+    const newPairs = pairsByDifficulty[difficulty];
+    setPairs(newPairs);
+    setShuffledRight(newPairs.map((p, i) => ({ id: i, text: p.right })).sort(() => Math.random() - 0.5));
+    setMatches({});
+    setSelectedLeft(null);
+    setCompleted(false);
+    setTimer(0);
+    setErrors(0);
+    setGameStarted(true);
+  };
 
   const handleLeftClick = (id: number) => {
     if (matches[id] !== undefined) return;
     setSelectedLeft(id);
   };
 
-  const handleRightClick = (id: number) => {
+  const handleRightClick = async (id: number) => {
     if (selectedLeft === null) return;
     if (Object.values(matches).includes(id)) return;
 
-    const newMatches = { ...matches, [selectedLeft]: id };
-    setMatches(newMatches);
-    setSelectedLeft(null);
+    if (selectedLeft === id) {
+      const newMatches = { ...matches, [selectedLeft]: id };
+      setMatches(newMatches);
+      setSelectedLeft(null);
 
-    if (Object.keys(newMatches).length === pairs.length) {
-      const allCorrect = Object.entries(newMatches).every(
-        ([left, right]) => parseInt(left) === right
-      );
-      if (allCorrect) {
+      if (Object.keys(newMatches).length === pairs.length) {
         setCompleted(true);
+        const difficultyMultiplier = difficulty === 'facil' ? 1 : difficulty === 'medio' ? 1.5 : 2;
+        const timeBonus = Math.max(0, 120 - timer);
+        const errorPenalty = errors * 10;
+        const score = Math.round((pairs.length * 100 * difficultyMultiplier) + timeBonus - errorPenalty);
+
+        if (user) {
+          saveScore.mutateAsync({
+            gameId: 'match-columns',
+            score: Math.max(0, score),
+            timeTaken: timer,
+            difficulty,
+            mode: 'single',
+            result: 'vitoria',
+            accuracy: ((pairs.length - errors) / pairs.length) * 100,
+          });
+        }
+        toast.success(`Parabéns! Pontuação: ${Math.max(0, score)}`);
       }
+    } else {
+      setErrors(e => e + 1);
+      toast.error("Conexão incorreta!");
+      setSelectedLeft(null);
     }
   };
 
-  const resetGame = () => {
-    setMatches({});
-    setSelectedLeft(null);
-    setCompleted(false);
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  if (completed) {
+  if (!gameStarted) {
     return (
-      <Card className="p-8 text-center space-y-6 bg-card/80 backdrop-blur-sm">
-        <h2 className="text-3xl font-bold text-foreground">Parabéns! 🎉</h2>
-        <div className="text-6xl">🏆</div>
-        <p className="text-xl text-muted-foreground">
-          Você conectou todas as colunas corretamente!
-        </p>
-        <Button onClick={resetGame} size="lg" className="w-full">
-          Jogar Novamente
-        </Button>
+      <Card className="p-8 max-w-md mx-auto text-center space-y-6">
+        <h2 className="text-2xl font-bold">🔗 Ligar as Colunas</h2>
+        <div className="space-y-4">
+          <div>
+            <label className="text-sm font-medium mb-2 block">Dificuldade</label>
+            <Select value={difficulty} onValueChange={(v) => setDifficulty(v as any)}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="facil">Fácil (3 pares)</SelectItem>
+                <SelectItem value="medio">Médio (5 pares)</SelectItem>
+                <SelectItem value="dificil">Difícil (7 pares)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Button onClick={startGame} size="lg" className="w-full">Iniciar Jogo</Button>
+        </div>
       </Card>
     );
   }
 
+  if (completed) {
+    const difficultyMultiplier = difficulty === 'facil' ? 1 : difficulty === 'medio' ? 1.5 : 2;
+    const timeBonus = Math.max(0, 120 - timer);
+    const errorPenalty = errors * 10;
+    const score = Math.round((pairs.length * 100 * difficultyMultiplier) + timeBonus - errorPenalty);
+
+    return (
+      <Card className="p-8 text-center space-y-6">
+        <h2 className="text-3xl font-bold">Parabéns! 🎉</h2>
+        <div className="text-6xl">🏆</div>
+        <div className="space-y-2">
+          <p className="text-xl">Tempo: {formatTime(timer)}</p>
+          <p className="text-xl">Erros: {errors}</p>
+          <p className="text-2xl font-bold text-primary flex items-center justify-center gap-2">
+            <Trophy className="w-6 h-6" /> {Math.max(0, score)} pontos
+          </p>
+        </div>
+        <Button onClick={startGame} size="lg" className="w-full">Jogar Novamente</Button>
+      </Card>
+    );
+  }
+
+  const leftItems = pairs.map((p, i) => ({ id: i, text: p.left }));
+
   return (
-    <Card className="p-8 space-y-6 bg-card/80 backdrop-blur-sm">
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold text-foreground">
-          Ligar as Colunas 🔗
-        </h2>
-        <p className="text-muted-foreground">
-          Conecte cada país com sua capital
-        </p>
+    <Card className="p-8 space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold">🔗 Ligar as Colunas</h2>
+        <div className="flex items-center gap-4">
+          <span className="text-sm bg-muted px-3 py-1 rounded-full capitalize">{difficulty}</span>
+          <span className="flex items-center gap-1 text-lg font-mono">
+            <Clock className="w-4 h-4" /> {formatTime(timer)}
+          </span>
+        </div>
       </div>
 
+      <p className="text-center text-muted-foreground">Conecte cada país com sua capital</p>
+
       <div className="grid grid-cols-2 gap-6">
-        {/* Coluna Esquerda */}
         <div className="space-y-3">
-          <h3 className="font-semibold text-center text-foreground">Países</h3>
+          <h3 className="font-semibold text-center">Países</h3>
           {leftItems.map((item) => {
             const isMatched = matches[item.id] !== undefined;
             const isSelected = selectedLeft === item.id;
-
             return (
               <Button
                 key={item.id}
@@ -92,29 +185,26 @@ const MatchColumns = () => {
                 className="w-full justify-start gap-2"
                 disabled={isMatched}
               >
-                {isMatched && <CheckCircle className="w-4 h-4 text-success" />}
+                {isMatched && <CheckCircle className="w-4 h-4 text-green-500" />}
                 {item.text}
               </Button>
             );
           })}
         </div>
 
-        {/* Coluna Direita */}
         <div className="space-y-3">
-          <h3 className="font-semibold text-center text-foreground">Capitais</h3>
-          {rightItems.map((item) => {
+          <h3 className="font-semibold text-center">Capitais</h3>
+          {shuffledRight.map((item) => {
             const isMatched = Object.values(matches).includes(item.id);
-            const isCorrectMatch = matches[item.id] === item.id;
-
             return (
               <Button
                 key={item.id}
                 onClick={() => handleRightClick(item.id)}
-                variant={isMatched && isCorrectMatch ? "success" : "outline"}
+                variant={isMatched ? "secondary" : "outline"}
                 className="w-full justify-start gap-2"
                 disabled={isMatched}
               >
-                {isMatched && <CheckCircle className="w-4 h-4" />}
+                {isMatched && <CheckCircle className="w-4 h-4 text-green-500" />}
                 {item.text}
               </Button>
             );
@@ -122,9 +212,11 @@ const MatchColumns = () => {
         </div>
       </div>
 
-      <Button onClick={resetGame} variant="outline" className="w-full">
-        Reiniciar
-      </Button>
+      <div className="text-center text-sm text-muted-foreground">
+        {Object.keys(matches).length} de {pairs.length} conexões | Erros: {errors}
+      </div>
+
+      <Button onClick={startGame} variant="outline" className="w-full">Reiniciar</Button>
     </Card>
   );
 };
