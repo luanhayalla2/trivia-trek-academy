@@ -18,6 +18,12 @@ const games = [
   { id: 'quiz', name: 'Quiz' },
   { id: 'anagram', name: 'Anagramas' },
   { id: 'hangman', name: 'Forca' },
+  { id: 'crossword', name: 'Palavras Cruzadas' },
+  { id: 'puzzle', name: 'Quebra-Cabeças' },
+  { id: 'matchcolumns', name: 'Ligar Colunas' },
+  { id: 'poker', name: 'Poker' },
+  { id: 'ludo', name: 'Ludo' },
+  { id: 'trilha', name: 'Trilha' },
 ];
 
 const difficulties = [
