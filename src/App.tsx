@@ -24,6 +24,7 @@ import Shop from "./pages/Shop";
 import Checkout from "./pages/Checkout";
 import Chatbot from "./components/Chatbot";
 import EducaGame from "./pages/EducaGame";
+import Friends from "./pages/Friends";
 
 const queryClient = new QueryClient();
 
@@ -55,7 +56,8 @@ const App = () => (
             <Route path="/shop" element={<ProtectedRoute><Shop /></ProtectedRoute>} />
             <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
             <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
-            <Route path="/educa-game" element={<ProtectedRoute><EducaGame /></ProtectedRoute>} />
+<Route path="/educa-game" element={<ProtectedRoute><EducaGame /></ProtectedRoute>} />
+            <Route path="/friends" element={<ProtectedRoute><Friends /></ProtectedRoute>} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

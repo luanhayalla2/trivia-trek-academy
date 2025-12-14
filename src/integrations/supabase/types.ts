@@ -49,6 +49,48 @@ export type Database = {
           },
         ]
       }
+      friendships: {
+        Row: {
+          addressee_id: string
+          created_at: string
+          id: string
+          requester_id: string
+          status: Database["public"]["Enums"]["friendship_status"]
+          updated_at: string
+        }
+        Insert: {
+          addressee_id: string
+          created_at?: string
+          id?: string
+          requester_id: string
+          status?: Database["public"]["Enums"]["friendship_status"]
+          updated_at?: string
+        }
+        Update: {
+          addressee_id?: string
+          created_at?: string
+          id?: string
+          requester_id?: string
+          status?: Database["public"]["Enums"]["friendship_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "friendships_addressee_id_fkey"
+            columns: ["addressee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "friendships_requester_id_fkey"
+            columns: ["requester_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       game_high_scores: {
         Row: {
           best_score: number
@@ -90,6 +132,67 @@ export type Database = {
           wins?: number
         }
         Relationships: []
+      }
+      game_rooms: {
+        Row: {
+          created_at: string
+          current_turn: string | null
+          game_id: string
+          game_state: Json | null
+          guest_id: string | null
+          host_id: string
+          id: string
+          status: string
+          updated_at: string
+          winner_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          current_turn?: string | null
+          game_id: string
+          game_state?: Json | null
+          guest_id?: string | null
+          host_id: string
+          id?: string
+          status?: string
+          updated_at?: string
+          winner_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          current_turn?: string | null
+          game_id?: string
+          game_state?: Json | null
+          guest_id?: string | null
+          host_id?: string
+          id?: string
+          status?: string
+          updated_at?: string
+          winner_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_rooms_guest_id_fkey"
+            columns: ["guest_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "game_rooms_host_id_fkey"
+            columns: ["host_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "game_rooms_winner_id_fkey"
+            columns: ["winner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       game_scores: {
         Row: {
@@ -513,6 +616,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      are_friends: {
+        Args: { user1_id: string; user2_id: string }
+        Returns: boolean
+      }
       assign_daily_missions: { Args: never; Returns: undefined }
       assign_weekly_missions: { Args: never; Returns: undefined }
       check_mission_completion: {
@@ -522,6 +629,7 @@ export type Database = {
     }
     Enums: {
       difficulty_level: "facil" | "medio" | "dificil" | "avancado"
+      friendship_status: "pending" | "accepted" | "rejected" | "blocked"
       game_difficulty: "facil" | "medio" | "dificil"
       game_mode: "single" | "multiplayer"
       game_result: "vitoria" | "derrota" | "empate"
@@ -660,6 +768,7 @@ export const Constants = {
   public: {
     Enums: {
       difficulty_level: ["facil", "medio", "dificil", "avancado"],
+      friendship_status: ["pending", "accepted", "rejected", "blocked"],
       game_difficulty: ["facil", "medio", "dificil"],
       game_mode: ["single", "multiplayer"],
       game_result: ["vitoria", "derrota", "empate"],
