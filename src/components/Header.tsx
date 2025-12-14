@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { GameCard } from "@/components/ui/game-card";
-import { BookOpen, Trophy, User, Store, Gem, Gamepad2 } from "lucide-react";
+import { BookOpen, Trophy, User, Store, Gem, Gamepad2, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -68,6 +68,10 @@ const Header = () => {
               </Link>
               <Link to="/about" className="text-foreground hover:text-primary transition-colors">
                 {t('header.about')}
+              </Link>
+              <Link to="/friends" className="text-foreground hover:text-primary transition-colors flex items-center gap-1">
+                <Users className="h-4 w-4" />
+                Amigos
               </Link>
             </nav>
 

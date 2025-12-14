@@ -22,9 +22,11 @@ import {
   CheckCircle2,
   Zap,
   Settings,
-  Map
+  Map,
+  BarChart3
 } from "lucide-react";
 import { AchievementsMap } from "@/components/AchievementsMap";
+import PlayerStatsDashboard from "@/components/PlayerStatsDashboard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link, useNavigate } from "react-router-dom";
@@ -276,7 +278,7 @@ const Profile = () => {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             <Tabs defaultValue="missions" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="missions">
                   <Target className="h-4 w-4 mr-2" />
                   Missões
@@ -284,6 +286,10 @@ const Profile = () => {
                 <TabsTrigger value="achievements">
                   <Trophy className="h-4 w-4 mr-2" />
                   Conquistas
+                </TabsTrigger>
+                <TabsTrigger value="stats">
+                  <BarChart3 className="h-4 w-4 mr-2" />
+                  Estatísticas
                 </TabsTrigger>
                 <TabsTrigger value="map">
                   <Map className="h-4 w-4 mr-2" />
@@ -365,6 +371,12 @@ const Profile = () => {
                   <p className="text-sm text-muted-foreground mt-2">Continue jogando para desbloquear conquistas!</p>
                 </GameCard>
               )}
+              </TabsContent>
+
+              {/* Stats Tab */}
+              <TabsContent value="stats" className="mt-6">
+                <h2 className="text-2xl font-bold mb-6">Estatísticas Detalhadas</h2>
+                <PlayerStatsDashboard />
               </TabsContent>
 
               {/* Achievements Map Tab */}
