@@ -25,6 +25,7 @@ import Checkout from "./pages/Checkout";
 import Chatbot from "./components/Chatbot";
 import EducaGame from "./pages/EducaGame";
 import Friends from "./pages/Friends";
+import { GameInviteNotification } from "./components/GameInviteNotification";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
         <LanguageProvider>
           <AuthProvider>
             <Chatbot />
+            <GameInviteNotification />
             <Routes>
             {/* Public routes */}
             <Route path="/login" element={<Login />} />
