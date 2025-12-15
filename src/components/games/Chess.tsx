@@ -1,19 +1,25 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { User, Users, Trophy } from "lucide-react";
+import { User, Users, Trophy, Globe } from "lucide-react";
 import { useGameScore, GameDifficulty, GameMode } from "@/hooks/useGameScore";
 import { useAuth } from "@/contexts/AuthContext";
+import { useGameRooms, GameRoom } from "@/hooks/useGameRooms";
 import { toast } from "sonner";
+import { MultiplayerLobby } from "@/components/MultiplayerLobby";
+import { GameChat } from "@/components/GameChat";
+import { useSearchParams } from "react-router-dom";
 
-type GameState = 'setup' | 'playing' | 'ended';
+type GameState = 'setup' | 'lobby' | 'playing' | 'ended';
 
 const Chess = () => {
   const { user } = useAuth();
   const { saveScore, saveMultiplayerMatch } = useGameScore();
+  const { currentRoom, setCurrentRoom, updateGameState, endGame: endGameRoom, leaveRoom } = useGameRooms('chess');
+  const [searchParams] = useSearchParams();
 
   const initialBoard = [
     ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
@@ -38,6 +44,8 @@ const Chess = () => {
   const [movesCount, setMovesCount] = useState(0);
   const [captures, setCaptures] = useState({ white: 0, black: 0 });
   const [winner, setWinner] = useState<'white' | 'black' | null>(null);
+  const [isOnlineMultiplayer, setIsOnlineMultiplayer] = useState(false);
+  const [playerColor, setPlayerColor] = useState<'white' | 'black'>('white');
 
   const whitePieces = ['♔', '♕', '♖', '♗', '♘', '♙'];
   const blackPieces = ['♚', '♛', '♜', '♝', '♞', '♟'];
@@ -49,6 +57,41 @@ const Chess = () => {
     '♔': 1000, '♕': 9, '♖': 5, '♗': 3, '♘': 3, '♙': 1,
     '♚': 1000, '♛': 9, '♜': 5, '♝': 3, '♞': 3, '♟': 1,
   };
+
+  // Check for room in URL params
+  useEffect(() => {
+    const roomId = searchParams.get('room');
+    if (roomId && currentRoom?.id === roomId) {
+      setIsOnlineMultiplayer(true);
+      setPlayerColor(currentRoom.host_id === user?.id ? 'white' : 'black');
+      setGameState('playing');
+      setStartTime(Date.now());
+      
+      if (currentRoom.game_state && currentRoom.game_state.board) {
+        setBoard(currentRoom.game_state.board);
+        setTurn(currentRoom.game_state.turn || 'white');
+        setMovesCount(currentRoom.game_state.movesCount || 0);
+        setCaptures(currentRoom.game_state.captures || { white: 0, black: 0 });
+      }
+    }
+  }, [searchParams, currentRoom, user?.id]);
+
+  // Subscribe to online game state updates
+  useEffect(() => {
+    if (!isOnlineMultiplayer || !currentRoom) return;
+
+    if (currentRoom.game_state && currentRoom.game_state.board) {
+      setBoard(currentRoom.game_state.board);
+      setTurn(currentRoom.game_state.turn || 'white');
+      setMovesCount(currentRoom.game_state.movesCount || 0);
+      setCaptures(currentRoom.game_state.captures || { white: 0, black: 0 });
+      
+      if (currentRoom.status === 'finished' && currentRoom.winner_id) {
+        setWinner(currentRoom.winner_id === currentRoom.host_id ? 'white' : 'black');
+        setGameState('ended');
+      }
+    }
+  }, [currentRoom?.game_state, currentRoom?.status, isOnlineMultiplayer]);
 
   const getValidMoves = useCallback((boardState: string[][], row: number, col: number): [number, number][] => {
     const piece = boardState[row][col];
@@ -216,7 +259,12 @@ const Chess = () => {
   const saveGameResult = async (gameWinner: 'white' | 'black') => {
     const timeTaken = Math.floor((Date.now() - startTime) / 1000);
 
-    if (mode === 'multiplayer') {
+    if (isOnlineMultiplayer && currentRoom) {
+      const winnerId = gameWinner === 'white' ? currentRoom.host_id : currentRoom.guest_id;
+      await endGameRoom(currentRoom.id, winnerId);
+    }
+
+    if (mode === 'multiplayer' && !isOnlineMultiplayer) {
       try {
         await saveMultiplayerMatch.mutateAsync({
           gameId: 'chess',
@@ -231,7 +279,7 @@ const Chess = () => {
       } catch (error) {
         console.error('Error saving match:', error);
       }
-    } else if (user) {
+    } else if (user && !isOnlineMultiplayer) {
       const playerWon = gameWinner === 'white';
       const score = playerWon ? 500 + captures.white * 50 : captures.white * 25;
       
@@ -252,11 +300,32 @@ const Chess = () => {
         console.error('Error saving score:', error);
       }
     }
+
+    if (isOnlineMultiplayer && user) {
+      const playerWon = (playerColor === 'white' && gameWinner === 'white') || 
+                        (playerColor === 'black' && gameWinner === 'black');
+      const score = playerWon ? 500 + (playerColor === 'white' ? captures.white : captures.black) * 50 : 100;
+      
+      try {
+        await saveScore.mutateAsync({
+          gameId: 'chess',
+          score,
+          timeTaken,
+          difficulty: 'medio',
+          mode: 'multiplayer',
+          result: playerWon ? 'vitoria' : 'derrota',
+          movesCount
+        });
+      } catch (error) {
+        console.error('Error saving score:', error);
+      }
+    }
   };
 
-  const handleClick = (row: number, col: number) => {
+  const handleClick = async (row: number, col: number) => {
     if (gameState !== 'playing') return;
     if (mode === 'single' && turn === 'black') return;
+    if (isOnlineMultiplayer && turn !== playerColor) return;
 
     const piece = board[row][col];
     
@@ -268,16 +337,19 @@ const Chess = () => {
       if (isValid) {
         const capturedPiece = board[row][col];
         const newBoard = makeMove(board, [selRow, selCol], [row, col]);
+        const newTurn = turn === 'white' ? 'black' : 'white';
+        const newCaptures = capturedPiece ? {
+          ...captures,
+          [turn]: captures[turn] + (pieceValues[capturedPiece] || 1)
+        } : captures;
+        const newMovesCount = movesCount + 1;
+        
         setBoard(newBoard);
+        setMovesCount(newMovesCount);
         
         if (capturedPiece) {
-          setCaptures(prev => ({
-            ...prev,
-            [turn]: prev[turn] + (pieceValues[capturedPiece] || 1)
-          }));
+          setCaptures(newCaptures);
         }
-        
-        setMovesCount(prev => prev + 1);
 
         const gameWinner = checkGameEnd(newBoard);
         if (gameWinner) {
@@ -285,7 +357,17 @@ const Chess = () => {
           setGameState('ended');
           saveGameResult(gameWinner);
         } else {
-          setTurn(turn === 'white' ? 'black' : 'white');
+          setTurn(newTurn);
+          
+          // Update online game state
+          if (isOnlineMultiplayer && currentRoom) {
+            await updateGameState(currentRoom.id, {
+              board: newBoard,
+              turn: newTurn,
+              movesCount: newMovesCount,
+              captures: newCaptures
+            }, currentRoom.host_id === user?.id ? currentRoom.guest_id! : currentRoom.host_id);
+          }
           
           if (mode === 'single') {
             setTimeout(() => {
@@ -320,8 +402,10 @@ const Chess = () => {
       setSelected(null);
     } else if (piece) {
       if ((turn === 'white' && isWhitePiece(piece)) || (turn === 'black' && isBlackPiece(piece))) {
-        if (mode === 'multiplayer' || turn === 'white') {
-          setSelected([row, col]);
+        if (mode === 'multiplayer' || isOnlineMultiplayer || turn === 'white') {
+          if (!isOnlineMultiplayer || turn === playerColor) {
+            setSelected([row, col]);
+          }
         }
       }
     }
@@ -336,12 +420,28 @@ const Chess = () => {
     setMovesCount(0);
     setCaptures({ white: 0, black: 0 });
     setWinner(null);
+    setIsOnlineMultiplayer(false);
   };
 
   const backToSetup = () => {
     setGameState('setup');
     setBoard(initialBoard);
     setWinner(null);
+    setIsOnlineMultiplayer(false);
+    if (currentRoom) {
+      leaveRoom(currentRoom.id);
+    }
+  };
+
+  const handleRoomJoin = (room: GameRoom) => {
+    setCurrentRoom(room);
+    setIsOnlineMultiplayer(true);
+    setPlayerColor(room.host_id === user?.id ? 'white' : 'black');
+    setGameState('playing');
+    setStartTime(Date.now());
+    setBoard(initialBoard);
+    setMovesCount(0);
+    setCaptures({ white: 0, black: 0 });
   };
 
   if (gameState === 'setup') {
@@ -352,22 +452,30 @@ const Chess = () => {
         <div className="space-y-6">
           <div className="space-y-3">
             <Label>Modo de Jogo</Label>
-            <div className="flex gap-2">
+            <div className="grid grid-cols-3 gap-2">
               <Button
                 variant={mode === 'single' ? 'default' : 'outline'}
                 className="flex-1"
                 onClick={() => setMode('single')}
               >
                 <User className="w-4 h-4 mr-2" />
-                Solo vs IA
+                Solo
               </Button>
               <Button
-                variant={mode === 'multiplayer' ? 'default' : 'outline'}
+                variant={mode === 'multiplayer' && !isOnlineMultiplayer ? 'default' : 'outline'}
                 className="flex-1"
-                onClick={() => setMode('multiplayer')}
+                onClick={() => { setMode('multiplayer'); setIsOnlineMultiplayer(false); }}
               >
                 <Users className="w-4 h-4 mr-2" />
-                2 Jogadores
+                Local
+              </Button>
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={() => setGameState('lobby')}
+              >
+                <Globe className="w-4 h-4 mr-2" />
+                Online
               </Button>
             </div>
           </div>
@@ -430,7 +538,24 @@ const Chess = () => {
     );
   }
 
+  if (gameState === 'lobby') {
+    return (
+      <div>
+        <Button variant="ghost" onClick={backToSetup} className="mb-4">
+          ← Voltar
+        </Button>
+        <MultiplayerLobby
+          gameId="chess"
+          gameName="Xadrez"
+          onRoomJoin={handleRoomJoin}
+          onCreateRoom={() => {}}
+        />
+      </div>
+    );
+  }
+
   const validMoves = selected ? getValidMoves(board, selected[0], selected[1]) : [];
+  const isMyTurn = isOnlineMultiplayer ? turn === playerColor : true;
 
   return (
     <Card className="p-6 max-w-lg mx-auto">
@@ -441,22 +566,29 @@ const Chess = () => {
             {difficulty === 'facil' ? 'Fácil' : difficulty === 'medio' ? 'Médio' : 'Difícil'}
           </Badge>
         )}
+        {isOnlineMultiplayer && (
+          <Badge variant="outline" className="gap-1">
+            <Globe className="w-3 h-3" />
+            Online
+          </Badge>
+        )}
       </div>
 
       <div className="flex justify-between mb-4">
-        <div className="text-center">
-          <p className="font-bold">⚪ {mode === 'multiplayer' ? player1Name : 'Você'}</p>
+        <div className={`text-center p-2 rounded ${playerColor === 'white' && isOnlineMultiplayer ? 'bg-primary/10' : ''}`}>
+          <p className="font-bold">⚪ {isOnlineMultiplayer ? (currentRoom?.host?.username || 'Host') : mode === 'multiplayer' ? player1Name : 'Você'}</p>
           <p className="text-sm">Pontos: {captures.white}</p>
         </div>
-        <div className="text-center">
-          <p className="font-bold">⚫ {mode === 'multiplayer' ? player2Name : 'IA'}</p>
+        <div className={`text-center p-2 rounded ${playerColor === 'black' && isOnlineMultiplayer ? 'bg-primary/10' : ''}`}>
+          <p className="font-bold">⚫ {isOnlineMultiplayer ? (currentRoom?.guest?.username || 'Guest') : mode === 'multiplayer' ? player2Name : 'IA'}</p>
           <p className="text-sm">Pontos: {captures.black}</p>
         </div>
       </div>
 
       {gameState === 'playing' && (
-        <p className="text-center text-muted-foreground mb-4">
-          Vez: {turn === 'white' ? `⚪ ${mode === 'multiplayer' ? player1Name : 'Você'}` : `⚫ ${mode === 'multiplayer' ? player2Name : 'IA'}`}
+        <p className={`text-center mb-4 p-2 rounded ${isMyTurn ? 'bg-primary/10 text-primary font-semibold' : 'text-muted-foreground'}`}>
+          {isMyTurn ? 'Sua vez!' : 'Aguardando oponente...'}
+          {' '}({turn === 'white' ? '⚪ Brancas' : '⚫ Pretas'})
         </p>
       )}
 
@@ -464,7 +596,9 @@ const Chess = () => {
         <div className="text-center mb-4">
           <p className="text-xl font-bold text-green-600 flex items-center justify-center gap-2">
             <Trophy className="w-5 h-5" />
-            {winner === 'white' ? `⚪ ${mode === 'multiplayer' ? player1Name : 'Você'}` : `⚫ ${mode === 'multiplayer' ? player2Name : 'IA'}`} Venceu!
+            {isOnlineMultiplayer 
+              ? (winner === playerColor ? 'Você Venceu!' : 'Você Perdeu!')
+              : (winner === 'white' ? `⚪ ${mode === 'multiplayer' ? player1Name : 'Você'}` : `⚫ ${mode === 'multiplayer' ? player2Name : 'IA'}`)} Venceu!
           </p>
         </div>
       )}
@@ -498,6 +632,11 @@ const Chess = () => {
           Configurações
         </Button>
       </div>
+
+      {/* Chat for online multiplayer */}
+      {isOnlineMultiplayer && currentRoom && (
+        <GameChat roomId={currentRoom.id} />
+      )}
     </Card>
   );
 };

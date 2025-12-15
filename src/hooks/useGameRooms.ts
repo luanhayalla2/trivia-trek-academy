@@ -133,12 +133,24 @@ export const useGameRooms = (gameId?: string) => {
 
       if (error) throw error;
 
+      // Load profiles for the room
+      const { data: profiles } = await supabase
+        .from('profiles')
+        .select('id, username, avatar_url, level')
+        .in('id', [data.host_id, user.id]);
+
+      const roomWithProfiles: GameRoom = {
+        ...data,
+        host: profiles?.find(p => p.id === data.host_id),
+        guest: profiles?.find(p => p.id === user.id)
+      };
+
       toast({
         title: 'Entrou na sala!',
         description: 'O jogo vai começar.'
       });
 
-      setCurrentRoom(data as GameRoom);
+      setCurrentRoom(roomWithProfiles);
       return true;
     } catch (error: any) {
       toast({
@@ -198,7 +210,7 @@ export const useGameRooms = (gameId?: string) => {
     if (!user) return;
 
     try {
-      const room = rooms.find(r => r.id === roomId);
+      const room = rooms.find(r => r.id === roomId) || currentRoom;
       if (!room) return;
 
       if (room.host_id === user.id) {
@@ -232,13 +244,35 @@ export const useGameRooms = (gameId?: string) => {
           schema: 'public',
           table: 'game_rooms'
         },
-        (payload) => {
+        async (payload) => {
           console.log('Room update:', payload);
           loadRooms();
           
           // Update current room if it's the one that changed
           if (currentRoom && payload.new && (payload.new as any).id === currentRoom.id) {
-            setCurrentRoom(payload.new as GameRoom);
+            const updatedRoom = payload.new as any;
+            
+            // Load profiles if needed
+            if (updatedRoom.guest_id && !currentRoom.guest) {
+              const { data: profiles } = await supabase
+                .from('profiles')
+                .select('id, username, avatar_url, level')
+                .in('id', [updatedRoom.host_id, updatedRoom.guest_id].filter(Boolean));
+
+              setCurrentRoom({
+                ...updatedRoom,
+                status: updatedRoom.status as GameRoom['status'],
+                host: profiles?.find(p => p.id === updatedRoom.host_id),
+                guest: updatedRoom.guest_id ? profiles?.find(p => p.id === updatedRoom.guest_id) : undefined
+              });
+            } else {
+              setCurrentRoom({
+                ...updatedRoom,
+                status: updatedRoom.status as GameRoom['status'],
+                host: currentRoom.host,
+                guest: currentRoom.guest
+              });
+            }
           }
         }
       )
