@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { useGameScore, GameDifficulty } from "@/hooks/useGameScore";
 import { useAuth } from "@/contexts/AuthContext";
+import { useGameAchievements } from "@/hooks/useGameAchievements";
 import { Clock, Target, Trophy } from "lucide-react";
 
 interface CardType {
@@ -36,6 +37,7 @@ const MemoryGame = () => {
 
   const { saveScore } = useGameScore();
   const { user } = useAuth();
+  const { checkAndAwardAchievements } = useGameAchievements();
 
   const pairsCount = difficultyConfig[difficulty].pairs;
   const emojis = allEmojis.slice(0, pairsCount);
@@ -143,6 +145,11 @@ const MemoryGame = () => {
         mode: 'single',
         result: 'vitoria',
         movesCount: moves + 1
+      }, {
+        onSuccess: () => {
+          // Check achievements after saving score
+          checkAndAwardAchievements();
+        }
       });
     }
   };

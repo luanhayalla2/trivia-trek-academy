@@ -141,6 +141,8 @@ export const useGameRooms = (gameId?: string) => {
 
       const roomWithProfiles: GameRoom = {
         ...data,
+        status: data.status as GameRoom['status'],
+        game_state: data.game_state as Record<string, any>,
         host: profiles?.find(p => p.id === data.host_id),
         guest: profiles?.find(p => p.id === user.id)
       };

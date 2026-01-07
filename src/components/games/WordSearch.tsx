@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { useGameScore, GameDifficulty } from "@/hooks/useGameScore";
 import { useAuth } from "@/contexts/AuthContext";
+import { useGameAchievements } from "@/hooks/useGameAchievements";
 import { Clock, Target, Trophy } from "lucide-react";
 
 const difficultyConfig: Record<GameDifficulty, { gridSize: number; words: string[]; label: string; color: string }> = {
@@ -41,6 +42,7 @@ const WordSearch = () => {
 
   const { saveScore } = useGameScore();
   const { user } = useAuth();
+  const { checkAndAwardAchievements } = useGameAchievements();
 
   const config = difficultyConfig[difficulty];
   const words = config.words;
@@ -165,6 +167,10 @@ const WordSearch = () => {
         difficulty,
         mode: 'single',
         result: 'vitoria'
+      }, {
+        onSuccess: () => {
+          checkAndAwardAchievements();
+        }
       });
     }
   };

@@ -1,7 +1,7 @@
+import { useState, useCallback } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "sonner";
 
 export interface GameAchievementDefinition {
   id: string;
@@ -42,9 +42,17 @@ export const gameAchievements: GameAchievementDefinition[] = [
   { id: "anagram_expert", title: "Expert em Anagramas", description: "Resolva 50 anagramas", type: "wins", target: 50, icon: "shuffle", category: "games" },
 ];
 
+export interface NewAchievement {
+  id: string;
+  title: string;
+  description: string;
+  type: string;
+}
+
 export const useGameAchievements = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
+  const [newAchievement, setNewAchievement] = useState<NewAchievement | null>(null);
 
   const { data: userAchievements = [], isLoading } = useQuery({
     queryKey: ["user-achievements", user?.id],
@@ -108,7 +116,13 @@ export const useGameAchievements = () => {
     },
     onSuccess: (data, achievement) => {
       if (data) {
-        toast.success(`🏆 Conquista Desbloqueada: ${achievement.title}!`);
+        // Set the new achievement for notification display
+        setNewAchievement({
+          id: achievement.id,
+          title: achievement.title,
+          description: achievement.description,
+          type: achievement.type
+        });
         queryClient.invalidateQueries({ queryKey: ["user-achievements"] });
       }
     },
@@ -161,6 +175,10 @@ export const useGameAchievements = () => {
     }
   };
 
+  const clearNewAchievement = useCallback(() => {
+    setNewAchievement(null);
+  }, []);
+
   return {
     userAchievements,
     gameStats,
@@ -168,5 +186,7 @@ export const useGameAchievements = () => {
     checkAndAwardAchievements,
     getAchievementProgress,
     gameAchievements,
+    newAchievement,
+    clearNewAchievement,
   };
 };
