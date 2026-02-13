@@ -102,13 +102,13 @@ const CardGame = () => {
     const isRed = card.suit === '♥' || card.suit === '♦';
     if (hidden) {
       return (
-        <div className="w-16 h-24 bg-blue-600 rounded-lg border-2 border-white flex items-center justify-center">
-          <span className="text-white text-2xl">?</span>
+        <div className="w-16 h-24 bg-primary rounded-lg border-2 border-primary-foreground/30 flex items-center justify-center">
+          <span className="text-primary-foreground text-2xl">?</span>
         </div>
       );
     }
     return (
-      <div className={`w-16 h-24 bg-white rounded-lg border-2 border-foreground/20 flex flex-col items-center justify-center shadow-md ${isRed ? 'text-red-600' : 'text-foreground'}`}>
+      <div className={`w-16 h-24 bg-card rounded-lg border-2 border-border flex flex-col items-center justify-center shadow-card ${isRed ? 'text-destructive' : 'text-card-foreground'}`}>
         <span className="text-lg font-bold">{card.value}</span>
         <span className="text-2xl">{card.suit}</span>
       </div>

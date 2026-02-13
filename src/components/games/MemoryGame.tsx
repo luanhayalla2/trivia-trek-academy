@@ -16,9 +16,9 @@ interface CardType {
 }
 
 const difficultyConfig: Record<GameDifficulty, { pairs: number; label: string; color: string }> = {
-  facil: { pairs: 6, label: 'Fácil', color: 'bg-green-500' },
-  medio: { pairs: 8, label: 'Médio', color: 'bg-yellow-500' },
-  dificil: { pairs: 12, label: 'Difícil', color: 'bg-red-500' }
+  facil: { pairs: 6, label: 'Fácil', color: 'bg-success' },
+  medio: { pairs: 8, label: 'Médio', color: 'bg-warning text-warning-foreground' },
+  dificil: { pairs: 12, label: 'Difícil', color: 'bg-destructive' }
 };
 
 const allEmojis = ["🎓", "📚", "✏️", "🧮", "🔬", "🌍", "🎨", "🎵", "⭐", "🚀", "💡", "🎯"];
@@ -207,7 +207,7 @@ const MemoryGame = () => {
     return (
       <Card className="p-6 max-w-md mx-auto bg-card/90 backdrop-blur-sm">
         <div className="space-y-6 text-center">
-          <Trophy className="w-16 h-16 mx-auto text-yellow-500" />
+          <Trophy className="w-16 h-16 mx-auto text-warning" />
           <h2 className="text-2xl font-bold">Parabéns!</h2>
           
           <div className="flex justify-center gap-4">
@@ -262,7 +262,7 @@ const MemoryGame = () => {
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Pares</p>
-            <p className="text-2xl font-bold text-green-500">{matches}/{pairsCount}</p>
+            <p className="text-2xl font-bold text-success">{matches}/{pairsCount}</p>
           </div>
         </div>
 

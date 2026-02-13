@@ -280,7 +280,7 @@ const TicTacToe = () => {
                   className="flex-1"
                   onClick={() => setDifficulty('facil')}
                 >
-                  <span className="w-2 h-2 rounded-full bg-green-500 mr-2" />
+                  <span className="w-2 h-2 rounded-full bg-success mr-2" />
                   Fácil
                 </Button>
                 <Button
@@ -288,7 +288,7 @@ const TicTacToe = () => {
                   className="flex-1"
                   onClick={() => setDifficulty('medio')}
                 >
-                  <span className="w-2 h-2 rounded-full bg-yellow-500 mr-2" />
+                  <span className="w-2 h-2 rounded-full bg-warning mr-2" />
                   Médio
                 </Button>
                 <Button
@@ -296,7 +296,7 @@ const TicTacToe = () => {
                   className="flex-1"
                   onClick={() => setDifficulty('dificil')}
                 >
-                  <span className="w-2 h-2 rounded-full bg-red-500 mr-2" />
+                  <span className="w-2 h-2 rounded-full bg-destructive mr-2" />
                   Difícil
                 </Button>
               </div>
@@ -316,7 +316,7 @@ const TicTacToe = () => {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold">❌⭕ Jogo da Velha</h2>
         {mode === 'single' && (
-          <Badge className={difficulty === 'facil' ? 'bg-green-500' : difficulty === 'medio' ? 'bg-yellow-500' : 'bg-red-500'}>
+          <Badge className={difficulty === 'facil' ? 'bg-success' : difficulty === 'medio' ? 'bg-warning text-warning-foreground' : 'bg-destructive'}>
             {difficulty === 'facil' ? 'Fácil' : difficulty === 'medio' ? 'Médio' : 'Difícil'}
           </Badge>
         )}
@@ -324,7 +324,7 @@ const TicTacToe = () => {
 
       <div className="flex justify-center gap-6 mb-4 text-sm">
         <div className="text-center">
-          <p className="font-bold text-blue-600">❌ {mode === 'multiplayer' ? player1Name : 'Você'}</p>
+          <p className="font-bold text-primary">❌ {mode === 'multiplayer' ? player1Name : 'Você'}</p>
           <p className="text-2xl">{scores.x}</p>
         </div>
         <div className="text-center">
@@ -332,7 +332,7 @@ const TicTacToe = () => {
           <p className="text-2xl">{scores.draws}</p>
         </div>
         <div className="text-center">
-          <p className="font-bold text-red-600">⭕ {mode === 'multiplayer' ? player2Name : 'IA'}</p>
+          <p className="font-bold text-destructive">⭕ {mode === 'multiplayer' ? player2Name : 'IA'}</p>
           <p className="text-2xl">{scores.o}</p>
         </div>
       </div>
@@ -345,7 +345,7 @@ const TicTacToe = () => {
 
       {winner && (
         <div className="text-center mb-4">
-          <p className="text-xl font-bold text-green-600 flex items-center justify-center gap-2">
+          <p className="text-xl font-bold text-success flex items-center justify-center gap-2">
             <Trophy className="w-5 h-5" />
             {winner === 'X' ? `❌ ${mode === 'multiplayer' ? player1Name : 'Você'}` : `⭕ ${mode === 'multiplayer' ? player2Name : 'IA'}`} Venceu!
           </p>
@@ -353,7 +353,7 @@ const TicTacToe = () => {
       )}
 
       {isDraw && (
-        <p className="text-center mb-4 text-xl font-bold text-amber-600">
+        <p className="text-center mb-4 text-xl font-bold text-warning">
           🤝 Empate!
         </p>
       )}
@@ -365,9 +365,9 @@ const TicTacToe = () => {
             onClick={() => handleClick(index)}
             disabled={!!cell || !!winner || gameState !== 'playing' || (mode === 'single' && !xIsNext)}
             className={`w-14 h-14 text-3xl font-bold rounded-lg border-2 transition-all
-              ${winningLine.includes(index) ? 'bg-green-100 border-green-500' : 'bg-card border-border'}
+              ${winningLine.includes(index) ? 'bg-success/20 border-success' : 'bg-card border-border'}
               ${!cell && !winner && gameState === 'playing' && (mode === 'multiplayer' || xIsNext) ? 'hover:bg-muted cursor-pointer' : ''}
-              ${cell === 'X' ? 'text-blue-600' : 'text-red-600'}`}
+              ${cell === 'X' ? 'text-primary' : 'text-destructive'}`}
           >
             {cell}
           </button>

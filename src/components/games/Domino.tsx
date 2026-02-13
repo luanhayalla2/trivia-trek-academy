@@ -14,9 +14,9 @@ interface DominoPiece {
 }
 
 const difficultyConfig: Record<GameDifficulty, { aiDelay: number; aiMistakeRate: number; label: string; color: string }> = {
-  facil: { aiDelay: 2000, aiMistakeRate: 0.4, label: 'Fácil', color: 'bg-green-500' },
-  medio: { aiDelay: 1500, aiMistakeRate: 0.2, label: 'Médio', color: 'bg-yellow-500' },
-  dificil: { aiDelay: 1000, aiMistakeRate: 0.05, label: 'Difícil', color: 'bg-red-500' }
+  facil: { aiDelay: 2000, aiMistakeRate: 0.4, label: 'Fácil', color: 'bg-success' },
+  medio: { aiDelay: 1500, aiMistakeRate: 0.2, label: 'Médio', color: 'bg-warning text-warning-foreground' },
+  dificil: { aiDelay: 1000, aiMistakeRate: 0.05, label: 'Difícil', color: 'bg-destructive' }
 };
 
 const Domino = () => {
@@ -287,7 +287,7 @@ const Domino = () => {
     return (
       <Card className="p-6 max-w-md mx-auto bg-card/90 backdrop-blur-sm">
         <div className="space-y-6 text-center">
-          <Trophy className={`w-16 h-16 mx-auto ${isWin ? 'text-yellow-500' : 'text-muted-foreground'}`} />
+          <Trophy className={`w-16 h-16 mx-auto ${isWin ? 'text-warning' : 'text-muted-foreground'}`} />
           <h2 className="text-2xl font-bold">{isWin ? 'Você Venceu!' : 'Você Perdeu!'}</h2>
           
           {isWin && (
@@ -348,12 +348,12 @@ const Domino = () => {
       
       <div className="mb-6">
         <h3 className="text-sm font-medium mb-2">Mesa:</h3>
-        <div className="flex flex-wrap gap-1 min-h-16 p-3 bg-green-800 rounded-lg justify-center">
+        <div className="flex flex-wrap gap-1 min-h-16 p-3 bg-muted rounded-lg justify-center border border-border">
           {board.length === 0 ? (
-            <span className="text-white/60">Clique em uma peça para começar</span>
+            <span className="text-muted-foreground">Clique em uma peça para começar</span>
           ) : (
             board.map((piece) => (
-              <div key={piece.id} className="flex bg-white rounded border-2 border-foreground/20">
+              <div key={piece.id} className="flex bg-card rounded border-2 border-border">
                 <div className="w-8 h-12 flex items-center justify-center border-r">
                   {renderDots(piece.left)}
                 </div>
