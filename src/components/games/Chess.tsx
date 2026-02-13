@@ -562,7 +562,7 @@ const Chess = () => {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold">♟ Xadrez</h2>
         {mode === 'single' && (
-          <Badge className={difficulty === 'facil' ? 'bg-green-500' : difficulty === 'medio' ? 'bg-yellow-500' : 'bg-red-500'}>
+          <Badge className={difficulty === 'facil' ? 'bg-success' : difficulty === 'medio' ? 'bg-warning text-warning-foreground' : 'bg-destructive'}>
             {difficulty === 'facil' ? 'Fácil' : difficulty === 'medio' ? 'Médio' : 'Difícil'}
           </Badge>
         )}
@@ -594,7 +594,7 @@ const Chess = () => {
 
       {gameState === 'ended' && winner && (
         <div className="text-center mb-4">
-          <p className="text-xl font-bold text-green-600 flex items-center justify-center gap-2">
+          <p className="text-xl font-bold text-success flex items-center justify-center gap-2">
             <Trophy className="w-5 h-5" />
             {isOnlineMultiplayer 
               ? (winner === playerColor ? 'Você Venceu!' : 'Você Perdeu!')
@@ -612,9 +612,9 @@ const Chess = () => {
                 key={`${rowIdx}-${colIdx}`}
                 onClick={() => handleClick(rowIdx, colIdx)}
                 className={`w-10 h-10 flex items-center justify-center text-2xl cursor-pointer transition-all
-                  ${(rowIdx + colIdx) % 2 === 0 ? 'bg-amber-100' : 'bg-amber-700'}
+                  ${(rowIdx + colIdx) % 2 === 0 ? 'bg-muted/60' : 'bg-primary/30'}
                   ${selected?.[0] === rowIdx && selected?.[1] === colIdx ? 'ring-2 ring-primary' : ''}
-                  ${isValidMove ? 'ring-2 ring-green-500' : ''}
+                  ${isValidMove ? 'ring-2 ring-success' : ''}
                   hover:opacity-80`}
               >
                 {cell}
