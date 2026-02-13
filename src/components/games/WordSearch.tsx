@@ -230,7 +230,7 @@ const WordSearch = () => {
     return (
       <Card className="p-6 max-w-md mx-auto bg-card/90 backdrop-blur-sm">
         <div className="space-y-6 text-center">
-          <Trophy className="w-16 h-16 mx-auto text-yellow-500" />
+          <Trophy className="w-16 h-16 mx-auto text-warning" />
           <h2 className="text-2xl font-bold">Parabéns!</h2>
           
           <div className="flex justify-center gap-4">
@@ -286,7 +286,7 @@ const WordSearch = () => {
               key={word}
               className={`px-3 py-1 rounded-full text-sm font-semibold transition-all ${
                 foundWords.has(word)
-                  ? "bg-green-500 text-white line-through"
+                  ? "bg-success text-success-foreground line-through"
                   : "bg-muted text-muted-foreground"
               }`}
             >

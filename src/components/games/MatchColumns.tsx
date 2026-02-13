@@ -185,7 +185,7 @@ const MatchColumns = () => {
                 className="w-full justify-start gap-2"
                 disabled={isMatched}
               >
-                {isMatched && <CheckCircle className="w-4 h-4 text-green-500" />}
+                {isMatched && <CheckCircle className="w-4 h-4 text-success" />}
                 {item.text}
               </Button>
             );
@@ -204,7 +204,7 @@ const MatchColumns = () => {
                 className="w-full justify-start gap-2"
                 disabled={isMatched}
               >
-                {isMatched && <CheckCircle className="w-4 h-4 text-green-500" />}
+                {isMatched && <CheckCircle className="w-4 h-4 text-success" />}
                 {item.text}
               </Button>
             );

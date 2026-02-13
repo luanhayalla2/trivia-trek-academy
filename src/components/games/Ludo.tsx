@@ -21,10 +21,10 @@ const Ludo = () => {
   const [winner, setWinner] = useState(-1);
 
   const players = [
-    { name: 'Você', color: 'bg-blue-500', emoji: '🔵' },
-    { name: 'Bot 1', color: 'bg-red-500', emoji: '🔴' },
-    { name: 'Bot 2', color: 'bg-green-500', emoji: '🟢' },
-    { name: 'Bot 3', color: 'bg-yellow-500', emoji: '🟡' },
+    { name: 'Você', color: 'bg-primary', emoji: '🔵' },
+    { name: 'Bot 1', color: 'bg-destructive', emoji: '🔴' },
+    { name: 'Bot 2', color: 'bg-success', emoji: '🟢' },
+    { name: 'Bot 3', color: 'bg-warning', emoji: '🟡' },
   ];
 
   useEffect(() => {
@@ -201,7 +201,7 @@ const Ludo = () => {
           {isRolling ? 'Rolando...' : currentPlayer === 0 ? 'Jogar Dado' : 'Aguarde...'}
         </Button>
         {dice === 6 && !isRolling && currentPlayer === 0 && (
-          <p className="text-green-600 font-medium mt-2">🎉 Tirou 6! Jogue novamente!</p>
+          <p className="text-success font-medium mt-2">🎉 Tirou 6! Jogue novamente!</p>
         )}
       </div>
 

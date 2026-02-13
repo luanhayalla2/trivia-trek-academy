@@ -336,10 +336,10 @@ const Checkers = () => {
   const renderPiece = (piece: Piece) => {
     if (!piece) return null;
     const isKing = piece === 'R' || piece === 'B';
-    const color = piece.toLowerCase() === 'r' ? 'bg-red-600' : 'bg-gray-800';
+    const color = piece.toLowerCase() === 'r' ? 'bg-destructive' : 'bg-foreground';
     return (
       <div className={`w-8 h-8 rounded-full ${color} flex items-center justify-center shadow-lg`}>
-        {isKing && <span className="text-yellow-400">👑</span>}
+        {isKing && <span className="text-warning">👑</span>}
       </div>
     );
   };
@@ -438,7 +438,7 @@ const Checkers = () => {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold">⚫ Damas</h2>
         {mode === 'single' && (
-          <Badge className={difficulty === 'facil' ? 'bg-green-500' : difficulty === 'medio' ? 'bg-yellow-500' : 'bg-red-500'}>
+          <Badge className={difficulty === 'facil' ? 'bg-success' : difficulty === 'medio' ? 'bg-warning' : 'bg-destructive'}>
             {difficulty === 'facil' ? 'Fácil' : difficulty === 'medio' ? 'Médio' : 'Difícil'}
           </Badge>
         )}
@@ -446,12 +446,12 @@ const Checkers = () => {
 
       <div className="flex justify-between mb-4">
         <div className="text-center">
-          <p className="font-bold text-red-600">🔴 {mode === 'multiplayer' ? player1Name : 'Você'}</p>
-          <p className="text-sm">Peças: {pieces.red} | Capturas: {captures.r}</p>
+          <p className="font-bold text-destructive">🔴 {mode === 'multiplayer' ? player1Name : 'Você'}</p>
+          <p className="text-sm text-muted-foreground">Peças: {pieces.red} | Capturas: {captures.r}</p>
         </div>
         <div className="text-center">
-          <p className="font-bold text-gray-800">⚫ {mode === 'multiplayer' ? player2Name : 'IA'}</p>
-          <p className="text-sm">Peças: {pieces.black} | Capturas: {captures.b}</p>
+          <p className="font-bold text-foreground">⚫ {mode === 'multiplayer' ? player2Name : 'IA'}</p>
+          <p className="text-sm text-muted-foreground">Peças: {pieces.black} | Capturas: {captures.b}</p>
         </div>
       </div>
 
@@ -463,14 +463,14 @@ const Checkers = () => {
 
       {gameState === 'ended' && winner && (
         <div className="text-center mb-4">
-          <p className="text-xl font-bold text-green-600 flex items-center justify-center gap-2">
+          <p className="text-xl font-bold text-success flex items-center justify-center gap-2">
             <Trophy className="w-5 h-5" />
             {winner === 'r' ? `🔴 ${mode === 'multiplayer' ? player1Name : 'Você'}` : `⚫ ${mode === 'multiplayer' ? player2Name : 'IA'}`} Venceu!
           </p>
         </div>
       )}
 
-      <div className="grid grid-cols-8 gap-0 border-2 border-foreground/20 mx-auto w-fit mb-4">
+      <div className="grid grid-cols-8 gap-0 border-2 border-border mx-auto w-fit mb-4">
         {board.map((row, rowIdx) =>
           row.map((cell, colIdx) => {
             const isValidMove = selected && getValidMoves(board, selected[0], selected[1]).some(m => m.row === rowIdx && m.col === colIdx);
@@ -479,9 +479,9 @@ const Checkers = () => {
                 key={`${rowIdx}-${colIdx}`}
                 onClick={() => handleClick(rowIdx, colIdx)}
                 className={`w-10 h-10 flex items-center justify-center cursor-pointer transition-all
-                  ${(rowIdx + colIdx) % 2 === 0 ? 'bg-amber-100' : 'bg-amber-800'}
+                  ${(rowIdx + colIdx) % 2 === 0 ? 'bg-muted' : 'bg-primary/30'}
                   ${selected?.[0] === rowIdx && selected?.[1] === colIdx ? 'ring-2 ring-primary' : ''}
-                  ${isValidMove ? 'ring-2 ring-green-500' : ''}
+                  ${isValidMove ? 'ring-2 ring-success' : ''}
                   hover:opacity-80`}
               >
                 {renderPiece(cell)}
