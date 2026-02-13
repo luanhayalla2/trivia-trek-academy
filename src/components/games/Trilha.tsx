@@ -231,7 +231,7 @@ const Trilha = () => {
         key={pos}
         onClick={() => handleClick(pos)}
         className={`absolute w-8 h-8 rounded-full border-2 cursor-pointer transform -translate-x-1/2 -translate-y-1/2 transition-all
-          ${piece === 'w' ? 'bg-white border-gray-400' : piece === 'b' ? 'bg-gray-800 border-gray-600' : 'bg-muted border-muted-foreground/30'}
+          ${piece === 'w' ? 'bg-purity border-muted-foreground/40' : piece === 'b' ? 'bg-foreground border-muted-foreground' : 'bg-muted border-muted-foreground/30'}
           ${selected === pos ? 'ring-2 ring-primary ring-offset-2' : ''}
           ${removingPiece && piece === (turn === 'w' ? 'b' : 'w') ? 'ring-2 ring-destructive animate-pulse' : ''}
           hover:scale-110`}
@@ -300,7 +300,7 @@ const Trilha = () => {
 
       {gameOver ? (
         <div className="text-center mb-4 p-4 bg-primary/10 rounded-lg">
-          <Trophy className="w-8 h-8 mx-auto mb-2 text-yellow-500" />
+          <Trophy className="w-8 h-8 mx-auto mb-2 text-warning" />
           <p className="font-bold text-lg">
             {winner === 'w' ? '⚪ Brancas' : '⚫ Pretas'} Venceram!
           </p>
@@ -320,15 +320,15 @@ const Trilha = () => {
         </>
       )}
 
-      <div className="relative w-72 h-72 mx-auto bg-amber-100 rounded-lg border-2 border-amber-700">
+      <div className="relative w-72 h-72 mx-auto bg-muted rounded-lg border-2 border-primary/50">
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
-          <rect x="10" y="10" width="80" height="80" fill="none" stroke="#92400e" strokeWidth="1" />
-          <rect x="20" y="20" width="60" height="60" fill="none" stroke="#92400e" strokeWidth="1" />
-          <rect x="30" y="30" width="40" height="40" fill="none" stroke="#92400e" strokeWidth="1" />
-          <line x1="50" y1="10" x2="50" y2="30" stroke="#92400e" strokeWidth="1" />
-          <line x1="50" y1="70" x2="50" y2="90" stroke="#92400e" strokeWidth="1" />
-          <line x1="10" y1="50" x2="30" y2="50" stroke="#92400e" strokeWidth="1" />
-          <line x1="70" y1="50" x2="90" y2="50" stroke="#92400e" strokeWidth="1" />
+          <rect x="10" y="10" width="80" height="80" fill="none" stroke="currentColor" strokeWidth="1" className="text-primary/60" />
+          <rect x="20" y="20" width="60" height="60" fill="none" stroke="currentColor" strokeWidth="1" className="text-primary/60" />
+          <rect x="30" y="30" width="40" height="40" fill="none" stroke="currentColor" strokeWidth="1" className="text-primary/60" />
+          <line x1="50" y1="10" x2="50" y2="30" stroke="currentColor" strokeWidth="1" className="text-primary/60" />
+          <line x1="50" y1="70" x2="50" y2="90" stroke="currentColor" strokeWidth="1" className="text-primary/60" />
+          <line x1="10" y1="50" x2="30" y2="50" stroke="currentColor" strokeWidth="1" className="text-primary/60" />
+          <line x1="70" y1="50" x2="90" y2="50" stroke="currentColor" strokeWidth="1" className="text-primary/60" />
         </svg>
         
         {positions.map((coords, idx) => renderPosition(idx, coords[0], coords[1]))}

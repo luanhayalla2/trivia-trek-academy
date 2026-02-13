@@ -154,9 +154,9 @@ const Poker = () => {
       <div 
         key={index}
         onClick={() => toggleHold(index)}
-        className={`relative w-16 h-24 bg-white rounded-lg border-2 flex flex-col items-center justify-center shadow-md cursor-pointer transition-all
-          ${isRed ? 'text-red-600' : 'text-foreground'}
-          ${held[index] ? 'border-primary ring-2 ring-primary -translate-y-2' : 'border-foreground/20'}
+        className={`relative w-16 h-24 bg-card rounded-lg border-2 flex flex-col items-center justify-center shadow-md cursor-pointer transition-all
+          ${isRed ? 'text-destructive' : 'text-card-foreground'}
+          ${held[index] ? 'border-primary ring-2 ring-primary -translate-y-2' : 'border-border'}
           ${phase === 'draw' ? 'hover:scale-105' : ''}`}
       >
         <span className="text-lg font-bold">{card.value}</span>
@@ -234,7 +234,7 @@ const Poker = () => {
       )}
 
       {result && (
-        <p className={`text-center text-xl font-bold mb-4 ${evaluateHand(hand).payout > 0 ? 'text-green-600' : 'text-muted-foreground'}`}>
+        <p className={`text-center text-xl font-bold mb-4 ${evaluateHand(hand).payout > 0 ? 'text-success' : 'text-muted-foreground'}`}>
           {result}
         </p>
       )}
