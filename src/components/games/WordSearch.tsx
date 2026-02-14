@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useGameScore, GameDifficulty } from "@/hooks/useGameScore";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGameAchievements } from "@/hooks/useGameAchievements";
+import { playScoreSound } from "@/lib/sounds";
 import { Clock, Target, Trophy } from "lucide-react";
 
 const difficultyConfig: Record<GameDifficulty, { gridSize: number; words: string[]; label: string; color: string }> = {
@@ -139,6 +140,7 @@ const WordSearch = () => {
       const newFoundWords = new Set([...foundWords, foundWord]);
       setFoundWords(newFoundWords);
       setSelectedCells(new Set());
+      playScoreSound();
       toast.success(`Palavra encontrada: ${foundWord}!`);
 
       if (newFoundWords.size === words.length) {

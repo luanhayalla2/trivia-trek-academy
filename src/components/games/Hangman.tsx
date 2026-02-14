@@ -6,6 +6,7 @@ import { useGameScore } from "@/hooks/useGameScore";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { useGameAchievements } from "@/hooks/useGameAchievements";
+import { playScoreSound, playErrorSound } from "@/lib/sounds";
 
 type Difficulty = "facil" | "medio" | "dificil";
 
@@ -92,6 +93,7 @@ const Hangman = () => {
     setGuessedLetters([...guessedLetters, letter]);
 
     if (!currentWord.word.includes(letter)) {
+      playErrorSound();
       const newWrongGuesses = wrongGuesses + 1;
       setWrongGuesses(newWrongGuesses);
 
@@ -99,6 +101,8 @@ const Hangman = () => {
         setGameStatus("lost");
         endGame("lost");
       }
+    } else {
+      playScoreSound();
     }
   };
 

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useGameScore, GameDifficulty } from "@/hooks/useGameScore";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGameAchievements } from "@/hooks/useGameAchievements";
+import { playScoreSound, playErrorSound } from "@/lib/sounds";
 import { Clock, Target, Trophy } from "lucide-react";
 
 interface CardType {
@@ -106,6 +107,7 @@ const MemoryGame = () => {
       setCards(newCards);
       const newMatches = matches + 1;
       setMatches(newMatches);
+      playScoreSound();
       toast.success("Par encontrado! 🎉");
 
       if (newMatches === emojis.length) {
@@ -114,6 +116,7 @@ const MemoryGame = () => {
 
       setFlippedCards([]);
     } else {
+      playErrorSound();
       setTimeout(() => {
         const newCards = cards.map((c) =>
           c.id === firstId || c.id === secondId ? { ...c, isFlipped: false } : c

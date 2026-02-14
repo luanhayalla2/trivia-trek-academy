@@ -125,3 +125,21 @@ export const playDrawSound = () => {
     osc.stop(now + i * 0.15 + 0.2);
   });
 };
+
+export const playErrorSound = () => {
+  const ctx = getAudioContext();
+  const now = ctx.currentTime;
+  // Two low descending beeps
+  [200, 150].forEach((freq, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(freq, now + i * 0.15);
+    gain.gain.setValueAtTime(0.2, now + i * 0.15);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.25);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now + i * 0.15);
+    osc.stop(now + i * 0.15 + 0.25);
+  });
+};
