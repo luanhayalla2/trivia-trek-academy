@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Users, User, Trophy, Clock, Target } from 'lucide-react';
 import { GameDifficulty, GameMode } from '@/hooks/useGameScore';
+import { playWinSound, playLoseSound, playDrawSound } from '@/lib/sounds';
 
 interface GameWrapperProps {
   gameId: string;
@@ -61,6 +62,14 @@ export const GameWrapper: React.FC<GameWrapperProps> = ({
   const handleGameEnd = (result: { winner?: 1 | 2 | 'draw'; score?: number; timeTaken?: number; movesCount?: number }) => {
     setGameResult(result);
     setGameStarted(false);
+    // Play appropriate sound
+    if (result.winner === 'draw') {
+      playDrawSound();
+    } else if (result.winner === 1 || (mode === 'single' && result.winner !== 2)) {
+      playWinSound();
+    } else {
+      playLoseSound();
+    }
   };
 
   const handleRestart = () => {

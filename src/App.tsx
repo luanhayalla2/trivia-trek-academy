@@ -26,6 +26,7 @@ import Checkout from "./pages/Checkout";
 import Chatbot from "./components/Chatbot";
 import EducaGame from "./pages/EducaGame";
 import Friends from "./pages/Friends";
+import Achievements from "./pages/Achievements";
 import { GameInviteNotification } from "./components/GameInviteNotification";
 import { GlobalAchievementNotification } from "./components/GlobalAchievementNotification";
 
@@ -64,6 +65,7 @@ const App = () => (
                 <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
                 <Route path="/educa-game" element={<ProtectedRoute><EducaGame /></ProtectedRoute>} />
                 <Route path="/friends" element={<ProtectedRoute><Friends /></ProtectedRoute>} />
+                <Route path="/achievements" element={<ProtectedRoute><Achievements /></ProtectedRoute>} />
                 
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />

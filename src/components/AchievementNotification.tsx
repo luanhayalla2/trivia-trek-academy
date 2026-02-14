@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Star, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { playAchievementSound } from '@/lib/sounds';
 
 interface Achievement {
   id: string;
@@ -21,6 +22,7 @@ const AchievementNotification = ({ achievement, onClose }: AchievementNotificati
   useEffect(() => {
     if (achievement) {
       setIsVisible(true);
+      playAchievementSound();
       const timer = setTimeout(() => {
         setIsVisible(false);
         setTimeout(onClose, 500);

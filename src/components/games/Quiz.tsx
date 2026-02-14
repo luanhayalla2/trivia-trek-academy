@@ -6,6 +6,7 @@ import { useGameScore } from "@/hooks/useGameScore";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { useGameAchievements } from "@/hooks/useGameAchievements";
+import { playScoreSound } from "@/lib/sounds";
 
 type Difficulty = "facil" | "medio" | "dificil";
 
@@ -104,6 +105,7 @@ const Quiz = () => {
       const basePoints = 100 * difficultyConfig[difficulty!].scoreMultiplier;
       setScore(score + basePoints + timeBonus);
       setCorrectAnswers(correctAnswers + 1);
+      playScoreSound();
     }
 
     setTimeout(() => {
