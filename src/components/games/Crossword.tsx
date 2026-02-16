@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useGameScore } from "@/hooks/useGameScore";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Clock, Trophy } from "lucide-react";
+import { playScoreSound, playErrorSound } from "@/lib/sounds";
 
 interface Clue {
   number: number;
@@ -75,12 +76,14 @@ const Crossword = () => {
     if (userAnswer === clue.answer) {
       const newCorrect = new Set([...correctAnswers, clue.number]);
       setCorrectAnswers(newCorrect);
+      playScoreSound();
       toast.success(`Resposta ${clue.number} correta! 🎉`);
 
       if (newCorrect.size === clues.length) {
         endGame(newCorrect.size);
       }
     } else {
+      playErrorSound();
       toast.error("Resposta incorreta. Tente novamente!");
     }
   };

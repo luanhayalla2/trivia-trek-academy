@@ -6,7 +6,7 @@ import { useGameScore } from "@/hooks/useGameScore";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { useGameAchievements } from "@/hooks/useGameAchievements";
-import { playScoreSound } from "@/lib/sounds";
+import { playScoreSound, playErrorSound } from "@/lib/sounds";
 
 type Difficulty = "facil" | "medio" | "dificil";
 
@@ -106,6 +106,8 @@ const Quiz = () => {
       setScore(score + basePoints + timeBonus);
       setCorrectAnswers(correctAnswers + 1);
       playScoreSound();
+    } else {
+      playErrorSound();
     }
 
     setTimeout(() => {

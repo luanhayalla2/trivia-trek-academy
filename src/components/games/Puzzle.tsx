@@ -6,6 +6,7 @@ import { Shuffle, Clock, Trophy } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGameScore } from "@/hooks/useGameScore";
 import { toast } from "sonner";
+import { playClickSound, playWinSound } from "@/lib/sounds";
 
 const Puzzle = () => {
   const { user } = useAuth();
@@ -91,6 +92,7 @@ const Puzzle = () => {
           movesCount: moves,
         });
       }
+      playWinSound();
       toast.success(`Parabéns! Pontuação: ${score}`);
     }
   };
@@ -114,6 +116,7 @@ const Puzzle = () => {
     [newTiles[index], newTiles[emptyIndex]] = [newTiles[emptyIndex], newTiles[index]];
     setTiles(newTiles);
     setMoves(moves + 1);
+    playClickSound();
   };
 
   const formatTime = (seconds: number) => {

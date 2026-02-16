@@ -4,15 +4,40 @@ import { GameCard } from "@/components/ui/game-card";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Slider } from "@/components/ui/slider";
 import { ArrowLeft, Volume2, VolumeX, Moon, Sun, Bell, BellOff, Zap, Clock, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
+import { getGlobalVolume, setGlobalVolume, playScoreSound } from "@/lib/sounds";
 
 const Settings = () => {
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(getGlobalVolume() > 0);
+  const [volume, setVolume] = useState(getGlobalVolume() * 100);
   const [darkMode, setDarkMode] = useState(true);
   const [notifications, setNotifications] = useState(true);
   const [gameTimer, setGameTimer] = useState(30);
   const [difficulty, setDifficulty] = useState("medium");
+
+  const handleVolumeChange = (value: number[]) => {
+    const v = value[0];
+    setVolume(v);
+    setGlobalVolume(v / 100);
+    setSoundEnabled(v > 0);
+  };
+
+  const handleSoundToggle = (enabled: boolean) => {
+    setSoundEnabled(enabled);
+    if (enabled) {
+      const restored = volume > 0 ? volume : 50;
+      setVolume(restored);
+      setGlobalVolume(restored / 100);
+    } else {
+      setGlobalVolume(0);
+    }
+  };
+
+  const testSound = () => {
+    playScoreSound();
+  };
 
   const difficultyOptions = [
     { id: "easy", name: "Fácil", description: "45 segundos por pergunta", icon: "🌱" },
@@ -55,9 +80,27 @@ const Settings = () => {
               </div>
               <Switch
                 checked={soundEnabled}
-                onCheckedChange={setSoundEnabled}
+                onCheckedChange={handleSoundToggle}
               />
             </div>
+            {soundEnabled && (
+              <div className="space-y-3 mt-4 pt-4 border-t border-border">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">Volume</span>
+                  <span className="text-sm font-medium">{Math.round(volume)}%</span>
+                </div>
+                <Slider
+                  value={[volume]}
+                  onValueChange={handleVolumeChange}
+                  max={100}
+                  step={1}
+                  className="w-full"
+                />
+                <Button variant="outline" size="sm" onClick={testSound} className="w-full mt-2">
+                  🔊 Testar Som
+                </Button>
+              </div>
+            )}
           </GameCard>
 
           {/* Appearance Settings */}

@@ -6,6 +6,7 @@ import { CheckCircle, Clock, Trophy } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGameScore } from "@/hooks/useGameScore";
 import { toast } from "sonner";
+import { playScoreSound, playErrorSound } from "@/lib/sounds";
 
 const pairsByDifficulty = {
   facil: [
@@ -77,6 +78,7 @@ const MatchColumns = () => {
       const newMatches = { ...matches, [selectedLeft]: id };
       setMatches(newMatches);
       setSelectedLeft(null);
+      playScoreSound();
 
       if (Object.keys(newMatches).length === pairs.length) {
         setCompleted(true);
@@ -100,6 +102,7 @@ const MatchColumns = () => {
       }
     } else {
       setErrors(e => e + 1);
+      playErrorSound();
       toast.error("Conexão incorreta!");
       setSelectedLeft(null);
     }
