@@ -6,12 +6,23 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { subjects } from "@/data/subjects";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
+
+const difficultyOptions = [
+  { id: "facil", label: "🌱 Fácil", gems: 5, xp: 10 },
+  { id: "medio", label: "⚡ Médio", gems: 10, xp: 20 },
+  { id: "dificil", label: "🔥 Difícil", gems: 20, xp: 40 },
+  { id: "avancado", label: "🚀 Avançado", gems: 30, xp: 60 },
+];
 
 const Subjects = () => {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedDifficulties, setSelectedDifficulties] = useState<Record<string, string>>({});
+
+  const getDifficulty = (subjectId: string) => selectedDifficulties[subjectId] || "medio";
 
   const categories = [
     { id: "idiomas", name: "🌍 Idiomas", emoji: "🌍", description: t('subjects.categories.languages') },
@@ -21,11 +32,6 @@ const Subjects = () => {
     { id: "criativas", name: "🎨 Criativas", emoji: "🎨", description: t('subjects.categories.creative') },
     { id: "tecnologia", name: "⚡ Tecnologia", emoji: "⚡", description: t('subjects.categories.technology') },
   ];
-
-  const subjectsByCategory = categories.map(category => ({
-    ...category,
-    subjects: subjects.filter(s => s.category === category.id)
-  })).filter(cat => cat.subjects.length > 0);
 
   const filteredSubjects = selectedCategory === "all" 
     ? subjects 
@@ -54,6 +60,9 @@ const Subjects = () => {
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               {t('subjects.description')}
             </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              {filteredSubjects.length} disciplinas disponíveis
+            </p>
           </div>
 
           <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
@@ -80,6 +89,8 @@ const Subjects = () => {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredSubjects.map((subject) => {
                   const Icon = subject.icon;
+                  const diff = getDifficulty(subject.id);
+                  const diffInfo = difficultyOptions.find(d => d.id === diff)!;
                   return (
                     <GameCard
                       key={subject.id}
@@ -93,17 +104,33 @@ const Subjects = () => {
                         
                         <div>
                           <h3 className="text-xl font-bold mb-2">{subject.name}</h3>
-                          <p className="text-current/80 text-sm mb-4">
+                          <p className="text-current/80 text-sm mb-3">
                             {subject.description}
                           </p>
-                          <div className="flex justify-between items-center text-sm text-current/70 mb-4 px-2">
+                          <div className="flex justify-between items-center text-sm text-current/70 mb-3 px-2">
                             <span>{subject.questions} {t('subjects.questions')}</span>
-                            <span>{t('subjects.level')}</span>
+                            <span>💎{diffInfo.gems} ⭐{diffInfo.xp}XP</span>
                           </div>
                         </div>
 
-                        <Link to={`/game/${subject.id}`}>
-                          <Button variant="secondary" className="w-full bg-background/20 hover:bg-background/30 backdrop-blur-sm border border-current/10">
+                        <Select
+                          value={diff}
+                          onValueChange={(v) => setSelectedDifficulties(prev => ({ ...prev, [subject.id]: v }))}
+                        >
+                          <SelectTrigger className="w-full bg-background/30 border-current/20 backdrop-blur-sm text-sm">
+                            <SelectValue placeholder="Dificuldade" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-card border-border z-50">
+                            {difficultyOptions.map(opt => (
+                              <SelectItem key={opt.id} value={opt.id}>
+                                {opt.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+
+                        <Link to={`/lesson/${subject.id}/${diff}`}>
+                          <Button variant="secondary" className="w-full bg-background/20 hover:bg-background/30 backdrop-blur-sm border border-current/10 mt-2">
                             {t('subjects.playNow')}
                           </Button>
                         </Link>
